@@ -2505,6 +2505,7 @@ body[data-theme="light"] .message-input::placeholder {
     let resetChatButton;
     let initialOptionsContainer = null;
     let initialOptionsExpanded = false;
+    let welcomeTimeoutId = null;
 
     document.addEventListener("DOMContentLoaded", () => {
       createIcons({ icons });
@@ -2730,11 +2731,19 @@ function initializeLanguage() {
       element.appendChild(iconSvg);
     }
 
+    function clearWelcomeTimeout() {
+      if (welcomeTimeoutId) {
+        clearTimeout(welcomeTimeoutId);
+        welcomeTimeoutId = null;
+      }
+    }
+
     function startChatExperience() {
       messages = [];
       isTyping = false;
       initialOptionsContainer = null;
       initialOptionsExpanded = false;
+      clearWelcomeTimeout();
       if (messagesContainer) {
         messagesContainer.innerHTML = "";
       }
@@ -2742,12 +2751,13 @@ function initializeLanguage() {
         sendButton.disabled = false;
       }
       showWelcome();
-      setTimeout(() => {
+      welcomeTimeoutId = setTimeout(() => {
         const welcome = document.querySelector(".welcome-screen");
         if (welcome) {
           welcome.remove();
         }
         showInitialOptions();
+        welcomeTimeoutId = null;
       }, 3300);
       input?.focus();
     }
@@ -2757,6 +2767,8 @@ function initializeLanguage() {
         resetChatButton.classList.add("spinning");
         setTimeout(() => resetChatButton?.classList.remove("spinning"), 650);
       }
+
+      clearWelcomeTimeout();
 
       if (messagesContainer) {
         messagesContainer.innerHTML = "";
