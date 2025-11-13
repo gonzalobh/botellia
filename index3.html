@@ -1,0 +1,3635 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sommelier de Vins Français · Botellia.fr</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+      --font-display: 'Playfair Display', serif;
+      --font-body: 'Inter', 'Neue Haas Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --color-night: #0b0b0d;
+      --color-obsidian: #131316;
+      --color-carbon: #1b1b1f;
+      --color-graphite: #222225;
+      --color-porcelain: #f6f4ee;
+      --color-ivory: #f8f8f6;
+      --color-ink: #283e65;
+      --color-muted: #b7b7c2;
+      --color-muted-dark: #8f8f9a;
+      --color-accent: #C5A34F;
+      --color-accent-soft: #D8BB6C;
+      --shadow-veil: 0 48px 90px rgba(0, 0, 0, 0.55);
+      --shadow-panel: 0 28px 60px rgba(0, 0, 0, 0.45);
+      --shadow-hover: 0 26px 70px rgba(0, 0, 0, 0.55);
+      --radius-xl: 32px;
+      --radius-lg: 28px;
+      --radius-md: 22px;
+      --transition-base: all 0.45s ease;
+      --transition-soft: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    html, body {
+      height: 100%;
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      overflow: hidden;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(197, 163, 79, 0.14), transparent 52%),
+        radial-gradient(circle at 80% 0%, rgba(88, 86, 76, 0.18), transparent 60%),
+        linear-gradient(160deg, var(--color-night), var(--color-obsidian) 55%, #070708 100%);
+      color: var(--color-ivory);
+      font-family: var(--font-body);
+      letter-spacing: 0.01em;
+      line-height: 1.6;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.8s ease, color 0.6s ease;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 25% 30%, rgba(216, 187, 108, 0.08), transparent 55%),
+        radial-gradient(circle at 80% 65%, rgba(110, 110, 110, 0.08), transparent 60%);
+      pointer-events: none;
+      mix-blend-mode: screen;
+      opacity: 0.9;
+      transition: opacity 0.8s ease;
+    }
+
+    body[data-theme="light"] {
+      background:
+        radial-gradient(circle at 18% 12%, rgba(216, 187, 108, 0.28), transparent 58%),
+        linear-gradient(160deg, #f4f3ed, #ebe8df 60%, #f8f6f1 100%);
+      color: var(--color-ink);
+    }
+
+    body[data-theme="light"]::before {
+      opacity: 0.55;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(197, 163, 79, 0.22), transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.4), transparent 65%);
+      mix-blend-mode: normal;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    p {
+      line-height: 1.8;
+    }
+
+    .chat-container {
+      position: relative;
+      width: 100%;
+      max-width: 520px;
+      height: 100vh;
+      min-height: -webkit-fill-available;
+      background: rgba(19, 19, 22, 0.9);
+      border-radius: 0;
+      box-shadow: none;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(26px);
+      transition: transform 0.6s var(--transition-soft), background 0.8s ease, border-color 0.6s ease;
+    }
+
+    @media (max-width: 767px) {
+      body {
+        padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+        display: block;
+      }
+
+      .chat-container {
+        border-radius: 0;
+        height: calc(100vh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+        max-height: none;
+        margin: 0 auto;
+      }
+
+@media (max-width: 767px) {
+  .options-container.initial-options {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    justify-content: flex-start; /* ← alinea a la izquierda */
+  }
+}
+
+
+      .options-container.initial-options .option-button {
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+      }
+
+      .options-container.initial-options .option-button.toggle-button {
+        position: sticky;
+        right: 0;
+      }
+    }
+
+    @supports (height: 100dvh) {
+      html, body {
+        min-height: 100dvh;
+      }
+
+      .chat-container {
+        min-height: 100dvh;
+        height: 100dvh;
+      }
+
+      @media (max-width: 767px) {
+        .chat-container {
+          height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+        }
+      }
+    }
+
+    @media (min-width: 768px) {
+      body {
+        padding: 28px;
+      }
+
+      .chat-container {
+        height: 88vh;
+        max-height: 880px;
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-veil);
+      }
+    }
+
+    body[data-theme="light"] .chat-container {
+      background: rgba(250, 248, 242, 0.82);
+      border: 1px solid rgba(16, 16, 16, 0.05);
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.12);
+      backdrop-filter: blur(20px);
+    }
+
+    .header {
+      position: relative;
+      padding: 16px 32px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 38px;
+      flex-shrink: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 480px) {
+      .header {
+        padding: 18px 18px 16px;
+        gap: 12px;
+      }
+
+      .header-content {
+        gap: 12px;
+        min-width: 0;
+      }
+
+      .header-icon {
+        width: clamp(40px, 12vw, 48px);
+        height: clamp(40px, 12vw, 48px);
+        border-radius: clamp(16px, 6vw, 22px);
+      }
+
+      .header-titles {
+        gap: clamp(4px, 1.2vw, 8px);
+      }
+
+      .header-title {
+        font-size: clamp(16px, 4.8vw, 18px);
+        letter-spacing: clamp(0.08em, 0.3vw, 0.12em);
+      }
+
+      .header-actions {
+        gap: 4px;
+      }
+
+      .icon-button {
+        width: 32px;
+        height: 32px;
+      }
+
+      .language-select select {
+        padding: 6px 22px 6px 10px;
+        font-size: 10px;
+        letter-spacing: 0.05em;
+      }
+
+      .language-select::after {
+        right: 9px;
+        font-size: 10px;
+      }
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(197, 163, 79, 0.16), rgba(255, 255, 255, 0.02));
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* ← mueve icono a la izquierda y botones a la derecha */
+  width: 100%;
+}
+.header-icon {
+  margin-left: 0 !important; /* por si antes tenías negativos */
+}
+
+.header-actions {
+  flex-shrink: 0;   /* ← evita que aplaste el contenido */
+}
+
+
+    .header-icon {
+      width: clamp(44px, 6vw, 60px);
+      height: clamp(44px, 6vw, 60px);
+      border-radius: clamp(18px, 2vw, 26px);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header-icon::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      opacity: 0.45;
+      pointer-events: none;
+    }
+
+    body[data-theme="light"] .header-icon {
+  
+      color: #a22e32;
+    }
+
+    .header-titles {
+      display: flex;
+      align-items: center;
+      gap: clamp(6px, 1.4vw, 12px);
+    }
+
+    .header-title {
+        color:#1F3866;
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(6px, 1.4vw, 12px);
+      font-size: clamp(18px, 2.4vw, 24px);
+      letter-spacing: clamp(0.12em, 0.35vw, 0.22em);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .header-flag {
+      display: inline-flex;
+      align-items: center;
+      font-size: clamp(20px, 2.6vw, 28px);
+      line-height: 1;
+    }
+
+    .header-title-text {
+      white-space: nowrap;
+    }
+
+    .icon-button {
+      position: relative;
+      z-index: 1;
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(24, 24, 28, 0.7);
+      color: var(--color-accent-soft);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.4s var(--transition-soft), border-color 0.4s ease, color 0.4s ease, background 0.6s ease;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    .language-select {
+      position: relative;
+      z-index: 1;
+    }
+
+    .language-select select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background: rgba(24, 24, 28, 0.7);
+      color: rgba(245, 245, 245, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 16px;
+      padding: 10px 13px 10px 13px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: transform 0.35s var(--transition-soft), border-color 0.4s ease, background 0.6s ease, color 0.6s ease;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+      width: auto;
+      min-width: 0;
+      white-space: nowrap;
+    }
+
+    .language-select select:hover {
+      transform: translateY(-3px);
+      border-color: rgba(216, 187, 108, 0.45);
+      color: var(--color-ivory);
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.32);
+    }
+
+    .language-select select:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 3px;
+    }
+
+
+
+    .icon-button:hover {
+      transform: translateY(-3px);
+      border-color: rgba(216, 187, 108, 0.65);
+      color: var(--color-accent);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.38);
+    }
+
+    .icon-button:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 4px;
+    }
+
+    body[data-theme="light"] .icon-button {
+      background: rgba(255, 255, 255, 0.65);
+      border-color: rgba(16, 16, 16, 0.08);
+      color: #273e65;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+    }
+
+    body[data-theme="light"] .language-select select {
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--color-ink);
+      border-color: rgba(16, 16, 16, 0.08);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+    }
+
+    body[data-theme="light"] .language-select select:hover {
+      color: var(--color-ink);
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.12);
+    }
+
+    body[data-theme="light"] .language-select::after {
+      color: #8b6a1e;
+    }
+
+    .messages-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px 28px calc(110px + env(safe-area-inset-bottom, 0px));
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .messages-container::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .messages-container::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(197, 163, 79, 0.4), rgba(216, 187, 108, 0.25));
+      border-radius: 999px;
+    }
+
+    .floating-reset {
+      position: absolute;
+      bottom: calc(118px + env(safe-area-inset-bottom, 0px));
+      right: clamp(18px, 5vw, 28px);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(160deg, rgba(197, 163, 79, 0.2), rgba(19, 19, 22, 0.75));
+      border: 1px solid rgba(197, 163, 79, 0.38);
+      color: var(--color-accent-soft);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(12px);
+      cursor: pointer;
+      transition: transform 0.35s ease, background 0.45s ease, border-color 0.45s ease,
+        box-shadow 0.45s ease, color 0.4s ease;
+      z-index: 1000;
+    }
+
+    .floating-reset svg {
+      width: 24px;
+      height: 24px;
+      transition: transform 0.6s ease, filter 0.45s ease;
+    }
+
+    .floating-reset:hover {
+      transform: scale(1.08);
+      background: linear-gradient(160deg, rgba(216, 187, 108, 0.28), rgba(32, 32, 38, 0.85));
+      border-color: rgba(216, 187, 108, 0.6);
+      box-shadow: 0 24px 54px rgba(0, 0, 0, 0.45);
+      color: #f4e3b0;
+    }
+
+    .floating-reset:focus-visible {
+      outline: 2px solid var(--color-accent-soft);
+      outline-offset: 4px;
+    }
+
+    .floating-reset.spinning svg {
+      transform: rotate(-360deg);
+    }
+
+    body[data-theme="light"] .floating-reset {
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.88), rgba(197, 163, 79, 0.22));
+      border: 1px solid rgba(197, 163, 79, 0.4);
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.16);
+      color: #7a5d1a;
+    }
+
+    body[data-theme="light"] .floating-reset:hover {
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(216, 187, 108, 0.32));
+      border-color: rgba(216, 187, 108, 0.65);
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.2);
+      color: #5c4311;
+    }
+
+    @media (max-width: 480px) {
+      .floating-reset {
+        bottom: calc(102px + env(safe-area-inset-bottom, 0px));
+        left: 18px;
+        width: 48px;
+        height: 48px;
+      }
+    }
+
+    .message {
+      display: flex;
+      animation: messageReveal 0.6s var(--transition-soft) forwards;
+      opacity: 0;
+    }
+
+    .message.user {
+      justify-content: flex-end;
+    }
+
+    .message.assistant {
+      justify-content: flex-start;
+          flex-direction: column;
+    align-items: flex-start;
+    }
+
+    .message-bubble {
+      max-width: 82%;
+      padding: 18px 22px;
+      border-radius: var(--radius-lg);
+      font-size: 17px;
+      line-height: 1.75;
+      letter-spacing: 0.01em;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: transform 0.4s var(--transition-soft), box-shadow 0.5s ease, border-color 0.4s ease, background 0.6s ease, color 0.6s ease;
+      position: relative;
+    }
+
+    .message-bubble:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .message.assistant .message-bubble {
+      background: linear-gradient(160deg, rgba(30, 30, 34, 0.95), rgba(20, 20, 24, 0.92));
+      color: rgba(248, 248, 246, 0.92);
+      border-color: rgba(255, 255, 255, 0.06);
+      box-shadow: 0 26px 52px rgba(0, 0, 0, 0.45);
+    }
+
+    .message.user .message-bubble {
+      background: linear-gradient(160deg, rgba(248, 248, 246, 0.94), rgba(236, 234, 226, 0.9));
+      color: var(--color-ink);
+      border-color: rgba(197, 163, 79, 0.35);
+      box-shadow: 0 26px 48px rgba(0, 0, 0, 0.32);
+    }
+
+    body[data-theme="light"] .message.assistant .message-bubble {
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--color-ink);
+      border-color: rgba(16, 16, 16, 0.08);
+      box-shadow: 0 20px 36px rgba(0, 0, 0, 0.1);
+    }
+
+    body[data-theme="light"] .message.user .message-bubble {
+      background: linear-gradient(160deg, rgba(245, 243, 236, 0.96), rgba(255, 255, 255, 0.92));
+      border-color: rgba(197, 163, 79, 0.35);
+      color:#A12E32;
+    }
+
+    .typing-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 20px;
+      border-radius: var(--radius-md);
+      background: rgba(197, 163, 79, 0.16);
+      border: 1px solid rgba(197, 163, 79, 0.3);
+      box-shadow: 0 20px 32px rgba(0, 0, 0, 0.28);
+    }
+
+    .typing-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-accent-soft);
+      animation: typing 1.3s infinite;
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.6; }
+      30% { transform: translateY(-6px); opacity: 1; }
+    }
+
+    .options-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .options-container.initial-options {
+      position: relative;
+    }
+
+    .options-container.follow-up-options {
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .message.assistant .options-container.follow-up-options {
+      margin-top: 18px;
+    }
+
+    .option-button {
+      padding: 12px 20px;
+      border-radius: 999px;
+      background: rgba(28, 28, 32, 0.82);
+      color: rgba(245, 245, 245, 0.9);
+      border: 1px solid rgba(197, 163, 79, 0.22);
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.35s var(--transition-soft), background 0.5s ease, border-color 0.4s ease, color 0.4s ease;
+    }
+
+    .option-button:hover {
+      transform: translateY(-3px);
+      background: rgba(197, 163, 79, 0.22);
+      border-color: rgba(216, 187, 108, 0.45);
+      color: var(--color-ivory);
+      box-shadow: 0 22px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    .option-button.toggle-button {
+      flex: 0 0 auto;
+    }
+
+    body[data-theme="light"] .option-button {
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--color-ink);
+      border-color: rgba(197, 163, 79, 0.32);
+    }
+
+    body[data-theme="light"] .option-button:hover {
+      background: rgba(197, 163, 79, 0.28);
+      color: var(--color-ink);
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.12);
+    }
+
+    .input-container {
+      padding: 24px 26px;
+      padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+      display: flex;
+      gap: 16px;
+      align-items: center;
+
+      backdrop-filter: blur(20px);
+      transition: background 0.8s ease, border-color 0.6s ease;
+      flex-shrink: 0;
+    }
+
+
+
+    .input-wrapper {
+      flex: 1;
+      position: relative;
+    }
+
+    .message-input {
+      width: 100%;
+      padding: 16px 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(26, 26, 32, 0.75);
+      color: rgba(248, 248, 246, 0.92);
+      font-size: 16px;
+      letter-spacing: 0.02em;
+      outline: none;
+      transition: border-color 0.4s ease, background 0.5s ease, box-shadow 0.6s ease;
+    }
+
+    .message-input:focus {
+      border-color: rgba(216, 187, 108, 0.65);
+      background: rgba(26, 26, 32, 0.9);
+      box-shadow: 0 0 0 6px rgba(197, 163, 79, 0.18);
+    }
+
+    body[data-theme="light"] .message-input {
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      color: var(--color-ink);
+    }
+
+    .send-button {
+      width: 52px;
+      height: 52px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(26, 26, 30, 0.78);
+      color: var(--color-accent-soft);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.35s var(--transition-soft), background 0.6s ease, border-color 0.4s ease, box-shadow 0.6s ease, color 0.4s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .send-button:hover {
+      transform: translateY(-3px);
+    }
+
+    .send-button {
+      background: linear-gradient(135deg, var(--color-accent), var(--color-accent-soft));
+      border: 1px solid rgba(197, 163, 79, 0.65);
+      color: var(--color-ink);
+      box-shadow: 0 26px 50px rgba(197, 163, 79, 0.3);
+    }
+
+    .send-button:hover {
+      background: linear-gradient(135deg, var(--color-accent-soft), #e0c874);
+      border-color: rgba(216, 187, 108, 0.75);
+      box-shadow: 0 30px 60px rgba(197, 163, 79, 0.4);
+    }
+
+    .send-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    body[data-theme="light"] .send-button {
+      border-color: #A12E32;
+      background: #A12E32;
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12);
+    }
+
+    body[data-theme="light"] .send-button {
+      color: white;
+      background:#A12E32;
+      border-color: #A12E32;
+      box-shadow: 0 22px 42px rgba(197, 163, 79, 0.35);
+    }
+
+    .icon svg,
+    .header-icon svg {
+      display: block;
+    }
+
+    .welcome-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 48px 32px;
+      gap: 20px;
+      min-height: 100%;
+      animation: fadeIn 0.8s ease;
+    }
+
+    .welcome-icon {
+      width: 74px;
+      height: 74px;
+      border-radius: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 40% 30%, rgba(197, 163, 79, 0.45), transparent 70%);
+      color: var(--color-accent-soft);
+    }
+
+    .welcome-title {
+      font-family: var(--font-display);
+      font-size: 26px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .welcome-subtitle {
+      max-width: 320px;
+      color: rgba(245, 245, 245, 0.75);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    body[data-theme="light"] .welcome-subtitle {
+      color: rgba(24, 24, 24, 0.65);
+    }
+
+    .wine-image {
+      max-width: 220px;
+      border-radius: 24px;
+      margin-top: 12px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+      transition: transform 0.5s var(--transition-soft), box-shadow 0.6s ease;
+    }
+
+    .wine-image:hover {
+      transform: scale(1.04);
+      box-shadow: 0 36px 80px rgba(0, 0, 0, 0.4);
+    }
+
+    @media (max-width: 360px) {
+      .header {
+        padding: 16px 16px 14px;
+      }
+
+      .header-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 16px;
+      }
+
+      .header-title {
+        font-size: 15px;
+        letter-spacing: 0.08em;
+      }
+
+      .header-actions {
+        gap: 3px;
+      }
+
+      .icon-button {
+        width: 30px;
+        height: 30px;
+      }
+
+      .language-select select {
+        padding: 6px 20px 6px 8px;
+        font-size: 10px;
+      }
+
+      .language-select::after {
+        right: 8px;
+      }
+
+      .messages-container {
+        padding: 20px 18px;
+      }
+
+      .message-bubble {
+        max-width: 90%;
+        padding: 16px 18px;
+        font-size: 16px;
+      }
+
+      .input-container {
+        padding: 20px;
+      }
+
+      .message-input {
+        padding: 14px 20px;
+      }
+
+      .send-button {
+        width: 48px;
+        height: 48px;
+      }
+    }
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .chat-container {
+        max-width: 620px;
+        height: 86vh;
+      }
+    }
+
+    .wine-modal {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(5, 5, 7, 0.7);
+      backdrop-filter: blur(20px);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      color: var(--color-ivory);
+    }
+
+    body[data-theme="light"] .wine-modal {
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--color-ink);
+    }
+
+    .wine-modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .wine-card {
+      background: rgba(20, 20, 24, 0.95);
+      border-radius: var(--radius-lg);
+      padding: 36px 40px;
+      max-width: 460px;
+      width: min(90%, 460px);
+      box-shadow: var(--shadow-panel);
+      position: relative;
+      animation: fadeIn 0.6s ease;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    body[data-theme="light"] .wine-card {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.16);
+    }
+
+    .wine-card p {
+      margin: 12px 0;
+      line-height: 1.75;
+    }
+
+    .wine-card a {
+      color: var(--color-accent-soft);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .wine-card a:hover {
+      text-decoration: underline;
+    }
+
+    .wine-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      color: var(--color-accent-soft);
+    }
+
+    body[data-theme="light"] .wine-title {
+      color: #8b6a1e;
+    }
+
+    .wine-close {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--color-muted);
+      font-size: 24px;
+      cursor: pointer;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .wine-close:hover {
+      transform: scale(1.08);
+      color: var(--color-accent-soft);
+    }
+
+    .wine-name {
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 999px;
+      background: rgba(197, 163, 79, 0.16);
+      color: var(--color-accent-soft);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.4s ease, color 0.4s ease, transform 0.3s ease;
+    }
+
+    .wine-name:hover {
+      background: rgba(216, 187, 108, 0.28);
+      transform: translateY(-2px);
+    }
+
+    .wine-name:focus-visible {
+      outline: 2px solid var(--color-accent-soft);
+      outline-offset: 3px;
+    }
+
+    body[data-theme="light"] .wine-name {
+      background: rgba(197, 163, 79, 0.18);
+      color: #a22e32;
+    }
+
+    body[data-theme="light"] .wine-name:hover {
+      background: rgba(216, 187, 108, 0.3);
+    }
+
+    @keyframes messageReveal {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      body,
+      .chat-container,
+      .message,
+      .message-bubble,
+      .option-button,
+      .send-button,
+      .floating-reset,
+      .floating-reset svg {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+    
+    @supports (height: 100dvh) {
+  .chat-container {
+    height: 100dvh;
+    background-color: #0b0b0d; /* mismo color que --color-night */
+  }
+}
+
+html, body {
+  background-color: #0b0b0d; /* evita el fondo blanco detrás del teclado */
+  overscroll-behavior-y: contain; /* evita parpadeo blanco al hacer scroll */
+}
+
+@media (max-width: 768px) {
+  body {
+    background-color: #0b0b0d;
+  }
+}
+
+.header-titles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.header-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  opacity: 0.9;
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+}
+
+.header-title-text {
+  font-size: 22px;
+  letter-spacing: 0.18em;
+}
+
+.header-subtitle .flag {
+  font-size: 16px;
+}
+
+body[data-theme="light"] .header-subtitle {
+  color: #1F3866;
+}
+
+.powered-by {
+  text-align: center;
+  font-size: 10px;
+  opacity: 0.6;
+  margin-top: -6px;
+  margin-bottom: 14px;
+  font-family: var(--font-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.powered-logo {
+  height: 14px;
+  opacity: 0.8;
+}
+body[data-theme="light"] .message-input::placeholder {
+  color: #A12E32;
+}
+.input-zone {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+
+.input-zone .powered-by {
+  margin-top: -16px !important;  /* antes era ~14px */
+}
+
+
+  </style>
+  <base target="_blank">
+</head>
+<body>
+  <div class="chat-container">
+<header class="header">
+  <div class="header-content">
+
+    <!-- ICONO IZQUIERDA -->
+    <span class="header-icon" id="headerIcon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 22h8"></path>
+        <path d="M7 10h10"></path>
+        <path d="M12 15v7"></path>
+        <path d="M5 2h14l-1 6a7 7 0 0 1-12 0z"></path>
+      </svg>
+    </span>
+
+    <!-- TÍTULOS -->
+    <div class="header-titles">
+      <h1 class="header-title">
+        <span class="header-title-text">SOMMELIER</span>
+      </h1>
+
+      <div class="header-subtitle">
+        <span class="flag">🇫🇷</span>
+        <span class="subtitle-text">Vins de France</span>
+        <span class="flag">🇫🇷</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ACCIONES DERECHA -->
+  <div class="header-actions">
+    <button type="button" class="icon-button" id="themeToggle" aria-label="Changer de thème">
+      <span class="icon" id="themeIcon"></span>
+    </button>
+
+    <div class="language-select">
+      <label for="languageSelect" class="sr-only">Langue</label>
+      <select id="languageSelect">
+        <option value="fr">FR</option>
+        <option value="en">EN</option>
+        <option value="es">ES</option>
+        <option value="de">DE</option>
+        <option value="pt">PT</option>
+        <option value="pl">PL</option>
+        <option value="zh">ZH</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+
+    <main class="messages-container" id="messages"></main>
+
+    <button type="button" id="resetChatBtn" class="floating-reset" aria-label="Réinitialiser la conversation" style="display:none">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-refresh-ccw-icon lucide-refresh-ccw"
+      >
+        <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+        <path d="M3 3v5h5" />
+        <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+        <path d="M16 16h5v5" />
+      </svg>
+    </button>
+
+<div class="input-zone">
+  <form class="input-container" id="form">
+    <div class="input-wrapper">
+      <input
+        type="text"
+        id="input"
+        class="message-input"
+        placeholder="Demandez-moi un vin français..."
+        autocomplete="off"
+      />
+    </div>
+
+    <button type="submit" class="send-button" id="sendButton">
+      <span class="icon" id="sendIcon"></span>
+    </button>
+  </form>
+
+  <div class="powered-by">
+    Fait par <img src="logo.svg" alt="Logo" class="powered-logo">
+  </div>
+</div>
+
+
+  </div>
+
+  <!-- Carga de Lucide Icons -->
+    <script type="module">
+    import { createIcons, icons } from "https://cdn.jsdelivr.net/npm/lucide@latest/+esm";
+
+    const initialOptions = {
+      ES: {
+        lunch: "🍽️ Almuerzo",
+        dinner: "🍷 Cena",
+        aperitif: "🥂 Aperitivo",
+        special: "🎉 Ocasión especial",
+        more: "➕ Ver más",
+      },
+      EN: {
+        lunch: "🍽️ Lunch",
+        dinner: "🍷 Dinner",
+        aperitif: "🥂 Aperitif",
+        special: "🎉 Special occasion",
+        more: "➕ See more",
+      },
+      FR: {
+        lunch: "🍽️ Déjeuner",
+        dinner: "🍷 Dîner",
+        aperitif: "🥂 Apéritif",
+        special: "🎉 Occasion spéciale",
+        more: "➕ Voir plus",
+      },
+      ZH: {
+        lunch: "🍽️ 午餐",
+        dinner: "🍷 晚餐",
+        aperitif: "🥂 开胃酒",
+        special: "🎉 特别场合",
+        more: "➕ 更多",
+      },
+      DE: {
+        lunch: "🍽️ Mittagessen",
+        dinner: "🍷 Abendessen",
+        aperitif: "🥂 Aperitif",
+        special: "🎉 Besonderer Anlass",
+        more: "➕ Mehr anzeigen",
+      },
+      PL: {
+        lunch: "🍽️ Obiad",
+        dinner: "🍷 Kolacja",
+        aperitif: "🥂 Aperitif",
+        special: "🎉 Wyjątkowa okazja",
+        more: "➕ Pokaż więcej",
+      },
+      PT: {
+        lunch: "🍽️ Almoço",
+        dinner: "🍷 Jantar",
+        aperitif: "🥂 Aperitivo",
+        special: "🎉 Ocasião especial",
+        more: "➕ Ver mais",
+      },
+    };
+
+    const extendedOptions = {
+      ES: {
+        brunch: "🌅 Brunch elegante",
+        picnic: "🌄 Picnic campestre",
+        friends: "🔥 Noche entre amigos",
+        terrace: "🌙 Cena en terraza",
+        music: "🎶 Degustación con música",
+        autumn: "🍁 Comida de otoño",
+        seaside: "⛱️ Vacaciones junto al mar",
+        cozy: "🏠 Noche acogedora",
+        surprise: "🎁 Sorpréndeme",
+      },
+      EN: {
+        brunch: "🌅 Elegant brunch",
+        picnic: "🌄 Country picnic",
+        friends: "🔥 Night with friends",
+        terrace: "🌙 Dinner on terrace",
+        music: "🎶 Musical tasting",
+        autumn: "🍁 Autumn meal",
+        seaside: "⛱️ Seaside holidays",
+        cozy: "🏠 Cozy night",
+        surprise: "🎁 Surprise me",
+      },
+      FR: {
+        brunch: "🌅 Brunch élégant",
+        picnic: "🌄 Pique-nique champêtre",
+        friends: "🔥 Soirée entre amis",
+        terrace: "🌙 Dîner en terrasse",
+        music: "🎶 Dégustation musicale",
+        autumn: "🍁 Repas d’automne",
+        seaside: "⛱️ Vacances au bord de mer",
+        cozy: "🏠 Soir cocooning",
+        surprise: "🎁 Surprends-moi",
+      },
+      ZH: {
+        brunch: "🌅 优雅早午餐",
+        picnic: "🌄 田园野餐",
+        friends: "🔥 朋友聚会",
+        terrace: "🌙 露台晚餐",
+        music: "🎶 音乐品酒",
+        autumn: "🍁 秋季餐点",
+        seaside: "⛱️ 海边度假",
+        cozy: "🏠 温馨夜晚",
+        surprise: "🎁 给我惊喜",
+      },
+      DE: {
+        brunch: "🌅 Eleganter Brunch",
+        picnic: "🌄 Picknick im Grünen",
+        friends: "🔥 Abend mit Freunden",
+        terrace: "🌙 Abendessen auf der Terrasse",
+        music: "🎶 Degustation mit Musik",
+        autumn: "🍁 Herbstliches Essen",
+        seaside: "⛱️ Urlaub am Meer",
+        cozy: "🏠 Gemütlicher Abend",
+        surprise: "🎁 Überrasch mich",
+      },
+      PL: {
+        brunch: "🌅 Elegancki brunch",
+        picnic: "🌄 Piknik na świeżym powietrzu",
+        friends: "🔥 Wieczór ze znajomymi",
+        terrace: "🌙 Kolacja na tarasie",
+        music: "🎶 Degustacja z muzyką",
+        autumn: "🍁 Jesienny posiłek",
+        seaside: "⛱️ Wakacje nad morzem",
+        cozy: "🏠 Przytulny wieczór",
+        surprise: "🎁 Zaskocz mnie",
+      },
+      PT: {
+        brunch: "🌅 Brunch elegante",
+        picnic: "🌄 Piquenique no campo",
+        friends: "🔥 Noite com amigos",
+        terrace: "🌙 Jantar no terraço",
+        music: "🎶 Degustação com música",
+        autumn: "🍁 Refeição de outono",
+        seaside: "⛱️ Férias à beira-mar",
+        cozy: "🏠 Noite aconchegante",
+        surprise: "🎁 Surpreenda-me",
+      },
+    };
+
+    const extendedOccasionPrompts = {
+      ES: {
+        brunch: "Recomiéndame un vino francés para un brunch elegante.",
+        picnic: "Sugiere un vino francés ideal para un picnic campestre.",
+        friends: "Quiero un vino francés para una noche entre amigos.",
+        terrace: "Recomiéndame un vino francés para una cena en terraza.",
+        music: "Sugiere un vino francés para una degustación con música.",
+        autumn: "Recomiéndame un vino francés para una comida de otoño.",
+        seaside: "Sugiere un vino francés para vacaciones junto al mar.",
+        cozy: "Quiero un vino francés para una noche acogedora.",
+      },
+      EN: {
+        brunch: "Recommend a French wine for an elegant brunch.",
+        picnic: "Suggest a French wine for a country picnic.",
+        friends: "Recommend a French wine for a night with friends.",
+        terrace: "Suggest a French wine for dinner on the terrace.",
+        music: "Recommend a French wine for a tasting with music.",
+        autumn: "Suggest a French wine for an autumn meal.",
+        seaside: "Recommend a French wine for seaside holidays.",
+        cozy: "Suggest a French wine for a cozy night.",
+      },
+      FR: {
+        brunch: "Recommande-moi un vin français pour un brunch élégant.",
+        picnic: "Suggère un vin français pour un pique-nique champêtre.",
+        friends: "Je veux un vin français pour une soirée entre amis.",
+        terrace: "Propose un vin français pour un dîner en terrasse.",
+        music: "Suggère un vin français pour une dégustation musicale.",
+        autumn: "Recommande un vin français pour un repas d’automne.",
+        seaside: "Suggère un vin français pour des vacances au bord de mer.",
+        cozy: "Je cherche un vin français pour une soirée cocooning.",
+      },
+      ZH: {
+        brunch: "请为优雅的早午餐推荐一款法国葡萄酒。",
+        picnic: "请推荐一款适合田园野餐的法国葡萄酒。",
+        friends: "请推荐一款适合朋友聚会的法国葡萄酒。",
+        terrace: "请推荐一款适合露台晚餐的法国葡萄酒。",
+        music: "请推荐一款适合音乐品酒的法国葡萄酒。",
+        autumn: "请推荐一款适合秋季餐点的法国葡萄酒。",
+        seaside: "请推荐一款适合海边度假的法国葡萄酒。",
+        cozy: "请推荐一款适合温馨夜晚的法国葡萄酒。",
+      },
+      DE: {
+        brunch: "Empfiehl mir einen französischen Wein für einen eleganten Brunch.",
+        picnic: "Schlage einen französischen Wein für ein Picknick im Grünen vor.",
+        friends: "Ich suche einen französischen Wein für einen Abend mit Freunden.",
+        terrace: "Empfiehl mir einen französischen Wein für ein Abendessen auf der Terrasse.",
+        music: "Schlage einen französischen Wein für eine Degustation mit Musik vor.",
+        autumn: "Empfiehl mir einen französischen Wein für ein herbstliches Essen.",
+        seaside: "Schlage einen französischen Wein für Urlaub am Meer vor.",
+        cozy: "Ich möchte einen französischen Wein für einen gemütlichen Abend.",
+      },
+      PL: {
+        brunch: "Poleć mi francuskie wino na elegancki brunch.",
+        picnic: "Zaproponuj francuskie wino na piknik na świeżym powietrzu.",
+        friends: "Potrzebuję francuskiego wina na wieczór ze znajomymi.",
+        terrace: "Poleć francuskie wino na kolację na tarasie.",
+        music: "Zaproponuj francuskie wino na degustację z muzyką.",
+        autumn: "Poleć francuskie wino na jesienny posiłek.",
+        seaside: "Zaproponuj francuskie wino na wakacje nad morzem.",
+        cozy: "Szukam francuskiego wina na przytulny wieczór.",
+      },
+      PT: {
+        brunch: "Recomende um vinho francês para um brunch elegante.",
+        picnic: "Sugira um vinho francês para um piquenique no campo.",
+        friends: "Quero um vinho francês para uma noite com amigos.",
+        terrace: "Indique um vinho francês para um jantar no terraço.",
+        music: "Sugira um vinho francês para uma degustação com música.",
+        autumn: "Recomende um vinho francês para uma refeição de outono.",
+        seaside: "Sugira um vinho francês para férias à beira-mar.",
+        cozy: "Quero um vinho francês para uma noite aconchegante.",
+      },
+    };
+
+    const seeLessLabels = {
+      ES: "Ver menos",
+      EN: "See less",
+      FR: "Voir moins",
+      ZH: "收起",
+      DE: "Weniger anzeigen",
+      PL: "Pokaż mniej",
+      PT: "Ver menos",
+    };
+
+    const LANGUAGE_TO_OPTION_LANG = {
+      en: "EN",
+      es: "ES",
+      fr: "FR",
+      de: "DE",
+      pt: "PT",
+      pl: "PL",
+      zh: "ZH",
+    };
+
+    const BASE_OCCASION_KEYS = ["lunch", "dinner", "aperitif", "special"];
+
+    // Cada idioma define su propio systemPrompt dentro de TRANSLATIONS.
+
+    const TRANSLATIONS = {
+      en: {
+        htmlLang: "en",
+        title: "French Wine Sommelier · Tomos.bot",
+        headerTitle: "Sommelier",
+        placeholder: "Ask me for a French wine...",
+        themeToggle: {
+          toLight: "Switch back to light mode",
+          toDark: "Enable dark mode",
+        },
+        languageSelectorLabel: "Select language",
+        welcome: {
+          title: "Welcome to your Virtual Sommelier!",
+          subtitle: "Discover remarkable French wines for every occasion.",
+        },
+        initialQuestion: "For which occasion would you like a recommendation?",
+        initialOptions: {
+          lunch: "🍽️ Lunch",
+          dinner: "🍷 Dinner",
+          aperitif: "🥂 Aperitif",
+          special: "🎉 Special occasion",
+        },
+        prompts: {
+          aperitif: "Suggest a French wine for an aperitif.",
+        },
+        mealQuestion: (mealLabel) =>
+          `Perfect for ${mealLabel}, what kind of dish will you serve?`,
+        mealTypes: {
+          lunch: "lunch",
+          dinner: "dinner",
+        },
+        mealOptions: {
+          redMeat: {
+            label: "🥩 Red meats",
+            prompt: (mealLabel) =>
+              `Suggest a French wine to pair with red meats for ${mealLabel}.`,
+          },
+          fish: {
+            label: "🐟 Fish",
+            prompt: (mealLabel) =>
+              `Suggest a French wine to pair with fish during ${mealLabel}.`,
+          },
+          pasta: {
+            label: "🍝 Pasta",
+            prompt: (mealLabel) =>
+              `Suggest a French wine to pair with pasta for ${mealLabel}.`,
+          },
+          salad: {
+            label: "🥗 Salads",
+            prompt: (mealLabel) =>
+              `Suggest a French wine to pair with salads at ${mealLabel}.`,
+          },
+        },
+        specialQuestion:
+          "Wonderful! What kind of special occasion would you like advice for?",
+        specialOptions: {
+          birthday: {
+            label: "🎂 Birthday",
+            prompt: "Suggest an exceptional French wine for a birthday.",
+          },
+          romantic: {
+            label: "💕 Romantic dinner",
+            prompt: "Suggest a French wine for a romantic dinner.",
+          },
+          gift: {
+            label: "🎁 Gift",
+            prompt: "Suggest a memorable French wine to give as a gift.",
+          },
+          celebration: {
+            label: "🏆 Grand celebration",
+            prompt: "Suggest a prestigious French wine for a grand celebration.",
+          },
+        },
+        followUps: {
+          general: [],
+          occasion: [],
+          pairing: [],
+          profile: [],
+          region: [],
+        },
+        errorMessages: {
+          network:
+            "I'm sorry, an error occurred while connecting to the server. Please try again.",
+          fetch: "Error while retrieving the response.",
+        },
+        vivino: "View on Vivino →",
+        modalAriaLabel: (wineName) => `Tasting details for ${wineName}`,
+        modalCloseAria: "Close the wine sheet",
+        modalLabels: {
+          region: "Region",
+          cepage: "Grape",
+          aromes: "Aromas",
+          bouche: "Palate",
+          temperature: "Serving temperature",
+          prix: "Average price",
+        },
+        modalSeparator: ":",
+        modalSeparatorTrailingSpace: " ",
+        genericWineProfile: {
+          region: "France",
+          cepage: "Traditional blend",
+          aromes: "ripe fruit, floral notes, hint of spice",
+          bouche: "balanced, harmonious finish",
+          temperature: "Serve between 10 and 18 °C depending on the style",
+          prix: "Check Vivino for pricing",
+        },
+        wineDetails: {
+          "Château Margaux": {
+            region: "Bordeaux",
+            cepage: "Cabernet Sauvignon, Merlot",
+            aromes: "blackcurrant, violet, noble oak",
+            bouche: "silky tannins, elegant texture",
+            temperature: "16-18 °C",
+            prix: "~€250",
+          },
+          "Chablis Premier Cru": {
+            region: "Burgundy",
+            cepage: "Chardonnay",
+            aromes: "citrus, white blossom, flint",
+            bouche: "lively, mineral, saline finish",
+            temperature: "10-12 °C",
+            prix: "~€35",
+          },
+          "Côtes du Rhône": {
+            region: "Rhône Valley",
+            cepage: "Grenache, Syrah, Mourvèdre",
+            aromes: "dark fruits, sweet spices, garrigue herbs",
+            bouche: "generous, ample, supple tannins",
+            temperature: "15-17 °C",
+            prix: "~€18",
+          },
+          "Champagne Brut": {
+            region: "Champagne",
+            cepage: "Pinot Noir, Chardonnay, Meunier",
+            aromes: "green apple, brioche, citrus",
+            bouche: "fine bubbles, vibrant freshness",
+            temperature: "8-10 °C",
+            prix: "~€40",
+          },
+          "Rosé de Provence": {
+            region: "Provence",
+            cepage: "Grenache, Cinsault, Syrah",
+            aromes: "fresh red berries, white peach, herbs",
+            bouche: "light, refreshing, delicate finish",
+            temperature: "8-10 °C",
+            prix: "~€15",
+          },
+        },
+        systemPrompt: "",
+      },
+      es: {
+        htmlLang: "es",
+        title: "sommelier de Vinos Franceses · Tomos.bot",
+        headerTitle: "Sommelier",
+        placeholder: "Pregúntame por un vino francés...",
+        themeToggle: {
+          toLight: "Volver al modo claro",
+          toDark: "Activar el modo oscuro",
+        },
+        languageSelectorLabel: "Seleccionar idioma",
+        welcome: {
+          title: "¡Bienvenido a tu sommelier Virtual!",
+          subtitle: "Descubre grandes vinos franceses para cada ocasión.",
+        },
+        initialQuestion: "¿Para qué ocasión te gustaría una recomendación?",
+        initialOptions: {
+          lunch: "🍽️ Almuerzo",
+          dinner: "🍷 Cena",
+          aperitif: "🥂 Aperitivo",
+          special: "🎉 Ocasión especial",
+        },
+        prompts: {
+          aperitif: "Sugiéreme un vino francés para un aperitivo.",
+        },
+        mealQuestion: (mealLabel) =>
+          `Perfecto para el ${mealLabel}, ¿qué tipo de plato vas a servir?`,
+        mealTypes: {
+          lunch: "almuerzo",
+          dinner: "cena",
+        },
+        mealOptions: {
+          redMeat: {
+            label: "🥩 Carnes rojas",
+            prompt: (mealLabel) =>
+              `Sugiéreme un vino francés para acompañar carnes rojas durante el ${mealLabel}.`,
+          },
+          fish: {
+            label: "🐟 Pescados",
+            prompt: (mealLabel) =>
+              `Sugiéreme un vino francés para acompañar pescados durante el ${mealLabel}.`,
+          },
+          pasta: {
+            label: "🍝 Pastas",
+            prompt: (mealLabel) =>
+              `Sugiéreme un vino francés para acompañar pastas durante el ${mealLabel}.`,
+          },
+          salad: {
+            label: "🥗 Ensaladas",
+            prompt: (mealLabel) =>
+              `Sugiéreme un vino francés para acompañar ensaladas durante el ${mealLabel}.`,
+          },
+        },
+        specialQuestion:
+          "¡Magnífico! ¿Para qué tipo de ocasión especial deseas un consejo?",
+        specialOptions: {
+          birthday: {
+            label: "🎂 Cumpleaños",
+            prompt: "Sugiéreme un vino francés excepcional para un cumpleaños.",
+          },
+          romantic: {
+            label: "💕 Cena romántica",
+            prompt: "Sugiéreme un vino francés para una cena romántica.",
+          },
+          gift: {
+            label: "🎁 Regalo",
+            prompt: "Sugiéreme un vino francés memorable para regalar.",
+          },
+          celebration: {
+            label: "🏆 Gran celebración",
+            prompt: "Sugiéreme un vino francés prestigioso para una gran celebración.",
+          },
+        },
+        followUps: {
+          general: [],
+          occasion: [],
+          pairing: [],
+          profile: [],
+          region: [],
+        },
+        errorMessages: {
+          network:
+            "Lo siento, se produjo un error al conectar con el servidor. Inténtalo de nuevo.",
+          fetch: "Error al recuperar la respuesta.",
+        },
+        vivino: "Ver en Vivino →",
+        modalAriaLabel: (wineName) => `Detalles de cata de ${wineName}`,
+        modalCloseAria: "Cerrar la ficha del vino",
+        modalLabels: {
+          region: "Región",
+          cepage: "Uva",
+          aromes: "Aromas",
+          bouche: "Boca",
+          temperature: "Temperatura de servicio",
+          prix: "Precio medio",
+        },
+        modalSeparator: ":",
+        modalSeparatorTrailingSpace: " ",
+        genericWineProfile: {
+          region: "Francia",
+          cepage: "Ensamblaje tradicional",
+          aromes: "frutas maduras, notas florales y un toque de especias",
+          bouche: "equilibrado, final armonioso",
+          temperature: "Servir entre 10 y 18 °C según el estilo",
+          prix: "Consulta Vivino para conocer los precios",
+        },
+        wineDetails: {
+          "Château Margaux": {
+            region: "Burdeos",
+            cepage: "Cabernet Sauvignon, Merlot",
+            aromes: "grosella negra, violeta, roble noble",
+            bouche: "taninos sedosos, textura elegante",
+            temperature: "16-18 °C",
+            prix: "~€250",
+          },
+          "Chablis Premier Cru": {
+            region: "Borgoña",
+            cepage: "Chardonnay",
+            aromes: "cítricos, flor blanca, pedernal",
+            bouche: "vivo, mineral, final salino",
+            temperature: "10-12 °C",
+            prix: "~€35",
+          },
+          "Côtes du Rhône": {
+            region: "Valle del Ródano",
+            cepage: "Garnacha, Syrah, Mourvèdre",
+            aromes: "frutos negros, especias dulces, garriga",
+            bouche: "goloso, amplio, taninos suaves",
+            temperature: "15-17 °C",
+            prix: "~€18",
+          },
+          "Champagne Brut": {
+            region: "Champagne",
+            cepage: "Pinot Noir, Chardonnay, Meunier",
+            aromes: "manzana verde, brioche, cítricos",
+            bouche: "burbujas finas, frescura tónica",
+            temperature: "8-10 °C",
+            prix: "~€40",
+          },
+          "Rosé de Provence": {
+            region: "Provenza",
+            cepage: "Garnacha, Cinsault, Syrah",
+            aromes: "frutos rojos frescos, melocotón blanco, hierbas",
+            bouche: "ligero, refrescante, final delicado",
+            temperature: "8-10 °C",
+            prix: "~€15",
+          },
+        },
+        systemPrompt: "",
+      },
+      fr: {
+        htmlLang: "fr",
+        title: "Sommelier de Vins Français · Tomos.bot",
+        headerTitle: "Sommelier",
+        placeholder: "Demandez-moi un vin français...",
+        themeToggle: {
+          toLight: "Revenir au mode clair",
+          toDark: "Activer le mode nuit",
+        },
+        languageSelectorLabel: "Sélectionner la langue",
+        welcome: {
+          title: "Bienvenue auprès de votre Sommelier Virtuel !",
+          subtitle: "Découvrez les plus grands vins français pour chaque occasion.",
+        },
+        initialQuestion: "Pour quelle occasion souhaitez-vous une recommandation ?",
+        initialOptions: {
+          lunch: "🍽️ Déjeuner",
+          dinner: "🍷 Dîner",
+          aperitif: "🥂 Apéritif",
+          special: "🎉 Occasion spéciale",
+        },
+        prompts: {
+          aperitif: "Suggère-moi un vin français pour un apéritif.",
+        },
+        mealQuestion: (mealLabel) =>
+          `Parfait pour le ${mealLabel}, quel type de plat servirez-vous ?`,
+        mealTypes: {
+          lunch: "déjeuner",
+          dinner: "dîner",
+        },
+        mealOptions: {
+          redMeat: {
+            label: "🥩 Viandes rouges",
+            prompt: (mealLabel) =>
+              `Suggère-moi un vin français pour accompagner des viandes rouges lors du ${mealLabel}.`,
+          },
+          fish: {
+            label: "🐟 Poissons",
+            prompt: (mealLabel) =>
+              `Suggère-moi un vin français pour accompagner des poissons lors du ${mealLabel}.`,
+          },
+          pasta: {
+            label: "🍝 Pâtes",
+            prompt: (mealLabel) =>
+              `Suggère-moi un vin français pour accompagner des pâtes lors du ${mealLabel}.`,
+          },
+          salad: {
+            label: "🥗 Salades",
+            prompt: (mealLabel) =>
+              `Suggère-moi un vin français pour accompagner des salades lors du ${mealLabel}.`,
+          },
+        },
+        specialQuestion:
+          "Magnifique ! Pour quel type d'occasion spéciale souhaitez-vous être conseillé ?",
+        specialOptions: {
+          birthday: {
+            label: "🎂 Anniversaire",
+            prompt: "Suggère-moi un vin français d'exception pour un anniversaire.",
+          },
+          romantic: {
+            label: "💕 Dîner romantique",
+            prompt: "Suggère-moi un vin français pour un dîner romantique.",
+          },
+          gift: {
+            label: "🎁 Cadeau",
+            prompt: "Suggère-moi un vin français mémorable à offrir.",
+          },
+          celebration: {
+            label: "🏆 Grande célébration",
+            prompt: "Suggère-moi un vin français prestigieux pour une grande célébration.",
+          },
+        },
+        followUps: {
+          general: [],
+          occasion: [],
+          pairing: [],
+          profile: [],
+          region: [],
+        },
+        errorMessages: {
+          network:
+            "Je suis désolé, une erreur est survenue lors de la connexion au serveur. Veuillez réessayer.",
+          fetch: "Erreur lors de la récupération de la réponse.",
+        },
+        vivino: "Voir sur Vivino →",
+        modalAriaLabel: (wineName) => `Détails de dégustation pour ${wineName}`,
+        modalCloseAria: "Fermer la fiche du vin",
+        modalLabels: {
+          region: "Région",
+          cepage: "Cépage",
+          aromes: "Arômes",
+          bouche: "Bouche",
+          temperature: "Température",
+          prix: "Prix moyen",
+        },
+        modalSeparator: " :",
+        modalSeparatorTrailingSpace: " ",
+        genericWineProfile: {
+          region: "France",
+          cepage: "Assemblage traditionnel",
+          aromes: "fruits mûrs, notes florales et touche d'épices",
+          bouche: "équilibrée, finale harmonieuse",
+          temperature: "Servir entre 10 et 18 °C selon le style",
+          prix: "Consultez Vivino pour les prix",
+        },
+        wineDetails: {
+          "Château Margaux": {
+            region: "Bordeaux",
+            cepage: "Cabernet Sauvignon, Merlot",
+            aromes: "cassis, violette, bois noble",
+            bouche: "tanins soyeux, texture élégante",
+            temperature: "16-18 °C",
+            prix: "~250 €",
+          },
+          "Chablis Premier Cru": {
+            region: "Bourgogne",
+            cepage: "Chardonnay",
+            aromes: "agrumes, fleur blanche, pierre à fusil",
+            bouche: "vif, minéral, finale saline",
+            temperature: "10-12 °C",
+            prix: "~35 €",
+          },
+          "Côtes du Rhône": {
+            region: "Vallée du Rhône",
+            cepage: "Grenache, Syrah, Mourvèdre",
+            aromes: "fruits noirs, épices douces, garrigue",
+            bouche: "gourmand, ample, tanins souples",
+            temperature: "15-17 °C",
+            prix: "~18 €",
+          },
+          "Champagne Brut": {
+            region: "Champagne",
+            cepage: "Pinot Noir, Chardonnay, Meunier",
+            aromes: "pomme verte, brioche, agrumes",
+            bouche: "bulles fines, fraîcheur tonique",
+            temperature: "8-10 °C",
+            prix: "~40 €",
+          },
+          "Rosé de Provence": {
+            region: "Provence",
+            cepage: "Grenache, Cinsault, Syrah",
+            aromes: "fruits rouges frais, pêche blanche, herbes",
+            bouche: "léger, désaltérant, finale délicate",
+            temperature: "8-10 °C",
+            prix: "~15 €",
+          },
+        },
+        systemPrompt: "",
+      },
+      de: {
+        htmlLang: "de",
+        title: "Französischer Weinsommelier · Tomos.bot",
+        headerTitle: "Sommelier",
+        placeholder: "Frag mich nach einem französischen Wein...",
+        themeToggle: {
+          toLight: "Zurück zum hellen Modus wechseln",
+          toDark: "Dunkelmodus aktivieren",
+        },
+        languageSelectorLabel: "Sprache auswählen",
+        welcome: {
+          title: "Willkommen bei deinem virtuellen Sommelier!",
+          subtitle: "Entdecke bemerkenswerte französische Weine für jeden Anlass.",
+        },
+        initialQuestion: "Für welchen Anlass hättest du gern eine Empfehlung?",
+        initialOptions: {
+          lunch: "🍽️ Mittagessen",
+          dinner: "🍷 Abendessen",
+          aperitif: "🥂 Aperitif",
+          special: "🎉 Besonderer Anlass",
+        },
+        prompts: {
+          aperitif: "Empfiehl mir einen französischen Wein für einen Aperitif.",
+        },
+        mealQuestion: (mealLabel) =>
+          `Perfekt für ${mealLabel}, welches Gericht wirst du servieren?`,
+        mealTypes: {
+          lunch: "Mittagessen",
+          dinner: "Abendessen",
+        },
+        mealOptions: {
+          redMeat: {
+            label: "🥩 Rotes Fleisch",
+            prompt: (mealLabel) =>
+              `Empfiehl einen französischen Wein, der zu rotem Fleisch beim ${mealLabel} passt.`,
+          },
+          fish: {
+            label: "🐟 Fisch",
+            prompt: (mealLabel) =>
+              `Empfiehl einen französischen Wein, der zu Fisch beim ${mealLabel} passt.`,
+          },
+          pasta: {
+            label: "🍝 Pasta",
+            prompt: (mealLabel) =>
+              `Empfiehl einen französischen Wein, der zu Pasta beim ${mealLabel} passt.`,
+          },
+          salad: {
+            label: "🥗 Salate",
+            prompt: (mealLabel) =>
+              `Empfiehl einen französischen Wein, der zu Salaten beim ${mealLabel} passt.`,
+          },
+        },
+        specialQuestion:
+          "Großartig! Für welche Art von besonderem Anlass hättest du gern einen Rat?",
+        specialOptions: {
+          birthday: {
+            label: "🎂 Geburtstag",
+            prompt: "Empfiehl einen außergewöhnlichen französischen Wein für einen Geburtstag.",
+          },
+          romantic: {
+            label: "💕 Romantisches Dinner",
+            prompt: "Empfiehl einen französischen Wein für ein romantisches Dinner.",
+          },
+          gift: {
+            label: "🎁 Geschenk",
+            prompt: "Empfiehl einen unvergesslichen französischen Wein zum Verschenken.",
+          },
+          celebration: {
+            label: "🏆 Große Feier",
+            prompt: "Empfiehl einen prestigeträchtigen französischen Wein für eine große Feier.",
+          },
+        },
+        errorMessages: {
+          network:
+            "Es tut mir leid, beim Verbinden mit dem Server ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+          fetch: "Fehler beim Abrufen der Antwort.",
+        },
+        vivino: "Auf Vivino ansehen →",
+        modalAriaLabel: (wineName) => `Verkostungsnotizen für ${wineName}`,
+        modalCloseAria: "Weinkarte schließen",
+        modalLabels: {
+          region: "Region",
+          cepage: "Rebsorte",
+          aromes: "Aromen",
+          bouche: "Gaumen",
+          temperature: "Serviertemperatur",
+          prix: "Durchschnittspreis",
+        },
+        modalSeparator: ":",
+        modalSeparatorTrailingSpace: " ",
+        genericWineProfile: {
+          region: "Frankreich",
+          cepage: "Traditionelle Cuvée",
+          aromes: "reife Frucht, florale Noten, Hauch von Gewürz",
+          bouche: "ausgewogen, harmonischer Abgang",
+          temperature: "Je nach Stil zwischen 10 und 18 °C servieren",
+          prix: "Preise auf Vivino prüfen",
+        },
+        wineDetails: {
+          "Château Margaux": {
+            region: "Bordeaux",
+            cepage: "Cabernet Sauvignon, Merlot",
+            aromes: "schwarze Johannisbeere, Veilchen, edles Eichenholz",
+            bouche: "seidige Tannine, elegante Textur",
+            temperature: "16-18 °C",
+            prix: "~€250",
+          },
+          "Chablis Premier Cru": {
+            region: "Burgund",
+            cepage: "Chardonnay",
+            aromes: "Zitrus, weiße Blüte, Feuerstein",
+            bouche: "lebhaft, mineralisch, salziger Abgang",
+            temperature: "10-12 °C",
+            prix: "~€35",
+          },
+          "Côtes du Rhône": {
+            region: "Rhône-Tal",
+            cepage: "Grenache, Syrah, Mourvèdre",
+            aromes: "dunkle Früchte, süße Gewürze, Kräuter der Garrigue",
+            bouche: "generös, vollmundig, geschmeidige Tannine",
+            temperature: "15-17 °C",
+            prix: "~€18",
+          },
+          "Champagne Brut": {
+            region: "Champagne",
+            cepage: "Pinot Noir, Chardonnay, Meunier",
+            aromes: "grüner Apfel, Brioche, Zitrus",
+            bouche: "feine Perlage, lebendige Frische",
+            temperature: "8-10 °C",
+            prix: "~€40",
+          },
+          "Rosé de Provence": {
+            region: "Provence",
+            cepage: "Grenache, Cinsault, Syrah",
+            aromes: "frische rote Beeren, weißer Pfirsich, Kräuter",
+            bouche: "leicht, erfrischend, zarter Abgang",
+            temperature: "8-10 °C",
+            prix: "~€15",
+          },
+        },
+        systemPrompt: "",
+      },
+      pt: {
+        htmlLang: "pt",
+        title: "Sommelier de Vinhos Franceses · Tomos.bot",
+        headerTitle: "Sommelier",
+        placeholder: "Peça-me um vinho francês...",
+        themeToggle: {
+          toLight: "Voltar ao modo claro",
+          toDark: "Ativar o modo escuro",
+        },
+        languageSelectorLabel: "Selecionar idioma",
+        welcome: {
+          title: "Bem-vindo ao seu Sommelier Virtual!",
+          subtitle: "Descubra grandes vinhos franceses para cada ocasião.",
+        },
+        initialQuestion: "Para qual ocasião você deseja uma recomendação?",
+        initialOptions: {
+          lunch: "🍽️ Almoço",
+          dinner: "🍷 Jantar",
+          aperitif: "🥂 Aperitivo",
+          special: "🎉 Ocasião especial",
+        },
+        prompts: {
+          aperitif: "Indique um vinho francês para um aperitivo.",
+        },
+        mealQuestion: (mealLabel) =>
+          `Perfeito para o ${mealLabel}, que tipo de prato será servido?`,
+        mealTypes: {
+          lunch: "almoço",
+          dinner: "jantar",
+        },
+        mealOptions: {
+          redMeat: {
+            label: "🥩 Carnes vermelhas",
+            prompt: (mealLabel) =>
+              `Indique um vinho francês para harmonizar com carnes vermelhas durante o ${mealLabel}.`,
+          },
+          fish: {
+            label: "🐟 Peixes",
+            prompt: (mealLabel) =>
+              `Indique um vinho francês para acompanhar peixes no ${mealLabel}.`,
+          },
+          pasta: {
+            label: "🍝 Massas",
+            prompt: (mealLabel) =>
+              `Indique um vinho francês para harmonizar com massas no ${mealLabel}.`,
+          },
+          salad: {
+            label: "🥗 Saladas",
+            prompt: (mealLabel) =>
+              `Indique um vinho francês para acompanhar saladas no ${mealLabel}.`,
+          },
+        },
+        specialQuestion:
+          "Magnífico! Para qual tipo de ocasião especial você deseja um conselho?",
+        specialOptions: {
+          birthday: {
+            label: "🎂 Aniversário",
+            prompt: "Indique um vinho francês excepcional para um aniversário.",
+          },
+          romantic: {
+            label: "💕 Jantar romântico",
+            prompt: "Indique um vinho francês para um jantar romântico.",
+          },
+          gift: {
+            label: "🎁 Presente",
+            prompt: "Indique um vinho francês memorável para presentear.",
+          },
+          celebration: {
+            label: "🏆 Grande celebração",
+            prompt: "Indique um vinho francês prestigioso para uma grande celebração.",
+          },
+        },
+        errorMessages: {
+          network:
+            "Desculpe, ocorreu um erro ao conectar ao servidor. Tente novamente.",
+          fetch: "Erro ao obter a resposta.",
+        },
+        vivino: "Ver no Vivino →",
+        modalAriaLabel: (wineName) => `Detalhes de degustação de ${wineName}`,
+        modalCloseAria: "Fechar a ficha do vinho",
+        modalLabels: {
+          region: "Região",
+          cepage: "Uva",
+          aromes: "Aromas",
+          bouche: "Paladar",
+          temperature: "Temperatura de serviço",
+          prix: "Preço médio",
+        },
+        modalSeparator: ":",
+        modalSeparatorTrailingSpace: " ",
+        genericWineProfile: {
+          region: "França",
+          cepage: "Corte tradicional",
+          aromes: "frutas maduras, notas florais e toque de especiarias",
+          bouche: "equilibrado, final harmonioso",
+          temperature: "Servir entre 10 e 18 °C conforme o estilo",
+          prix: "Consulte o Vivino para preços",
+        },
+        wineDetails: {
+          "Château Margaux": {
+            region: "Bordéus",
+            cepage: "Cabernet Sauvignon, Merlot",
+            aromes: "groselha preta, violeta, carvalho nobre",
+            bouche: "taninos sedosos, textura elegante",
+            temperature: "16-18 °C",
+            prix: "~€250",
+          },
+          "Chablis Premier Cru": {
+            region: "Borgonha",
+            cepage: "Chardonnay",
+            aromes: "cítricos, flor branca, pedra de isqueiro",
+            bouche: "vivo, mineral, final salino",
+            temperature: "10-12 °C",
+            prix: "~€35",
+          },
+          "Côtes du Rhône": {
+            region: "Vale do Ródano",
+            cepage: "Grenache, Syrah, Mourvèdre",
+            aromes: "frutas escuras, especiarias doces, ervas de garrigue",
+            bouche: "generoso, amplo, taninos macios",
+            temperature: "15-17 °C",
+            prix: "~€18",
+          },
+          "Champagne Brut": {
+            region: "Champagne",
+            cepage: "Pinot Noir, Chardonnay, Meunier",
+            aromes: "maçã verde, brioche, cítricos",
+            bouche: "borbulhas finas, frescor vibrante",
+            temperature: "8-10 °C",
+            prix: "~€40",
+          },
+          "Rosé de Provence": {
+            region: "Provença",
+            cepage: "Grenache, Cinsault, Syrah",
+            aromes: "frutas vermelhas frescas, pêssego branco, ervas",
+            bouche: "leve, refrescante, final delicado",
+            temperature: "8-10 °C",
+            prix: "~€15",
+          },
+        },
+        systemPrompt: "",
+      },
+      pl: {
+        htmlLang: "pl",
+        title: "Sommelier Win Francuskich · Tomos.bot",
+        headerTitle: "Sommelier",
+        placeholder: "Zapytaj mnie o francuskie wino...",
+        themeToggle: {
+          toLight: "Powrót do jasnego trybu",
+          toDark: "Włącz tryb ciemny",
+        },
+        languageSelectorLabel: "Wybierz język",
+        welcome: {
+          title: "Witamy u Twojego Wirtualnego Sommeliera!",
+          subtitle: "Odkryj znakomite francuskie wina na każdą okazję.",
+        },
+        initialQuestion: "Na jaką okazję chcesz otrzymać rekomendację?",
+        initialOptions: {
+          lunch: "🍽️ Lunch",
+          dinner: "🍷 Kolacja",
+          aperitif: "🥂 Aperitif",
+          special: "🎉 Specjalna okazja",
+        },
+        prompts: {
+          aperitif: "Poleć mi francuskie wino na aperitif.",
+        },
+        mealQuestion: (mealLabel) =>
+          `Świetnie pasuje do ${mealLabel}, jakie danie podasz?`,
+        mealTypes: {
+          lunch: "lunchu",
+          dinner: "kolacji",
+        },
+        mealOptions: {
+          redMeat: {
+            label: "🥩 Czerwone mięsa",
+            prompt: (mealLabel) =>
+              `Poleć mi francuskie wino do czerwonych mięs podczas ${mealLabel}.`,
+          },
+          fish: {
+            label: "🐟 Ryby",
+            prompt: (mealLabel) =>
+              `Poleć mi francuskie wino do ryb podczas ${mealLabel}.`,
+          },
+          pasta: {
+            label: "🍝 Makarony",
+            prompt: (mealLabel) =>
+              `Poleć mi francuskie wino do makaronów podczas ${mealLabel}.`,
+          },
+          salad: {
+            label: "🥗 Sałatki",
+            prompt: (mealLabel) =>
+              `Poleć mi francuskie wino do sałatek podczas ${mealLabel}.`,
+          },
+        },
+        specialQuestion:
+          "Wspaniale! Na jaki rodzaj specjalnej okazji potrzebujesz porady?",
+        specialOptions: {
+          birthday: {
+            label: "🎂 Urodziny",
+            prompt: "Poleć wyjątkowe francuskie wino na urodziny.",
+          },
+          romantic: {
+            label: "💕 Romantyczna kolacja",
+            prompt: "Poleć francuskie wino na romantyczną kolację.",
+          },
+          gift: {
+            label: "🎁 Prezent",
+            prompt: "Poleć niezapomniane francuskie wino na prezent.",
+          },
+          celebration: {
+            label: "🏆 Wielkie świętowanie",
+            prompt: "Poleć prestiżowe francuskie wino na wielkie świętowanie.",
+          },
+        },
+        errorMessages: {
+          network:
+            "Przepraszam, wystąpił błąd podczas łączenia z serwerem. Spróbuj ponownie.",
+          fetch: "Błąd podczas pobierania odpowiedzi.",
+        },
+        vivino: "Zobacz na Vivino →",
+        modalAriaLabel: (wineName) => `Szczegóły degustacji dla ${wineName}`,
+        modalCloseAria: "Zamknij kartę wina",
+        modalLabels: {
+          region: "Region",
+          cepage: "Szczep",
+          aromes: "Aromaty",
+          bouche: "Smak",
+          temperature: "Temperatura podania",
+          prix: "Średnia cena",
+        },
+        modalSeparator: ":",
+        modalSeparatorTrailingSpace: " ",
+        genericWineProfile: {
+          region: "Francja",
+          cepage: "Tradycyjna kupaża",
+          aromes: "dojrzałe owoce, nuty kwiatowe i odrobina przypraw",
+          bouche: "zrównoważone, harmonijne zakończenie",
+          temperature: "Podawaj w temperaturze 10–18 °C w zależności od stylu",
+          prix: "Sprawdź ceny w serwisie Vivino",
+        },
+        wineDetails: {
+          "Château Margaux": {
+            region: "Bordeaux",
+            cepage: "Cabernet Sauvignon, Merlot",
+            aromes: "czarna porzeczka, fiołek, szlachetne drewno",
+            bouche: "jedwabiste taniny, elegancka struktura",
+            temperature: "16-18 °C",
+            prix: "~€250",
+          },
+          "Chablis Premier Cru": {
+            region: "Burgundia",
+            cepage: "Chardonnay",
+            aromes: "cytrusy, białe kwiaty, krzemień",
+            bouche: "żywe, mineralne, słony finisz",
+            temperature: "10-12 °C",
+            prix: "~€35",
+          },
+          "Côtes du Rhône": {
+            region: "Dolina Rodanu",
+            cepage: "Grenache, Syrah, Mourvèdre",
+            aromes: "ciemne owoce, słodkie przyprawy, zioła garrigue",
+            bouche: "pełne, soczyste, miękkie taniny",
+            temperature: "15-17 °C",
+            prix: "~€18",
+          },
+          "Champagne Brut": {
+            region: "Szampania",
+            cepage: "Pinot Noir, Chardonnay, Meunier",
+            aromes: "zielone jabłko, brioche, cytrusy",
+            bouche: "drobne bąbelki, świeża energia",
+            temperature: "8-10 °C",
+            prix: "~€40",
+          },
+          "Rosé de Provence": {
+            region: "Prowansja",
+            cepage: "Grenache, Cinsault, Syrah",
+            aromes: "świeże czerwone owoce, biała brzoskwinia, zioła",
+            bouche: "lekkie, odświeżające, delikatne zakończenie",
+            temperature: "8-10 °C",
+            prix: "~€15",
+          },
+        },
+        systemPrompt: "",
+      },
+      zh: {
+        htmlLang: "zh-Hans",
+        title: "法国葡萄酒侍酒师 · Tomos.bot",
+        headerTitle: "🇫🇷 侍酒师",
+        placeholder: "向我咨询一款法国葡萄酒...",
+        themeToggle: {
+          toLight: "切换回亮色模式",
+          toDark: "开启夜间模式",
+        },
+        languageSelectorLabel: "选择语言",
+        welcome: {
+          title: "欢迎来到你的虚拟侍酒师！",
+          subtitle: "为每个时刻发现出色的法国美酒。",
+        },
+        initialQuestion: "你想为哪种场合寻求推荐？",
+        initialOptions: {
+          lunch: "🍽️ 午餐",
+          dinner: "🍷 晚餐",
+          aperitif: "🥂 开胃酒",
+          special: "🎉 特别场合",
+        },
+        prompts: {
+          aperitif: "请为开胃酒推荐一款法国葡萄酒。",
+        },
+        mealQuestion: (mealLabel) =>
+          `很适合${mealLabel}，你准备搭配什么菜肴？`,
+        mealTypes: {
+          lunch: "午餐",
+          dinner: "晚餐",
+        },
+        mealOptions: {
+          redMeat: {
+            label: "🥩 红肉",
+            prompt: (mealLabel) =>
+              `请推荐一款适合在${mealLabel}搭配红肉的法国葡萄酒。`,
+          },
+          fish: {
+            label: "🐟 鱼类",
+            prompt: (mealLabel) =>
+              `请推荐一款适合在${mealLabel}搭配鱼类的法国葡萄酒。`,
+          },
+          pasta: {
+            label: "🍝 意面",
+            prompt: (mealLabel) =>
+              `请推荐一款适合在${mealLabel}搭配意面的法国葡萄酒。`,
+          },
+          salad: {
+            label: "🥗 沙拉",
+            prompt: (mealLabel) =>
+              `请推荐一款适合在${mealLabel}搭配沙拉的法国葡萄酒。`,
+          },
+        },
+        specialQuestion: "太棒了！你想为哪种特别场合获得建议？",
+        specialOptions: {
+          birthday: {
+            label: "🎂 生日",
+            prompt: "请推荐一款适合生日的出色法国葡萄酒。",
+          },
+          romantic: {
+            label: "💕 浪漫晚餐",
+            prompt: "请推荐一款适合浪漫晚餐的法国葡萄酒。",
+          },
+          gift: {
+            label: "🎁 礼物",
+            prompt: "请推荐一款适合作为礼物的法国葡萄酒。",
+          },
+          celebration: {
+            label: "🏆 盛大庆祝",
+            prompt: "请推荐一款适合盛大庆祝的法国葡萄酒。",
+          },
+        },
+        followUps: {
+          general: [],
+          occasion: [],
+          pairing: [],
+          profile: [],
+          region: [],
+        },
+        errorMessages: {
+          network: "抱歉，连接服务器时出现错误，请重试。",
+          fetch: "获取回复时出错。",
+        },
+        vivino: "前往 Vivino 查看 →",
+        modalAriaLabel: (wineName) => `查看 ${wineName} 的品鉴详情`,
+        modalCloseAria: "关闭葡萄酒详情卡片",
+        modalLabels: {
+          region: "产区",
+          cepage: "葡萄品种",
+          aromes: "香气",
+          bouche: "口感",
+          temperature: "侍酒温度",
+          prix: "参考价格",
+        },
+        modalSeparator: "：",
+        modalSeparatorTrailingSpace: "",
+        genericWineProfile: {
+          region: "法国",
+          cepage: "经典调配",
+          aromes: "成熟果香、花香与一丝香料气息",
+          bouche: "平衡顺滑，余韵和谐",
+          temperature: "根据风格在 10 至 18 °C 之间侍酒",
+          prix: "价格信息请参考 Vivino",
+        },
+        wineDetails: {
+          "Château Margaux": {
+            region: "波尔多",
+            cepage: "赤霞珠、梅洛",
+            aromes: "黑加仑、紫罗兰、名贵橡木",
+            bouche: "单宁丝滑，质地优雅",
+            temperature: "16-18 °C",
+            prix: "约 €250",
+          },
+          "Chablis Premier Cru": {
+            region: "勃艮第",
+            cepage: "霞多丽",
+            aromes: "柑橘、白花、燧石",
+            bouche: "清新矿物感，咸鲜收尾",
+            temperature: "10-12 °C",
+            prix: "约 €35",
+          },
+          "Côtes du Rhône": {
+            region: "罗讷河谷",
+            cepage: "歌海娜、西拉、慕合怀特",
+            aromes: "黑色水果、甜香料、灌木丛气息",
+            bouche: "圆润饱满，单宁柔和",
+            temperature: "15-17 °C",
+            prix: "约 €18",
+          },
+          "Champagne Brut": {
+            region: "香槟",
+            cepage: "黑皮诺、霞多丽、皮诺·莫尼耶",
+            aromes: "青苹果、奶油面包、柑橘",
+            bouche: "气泡细腻，清爽利落",
+            temperature: "8-10 °C",
+            prix: "约 €40",
+          },
+          "Rosé de Provence": {
+            region: "普罗旺斯",
+            cepage: "歌海娜、神索、西拉",
+            aromes: "新鲜红色浆果、白桃、香草草本",
+            bouche: "轻盈爽口，余韵细腻",
+            temperature: "8-10 °C",
+            prix: "约 €15",
+          },
+        },
+        systemPrompt: "",
+      },
+    };
+
+    const LANGUAGE_STORAGE_KEY = "language-preference";
+    const THEME_STORAGE_KEY = "theme-preference";
+    const OPENAI_API_KEY = window?.OPENAI_API_KEY || "";
+
+    let currentLanguage = "fr";
+    let currentLang = LANGUAGE_TO_OPTION_LANG[currentLanguage] || "EN";
+    let messages = [];
+    let isTyping = false;
+    let activeWineModal = null;
+    let activeKeydownHandler = null;
+
+    let messagesContainer;
+    let form;
+    let input;
+    let sendButton;
+    let sendIcon;
+    let headerIcon;
+    let themeToggleButton;
+    let themeIcon;
+    let headerTitle;
+    let languageSelect;
+    let languageLabel;
+    let resetChatButton;
+    let initialOptionsContainer = null;
+    let initialOptionsExpanded = false;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      createIcons({ icons });
+      initializeApp();
+    });
+
+    function getTranslations() {
+      return TRANSLATIONS[currentLanguage] || TRANSLATIONS.fr;
+    }
+
+    function initializeApp() {
+      headerTitle = document.querySelector(".header-title");
+      themeToggleButton = document.getElementById("themeToggle");
+      themeIcon = document.getElementById("themeIcon");
+      languageSelect = document.getElementById("languageSelect");
+      languageLabel = document.querySelector('label[for="languageSelect"]');
+      messagesContainer = document.getElementById("messages");
+      form = document.getElementById("form");
+      input = document.getElementById("input");
+      sendButton = document.getElementById("sendButton");
+      sendIcon = document.getElementById("sendIcon");
+      headerIcon = document.getElementById("headerIcon");
+      resetChatButton = document.getElementById("resetChatBtn");
+
+      renderIcon(headerIcon, "wine", { width: 32, height: 32, strokeWidth: 1.4 });
+      renderIcon(sendIcon, "send", { width: 20, height: 20, strokeWidth: 1.6 });
+
+      initializeLanguage();
+      initializeTheme();
+      applyLanguageSettings();
+      setupThemeToggle();
+      setupLanguageSelect();
+
+      startChatExperience();
+
+      if (form) {
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const text = input?.value?.trim();
+          if (!text || isTyping) return;
+          input.value = "";
+          sendMessage(text);
+        });
+      }
+
+      if (input) {
+        input.addEventListener("keypress", (event) => {
+          if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            form?.dispatchEvent(new Event("submit"));
+          }
+        });
+      }
+
+      if (resetChatButton) {
+        resetChatButton.addEventListener("click", handleChatReset);
+      }
+
+      enhanceWineNames();
+    }
+
+function initializeLanguage() {
+  try {
+    const stored = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+
+    if (stored && TRANSLATIONS[stored]) {
+      // Si el usuario ya eligió un idioma antes, usamos ese
+      currentLanguage = stored;
+    } else {
+      // Si es la primera vez, siempre usar francés por defecto
+      currentLanguage = "fr";
+    }
+  } catch (error) {
+    // Si algo falla con localStorage, también usar francés
+    currentLanguage = "fr";
+  }
+
+  currentLang = LANGUAGE_TO_OPTION_LANG[currentLanguage] || "EN";
+
+  if (languageSelect) {
+    languageSelect.value = currentLanguage;
+  }
+}
+
+    function getCurrentTheme() {
+      return document.body.getAttribute("data-theme") === "light" ? "light" : "dark";
+    }
+
+    function applyLanguageSettings() {
+      currentLang = LANGUAGE_TO_OPTION_LANG[currentLanguage] || "EN";
+      const t = getTranslations();
+      document.documentElement.setAttribute("lang", t.htmlLang);
+      document.title = t.title;
+      if (headerTitle) headerTitle.textContent = t.headerTitle;
+      if (input) input.placeholder = t.placeholder;
+      if (languageLabel) languageLabel.textContent = t.languageSelectorLabel;
+      if (languageSelect) {
+        languageSelect.value = currentLanguage;
+        languageSelect.setAttribute("aria-label", t.languageSelectorLabel);
+        languageSelect.setAttribute("title", t.languageSelectorLabel);
+      }
+
+      const welcomeTitle = document.querySelector(".welcome-title");
+      if (welcomeTitle) welcomeTitle.textContent = t.welcome.title;
+      const welcomeSubtitle = document.querySelector(".welcome-subtitle");
+      if (welcomeSubtitle) welcomeSubtitle.textContent = t.welcome.subtitle;
+
+      applyTheme(getCurrentTheme(), { persist: false });
+
+      if (activeWineModal) {
+        closeWineModal();
+      }
+
+      if (initialOptionsContainer) {
+        renderInitialOccasionButtons();
+      }
+    }
+
+    function applyTheme(theme, { persist = true } = {}) {
+      const normalized = theme === "dark" ? "dark" : "light";
+      document.body.setAttribute("data-theme", normalized);
+      if (persist) {
+        try {
+          localStorage.setItem(THEME_STORAGE_KEY, normalized);
+        } catch (error) {}
+      }
+      const iconName = normalized === "dark" ? "sun" : "moon";
+      renderIcon(themeIcon, iconName, { width: 22, height: 22, strokeWidth: 1.6 });
+      if (themeToggleButton) {
+        const t = getTranslations();
+        const label = normalized === "dark" ? t.themeToggle.toLight : t.themeToggle.toDark;
+        themeToggleButton.setAttribute("aria-label", label);
+        themeToggleButton.setAttribute("title", label);
+      }
+    }
+
+    function initializeTheme() {
+      try {
+        const stored = localStorage.getItem(THEME_STORAGE_KEY);
+        if (stored === "dark" || stored === "light") {
+          applyTheme(stored, { persist: false });
+          return;
+        }
+      } catch (error) {}
+      const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
+      applyTheme(prefersDark === false ? "light" : "dark", { persist: false });
+    }
+
+    function setupThemeToggle() {
+      if (!themeToggleButton) return;
+      themeToggleButton.addEventListener("click", () => {
+        const current = getCurrentTheme();
+        const next = current === "dark" ? "light" : "dark";
+        applyTheme(next);
+      });
+    }
+
+    function setupLanguageSelect() {
+      if (!languageSelect) return;
+      languageSelect.addEventListener("change", (event) => {
+        const newLanguage = event.target.value;
+        if (!TRANSLATIONS[newLanguage] || newLanguage === currentLanguage) return;
+        currentLanguage = newLanguage;
+        currentLang = LANGUAGE_TO_OPTION_LANG[currentLanguage] || "EN";
+        try {
+          localStorage.setItem(LANGUAGE_STORAGE_KEY, newLanguage);
+        } catch (error) {}
+        applyLanguageSettings();
+        setupSpeechRecognition();
+        startChatExperience();
+      });
+    }
+
+    function renderIcon(element, name, options = {}) {
+      if (!element) return;
+
+      element.innerHTML = "";
+
+      const iconSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      iconSvg.setAttribute("width", options.width || 24);
+      iconSvg.setAttribute("height", options.height || 24);
+      iconSvg.setAttribute("viewBox", "0 0 24 24");
+      iconSvg.setAttribute("fill", "none");
+      iconSvg.setAttribute("stroke", "currentColor");
+      iconSvg.setAttribute("stroke-width", options.strokeWidth || 2);
+      iconSvg.setAttribute("stroke-linecap", "round");
+      iconSvg.setAttribute("stroke-linejoin", "round");
+
+      const iconPaths = {
+        wine: [
+          "M8 22h8",
+          "M7 10h10",
+          "M12 15v7",
+          "M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z",
+        ],
+        send: [
+          "M22 2L11 13",
+          "M22 2l-7 20-4-9-9-4 20-7z",
+        ],
+        moon: [
+          "M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z",
+        ],
+        sun: [
+          "M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0",
+          "M3 12h1m8 -9v1m8 8h1m-9 8v1M5.6 5.6l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7",
+        ],
+        sparkles: [
+          "M9.937 15.5A2 2 0 0 0 8.5 14.063l-6 -3.25 3.25 -6A2 2 0 0 0 9.937 3.5l6 3.25 -3.25 6a2 2 0 0 0 -1.437 2.75",
+          "M20 3v4",
+          "M22 5h-4",
+          "M14.062 14.5a2 2 0 0 0 -1.437 -1.437l-6 -3.25 3.25 -6a2 2 0 0 0 1.437 -1.437l6 3.25 -3.25 6a2 2 0 0 0 1.437 1.437l6 3.25 -3.25 6a2 2 0 0 0 -1.437 1.437",
+        ],
+      };
+
+      if (iconPaths[name]) {
+        iconPaths[name].forEach((pathData) => {
+          const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          path.setAttribute("d", pathData);
+          iconSvg.appendChild(path);
+        });
+      }
+
+      element.appendChild(iconSvg);
+    }
+
+    function startChatExperience() {
+      messages = [];
+      isTyping = false;
+      initialOptionsContainer = null;
+      initialOptionsExpanded = false;
+      if (messagesContainer) {
+        messagesContainer.innerHTML = "";
+      }
+      if (sendButton) {
+        sendButton.disabled = false;
+      }
+      showWelcome();
+      setTimeout(() => {
+        const welcome = document.querySelector(".welcome-screen");
+        if (welcome) {
+          welcome.remove();
+        }
+        showInitialOptions();
+      }, 3300);
+      input?.focus();
+    }
+
+    function handleChatReset() {
+      if (resetChatButton && !resetChatButton.classList.contains("spinning")) {
+        resetChatButton.classList.add("spinning");
+        setTimeout(() => resetChatButton?.classList.remove("spinning"), 650);
+      }
+
+      if (messagesContainer) {
+        messagesContainer.innerHTML = "";
+        messagesContainer.scrollTop = 0;
+      }
+
+      document
+        .querySelectorAll(".options-container, .typing-indicator")
+        .forEach((node) => {
+          const parentMessage = node.closest?.(".message");
+          if (parentMessage) {
+            parentMessage.remove();
+          } else {
+            node.remove();
+          }
+        });
+
+      messages = [];
+      isTyping = false;
+      initialOptionsContainer = null;
+      initialOptionsExpanded = false;
+      sendButton?.removeAttribute("disabled");
+
+      if (typeof conversationHistory !== "undefined") {
+        if (Array.isArray(conversationHistory)) {
+          conversationHistory.length = 0;
+        } else if (
+          conversationHistory &&
+          typeof conversationHistory === "object" &&
+          !Array.isArray(conversationHistory)
+        ) {
+          Object.keys(conversationHistory).forEach((key) => {
+            try {
+              delete conversationHistory[key];
+            } catch (error) {
+              conversationHistory[key] = undefined;
+            }
+          });
+        } else {
+          try {
+            conversationHistory = [];
+          } catch (error) {
+            // Ignored if reassignment is not allowed
+          }
+        }
+      }
+
+      showInitialOptions();
+      messagesContainer?.scrollTo({ top: 0, behavior: "smooth" });
+      input?.focus();
+    }
+
+    function showWelcome() {
+      if (!messagesContainer) return;
+      const t = getTranslations();
+      const welcomeDiv = document.createElement("div");
+      welcomeDiv.className = "welcome-screen";
+
+      const icon = document.createElement("span");
+      icon.className = "welcome-icon";
+      renderIcon(icon, "wine", { width: 48, height: 48, strokeWidth: 1 });
+
+      const title = document.createElement("h2");
+      title.className = "welcome-title";
+      title.textContent = t.welcome.title;
+
+      const subtitle = document.createElement("p");
+      subtitle.className = "welcome-subtitle";
+      subtitle.textContent = t.welcome.subtitle;
+
+      welcomeDiv.appendChild(icon);
+      welcomeDiv.appendChild(title);
+      welcomeDiv.appendChild(subtitle);
+
+      messagesContainer.appendChild(welcomeDiv);
+    }
+
+    function showInitialOptions() {
+      const t = getTranslations();
+      const message = addMessage("assistant", t.initialQuestion);
+      if (!message) return;
+
+      initialOptionsExpanded = false;
+      const container = document.createElement("div");
+      container.className = "options-container initial-options";
+      message.appendChild(container);
+      initialOptionsContainer = container;
+      renderInitialOccasionButtons();
+    }
+
+    function renderInitialOccasionButtons() {
+      if (!initialOptionsContainer) return;
+
+      const labels = initialOptions[currentLang] || initialOptions.EN;
+      const extended = extendedOptions[currentLang] || extendedOptions.EN;
+      const container = initialOptionsContainer;
+      container.innerHTML = "";
+
+      BASE_OCCASION_KEYS.forEach((key) => {
+        const label = labels?.[key];
+        if (!label) return;
+        const button = createOccasionButton(key, label);
+        if (button) {
+          container.appendChild(button);
+        }
+      });
+
+      if (initialOptionsExpanded && extended) {
+        Object.entries(extended).forEach(([key, label]) => {
+          if (!label) return;
+          const button = createOccasionButton(key, label);
+          if (button) {
+            container.appendChild(button);
+          }
+        });
+      }
+
+      const toggleLabel = initialOptionsExpanded
+        ? seeLessLabels[currentLang] || seeLessLabels.EN
+        : labels?.more;
+
+      if (toggleLabel) {
+        const toggleButton = createOccasionButton("toggle", toggleLabel, { toggle: true });
+        if (toggleButton) {
+          container.appendChild(toggleButton);
+        }
+      }
+    }
+
+    function createOccasionButton(key, label, options = {}) {
+      if (!label) return null;
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "option-button";
+      if (options.toggle) {
+        button.classList.add("toggle-button");
+        button.addEventListener("click", () => {
+          initialOptionsExpanded = !initialOptionsExpanded;
+          renderInitialOccasionButtons();
+        });
+      } else {
+        button.addEventListener("click", () => handleOccasionSelection(key));
+      }
+      button.textContent = label;
+      return button;
+    }
+
+    function handleOccasionSelection(key) {
+      if (key === "toggle") return;
+      if (key === "surprise") {
+        const randomKey = getRandomOccasionKey();
+        if (randomKey) {
+          handleOccasionSelection(randomKey);
+        }
+        return;
+      }
+
+      const t = getTranslations();
+
+      if (key === "lunch" || key === "dinner") {
+        clearInitialOccasionOptions();
+        showMealOptions(key);
+        return;
+      }
+
+      if (key === "aperitif") {
+        clearInitialOccasionOptions();
+        sendMessage(t.prompts.aperitif);
+        return;
+      }
+
+      if (key === "special") {
+        clearInitialOccasionOptions();
+        showSpecialOccasionOptions();
+        return;
+      }
+
+      const prompts = extendedOccasionPrompts[currentLang] || extendedOccasionPrompts.EN;
+      const prompt = prompts?.[key];
+      if (prompt) {
+        clearInitialOccasionOptions();
+        sendMessage(prompt);
+      }
+    }
+
+    function getRandomOccasionKey() {
+      const extended = extendedOptions[currentLang] || extendedOptions.EN;
+      const available = [
+        ...BASE_OCCASION_KEYS,
+        ...Object.keys(extended || {}),
+      ].filter((optionKey) => optionKey !== "surprise");
+
+      if (available.length === 0) {
+        return null;
+      }
+
+      const randomIndex = Math.floor(Math.random() * available.length);
+      return available[randomIndex] || null;
+    }
+
+    function clearInitialOccasionOptions() {
+      if (initialOptionsContainer) {
+        initialOptionsContainer.remove();
+        initialOptionsContainer = null;
+      }
+      initialOptionsExpanded = false;
+    }
+
+    function showMealOptions(mealKey) {
+      const t = getTranslations();
+      const mealLabel = t.mealTypes[mealKey] || mealKey;
+      const options = [
+        {
+          text: t.mealOptions.redMeat.label,
+          action: () => sendMessage(t.mealOptions.redMeat.prompt(mealLabel)),
+        },
+        {
+          text: t.mealOptions.fish.label,
+          action: () => sendMessage(t.mealOptions.fish.prompt(mealLabel)),
+        },
+        {
+          text: t.mealOptions.pasta.label,
+          action: () => sendMessage(t.mealOptions.pasta.prompt(mealLabel)),
+        },
+        {
+          text: t.mealOptions.salad.label,
+          action: () => sendMessage(t.mealOptions.salad.prompt(mealLabel)),
+        },
+      ];
+
+      addMessage("assistant", t.mealQuestion(mealLabel), options);
+    }
+
+    function showSpecialOccasionOptions() {
+      const t = getTranslations();
+      const options = [
+        {
+          text: t.specialOptions.birthday.label,
+          action: () => sendMessage(t.specialOptions.birthday.prompt),
+        },
+        {
+          text: t.specialOptions.romantic.label,
+          action: () => sendMessage(t.specialOptions.romantic.prompt),
+        },
+        {
+          text: t.specialOptions.gift.label,
+          action: () => sendMessage(t.specialOptions.gift.prompt),
+        },
+        {
+          text: t.specialOptions.celebration.label,
+          action: () => sendMessage(t.specialOptions.celebration.prompt),
+        },
+      ];
+
+      addMessage("assistant", t.specialQuestion, options);
+    }
+
+    function renderOptionButtons(options) {
+      const container = document.createElement("div");
+      container.classList.add("options-container", "follow-up-options");
+      options.forEach((opt) => {
+        const button = document.createElement("button");
+        button.classList.add("option-button");
+        button.textContent = opt.label;
+        button.onclick = () => sendMessage(opt.prompt);
+        container.appendChild(button);
+      });
+      const lastMessage = document.querySelector("#messages").lastElementChild;
+      if (lastMessage) lastMessage.appendChild(container);
+    }
+
+    function addMessage(role, content, options = []) {
+      if (!messagesContainer) return null;
+
+      const messageDiv = document.createElement("div");
+      messageDiv.className = `message ${role}`;
+
+      const bubble = document.createElement("div");
+      bubble.className = "message-bubble";
+      bubble.innerHTML = content;
+
+      messageDiv.appendChild(bubble);
+
+      if (options.length > 0) {
+        const optionsContainer = document.createElement("div");
+        optionsContainer.className = "options-container";
+
+        options.forEach((option) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "option-button";
+          button.textContent = option.text;
+          button.onclick = () => {
+            optionsContainer.remove();
+            option.action();
+          };
+          optionsContainer.appendChild(button);
+        });
+
+        messageDiv.appendChild(optionsContainer);
+      }
+
+      messagesContainer.appendChild(messageDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      return messageDiv;
+    }
+
+    function normalizeText(text) {
+      return text
+        ?.normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase() || "";
+    }
+
+    function resolveFollowUpOption(option, question) {
+      if (!option) return null;
+      const label = typeof option.label === "function" ? option.label(question) : option.label;
+      const prompt = typeof option.prompt === "function" ? option.prompt(question) : option.prompt;
+      const trimmedLabel = label?.toString().trim();
+      const trimmedPrompt = prompt?.toString().trim();
+      if (!trimmedLabel || !trimmedPrompt) {
+        return null;
+      }
+      return { label: trimmedLabel, prompt: trimmedPrompt };
+    }
+
+    function detectFollowUpCategories(question) {
+      const normalized = normalizeText(question);
+      const categories = [];
+      const includesAny = (keywords) => keywords.some((keyword) => normalized.includes(keyword));
+
+      if (
+        includesAny([
+          "collection",
+          "vinoteca",
+          "vinotheque",
+          "cellar",
+          "cave",
+          "cellier",
+          "bodega",
+          "coleccion",
+        ])
+      ) {
+        categories.push("collection");
+      }
+      if (
+        includesAny([
+          "cadeau",
+          "gift",
+          "regalo",
+          "offrir",
+          "destinat",
+          "recipient",
+          "persona",
+          "personne",
+          "present",
+        ])
+      ) {
+        categories.push("gift");
+      }
+      if (
+        includesAny([
+          "budget",
+          "presupuesto",
+          "prix",
+          "price",
+          "precio",
+          "cost",
+          "costo",
+          "invest",
+        ])
+      ) {
+        categories.push("budget");
+      }
+      if (
+        includesAny([
+          "plat",
+          "dish",
+          "plate",
+          "marid",
+          "acompan",
+          "servir",
+          "serve",
+          "accomp",
+          "mets",
+        ])
+      ) {
+        categories.push("pairing");
+      }
+      if (
+        includesAny([
+          "occasion",
+          "evento",
+          "event",
+          "moment",
+          "momento",
+          "celebr",
+          "soir",
+          "party",
+        ])
+      ) {
+        categories.push("occasion");
+      }
+      if (
+        includesAny([
+          "style",
+          "profil",
+          "profile",
+          "gust",
+          "pref",
+          "intens",
+          "leger",
+          "light",
+          "cors",
+          "tanin",
+          "acid",
+          "aroma",
+          "arome",
+          "fres",
+        ])
+      ) {
+        categories.push("profile");
+      }
+      if (includesAny(["region", "région", "región", "terroir", "area", "zone", "appel"])) {
+        categories.push("region");
+      }
+
+      return categories.length > 0 ? categories : ["general"];
+    }
+
+    function buildFallbackOptions(question) {
+      const t = getTranslations();
+      const followUps = t.followUps;
+      if (!followUps) {
+        return [];
+      }
+      const categories = detectFollowUpCategories(question);
+      for (const category of categories) {
+        const options = followUps[category];
+        if (Array.isArray(options) && options.length > 0) {
+          return options
+            .map((option) => resolveFollowUpOption(option, question))
+            .filter(Boolean);
+        }
+      }
+      if (Array.isArray(followUps.general)) {
+        return followUps.general
+          .map((option) => resolveFollowUpOption(option, question))
+          .filter(Boolean);
+      }
+      return [];
+    }
+
+    function parseFollowUpContent(content) {
+      if (!content) return [];
+      const attemptParse = (text) => {
+        try {
+          const parsed = JSON.parse(text);
+          if (Array.isArray(parsed)) {
+            return parsed;
+          }
+          if (Array.isArray(parsed?.options)) {
+            return parsed.options;
+          }
+          return [];
+        } catch (error) {
+          return [];
+        }
+      };
+
+      const trimmed = content.trim();
+      let parsed = attemptParse(trimmed);
+      if (parsed.length > 0) {
+        return parsed;
+      }
+
+      const withoutFence = trimmed
+        .replace(/^```json/i, "")
+        .replace(/^```/i, "")
+        .replace(/```$/i, "")
+        .trim();
+
+      parsed = attemptParse(withoutFence);
+      return Array.isArray(parsed) ? parsed : [];
+    }
+
+    function showFollowUpOptions(options, question = "") {
+      if (!Array.isArray(options) || options.length === 0 || !messagesContainer) return;
+      const sanitized = options
+        .map((option) => resolveFollowUpOption(option, question))
+        .filter(Boolean);
+      if (sanitized.length === 0) return;
+
+      const existing = messagesContainer.querySelectorAll(".options-container.follow-up-options");
+      existing.forEach((node) => node.remove());
+
+      const container = document.createElement("div");
+      container.className = "options-container follow-up-options";
+
+      sanitized.forEach((opt) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "option-button";
+        btn.textContent = opt.label;
+        btn.addEventListener("click", () => {
+          sendMessage(opt.prompt);
+          container.remove();
+        });
+        container.appendChild(btn);
+      });
+
+      if (container.childElementCount === 0) return;
+
+      const assistants = messagesContainer.querySelectorAll(".message.assistant");
+      const host = assistants[assistants.length - 1];
+      if (host) {
+        host.appendChild(container);
+      } else {
+        messagesContainer.appendChild(container);
+      }
+      container.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    async function generateFollowUpOptions(assistantMessage) {
+      if (!assistantMessage) return;
+
+      let followUpQuestion = "";
+      try {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(assistantMessage, "text/html");
+        followUpQuestion = doc.querySelector("b")?.textContent?.trim() || "";
+      } catch (error) {
+        followUpQuestion = "";
+      }
+
+      const fallbackOptions = buildFallbackOptions(followUpQuestion);
+      let hasDisplayed = false;
+      const showFallback = () => {
+        if (!hasDisplayed && fallbackOptions.length > 0) {
+          showFollowUpOptions(fallbackOptions, followUpQuestion);
+          hasDisplayed = true;
+        }
+      };
+
+      if (!followUpQuestion) {
+        showFallback();
+        return;
+      }
+
+      if (!OPENAI_API_KEY) {
+        showFallback();
+        return;
+      }
+
+      try {
+        const completion = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${OPENAI_API_KEY}`,
+          },
+          body: JSON.stringify({
+            model: "gpt-4o-mini",
+            messages: [
+              {
+                role: "system",
+                content:
+                  "Eres un asistente que genera opciones contextuales para botones de un chat de sommelier.",
+              },
+              {
+                role: "user",
+                content: `Genera 3 opciones contextuales en JSON según esta pregunta: ${followUpQuestion}`,
+              },
+            ],
+          }),
+        });
+
+        if (!completion.ok) {
+          throw new Error(`Follow-up completion failed with status ${completion.status}`);
+        }
+
+        const data = await completion.json();
+        const content = data?.choices?.[0]?.message?.content;
+        const parsedOptions = parseFollowUpContent(content);
+        if (parsedOptions.length > 0) {
+          showFollowUpOptions(parsedOptions, followUpQuestion);
+          hasDisplayed = true;
+          return;
+        }
+      } catch (error) {
+        console.error("Unable to generate follow-up options:", error);
+      }
+
+      showFallback();
+    }
+
+    function showTypingIndicator() {
+      if (!messagesContainer) return null;
+      const typingDiv = document.createElement("div");
+      typingDiv.className = "message assistant";
+
+      const typingIndicator = document.createElement("div");
+      typingIndicator.className = "typing-indicator";
+
+      for (let i = 0; i < 3; i++) {
+        const dot = document.createElement("div");
+        dot.className = "typing-dot";
+        typingIndicator.appendChild(dot);
+      }
+
+      typingDiv.appendChild(typingIndicator);
+      messagesContainer.appendChild(typingDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+      return typingDiv;
+    }
+
+async function sendMessage(text) {
+  if (isTyping) return;
+
+  const sanitizedText = text.trim();
+  if (!sanitizedText) return;
+
+  const t = getTranslations();
+  isTyping = true;
+  messages.push({ role: "user", content: sanitizedText });
+  addMessage("user", sanitizedText);
+
+  const typingIndicator = showTypingIndicator();
+  if (sendButton) {
+    sendButton.disabled = true;
+  }
+
+  try {
+    // 🚀 Enviamos mensajes + idioma actual
+    const response = await fetch("https://hotel-chat-proxy.vercel.app/api/omz", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        messages,
+        lang: currentLanguage || "es", // ← idioma seleccionado (de, fr, es, etc.)
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    const reply = data?.choices?.[0]?.message?.content || t.errorMessages.fetch;
+
+    messages.push({ role: "assistant", content: reply });
+    typingIndicator?.remove();
+
+    const cleanResponse = reply.replace(/<options>.*?<\/options>/s, "").trim();
+    const displayResponse = cleanResponse || reply;
+    addMessage("assistant", displayResponse);
+
+    let renderedDynamicOptions = false;
+    const optionsMatch = reply.match(/<options>(.*?)<\/options>/s);
+    if (optionsMatch) {
+      try {
+        const options = JSON.parse(optionsMatch[1]);
+        renderOptionButtons(options);
+        renderedDynamicOptions = true;
+      } catch (e) {
+        console.error("Error al parsear las opciones dinámicas:", e);
+      }
+    }
+
+    if (!renderedDynamicOptions) {
+      await generateFollowUpOptions(reply);
+    }
+
+  } catch (error) {
+    typingIndicator?.remove();
+    addMessage("assistant", t.errorMessages.network);
+  } finally {
+    isTyping = false;
+    if (sendButton) {
+      sendButton.disabled = false;
+    }
+    input?.focus();
+  }
+}
+
+    function createVivinoLink(wineName) {
+      const t = getTranslations();
+      const link = document.createElement("a");
+      link.href = `https://www.vivino.com/search?q=${encodeURIComponent(wineName)}`;
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.textContent = t.vivino;
+      return link;
+    }
+
+    function closeWineModal() {
+      if (!activeWineModal) return;
+      activeWineModal.classList.remove("active");
+      const modalToRemove = activeWineModal;
+      const removeModal = () => {
+        modalToRemove.remove();
+      };
+      modalToRemove.addEventListener("transitionend", removeModal, { once: true });
+      setTimeout(removeModal, 420);
+      if (activeKeydownHandler) {
+        document.removeEventListener("keydown", activeKeydownHandler);
+        activeKeydownHandler = null;
+      }
+      activeWineModal = null;
+    }
+
+    function openWineModal(wineName) {
+      closeWineModal();
+      const t = getTranslations();
+      const details = t.wineDetails[wineName] || t.genericWineProfile;
+
+      const overlay = document.createElement("div");
+      overlay.className = "wine-modal";
+      overlay.setAttribute("role", "dialog");
+      overlay.setAttribute("aria-modal", "true");
+      overlay.setAttribute("aria-label", t.modalAriaLabel(wineName));
+
+      const card = document.createElement("div");
+      card.className = "wine-card";
+      card.setAttribute("tabindex", "-1");
+
+      const closeButton = document.createElement("button");
+      closeButton.className = "wine-close";
+      closeButton.type = "button";
+      closeButton.setAttribute("aria-label", t.modalCloseAria);
+      closeButton.textContent = "×";
+
+      const title = document.createElement("h2");
+      title.className = "wine-title";
+      title.textContent = wineName;
+
+      const separator = t.modalSeparator ?? ":";
+      const trailingSpace = t.modalSeparatorTrailingSpace ?? " ";
+
+      const infoLines = [
+        { label: t.modalLabels.region, value: details.region },
+        { label: t.modalLabels.cepage, value: details.cepage },
+        { label: t.modalLabels.aromes, value: details.aromes },
+        { label: t.modalLabels.bouche, value: details.bouche },
+        { label: t.modalLabels.temperature, value: details.temperature },
+        { label: t.modalLabels.prix, value: details.prix },
+      ];
+
+      card.appendChild(closeButton);
+      card.appendChild(title);
+
+      infoLines.forEach(({ label, value }) => {
+        if (!value) return;
+        const paragraph = document.createElement("p");
+        paragraph.innerHTML = `<b>${label}${separator}</b>${trailingSpace}${value}`;
+        card.appendChild(paragraph);
+      });
+
+      const linkParagraph = document.createElement("p");
+      linkParagraph.appendChild(createVivinoLink(wineName));
+      card.appendChild(linkParagraph);
+
+      overlay.appendChild(card);
+      document.body.appendChild(overlay);
+
+      requestAnimationFrame(() => {
+        overlay.classList.add("active");
+        card.focus();
+      });
+
+      overlay.addEventListener("click", (event) => {
+        if (event.target === overlay) {
+          closeWineModal();
+        }
+      });
+
+      closeButton.addEventListener("click", closeWineModal);
+
+      activeKeydownHandler = (event) => {
+        if (event.key === "Escape" || event.key === "Esc") {
+          closeWineModal();
+        }
+      };
+
+      document.addEventListener("keydown", activeKeydownHandler);
+      activeWineModal = overlay;
+    }
+
+    function enhanceWineTrigger(element) {
+      if (!element) return null;
+      let trigger = element;
+      if (!(trigger instanceof HTMLAnchorElement)) {
+        const anchor = document.createElement("a");
+        anchor.className = element.className;
+        Array.from(element.attributes).forEach((attr) => {
+          if (attr.name !== "class") {
+            anchor.setAttribute(attr.name, attr.value);
+          }
+        });
+        anchor.innerHTML = element.innerHTML;
+        element.replaceWith(anchor);
+        trigger = anchor;
+      }
+
+      const wineName = (trigger.dataset.wine || trigger.textContent || "").trim();
+      if (wineName) {
+        trigger.dataset.wine = wineName;
+      }
+      trigger.setAttribute("href", "#");
+      trigger.setAttribute("target", "_self");
+      trigger.setAttribute("role", "button");
+      trigger.setAttribute("tabindex", "0");
+      return trigger;
+    }
+
+    function enhanceWineNames(root = document) {
+      const elements = root.querySelectorAll?.(".wine-name");
+      elements?.forEach((node) => {
+        enhanceWineTrigger(node);
+      });
+    }
+
+    enhanceWineNames();
+
+    const wineNameObserver =
+      typeof MutationObserver !== "undefined"
+        ? new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+              mutation.addedNodes.forEach((node) => {
+                if (!(node instanceof HTMLElement)) return;
+                if (node.classList.contains("wine-name")) {
+                  enhanceWineTrigger(node);
+                } else {
+                  enhanceWineNames(node);
+                }
+              });
+            });
+          })
+        : null;
+
+    if (wineNameObserver && messagesContainer) {
+      wineNameObserver.observe(messagesContainer, { childList: true, subtree: true });
+    }
+
+    function handleWineTriggerEvent(event) {
+      const trigger = event.target.closest?.(".wine-name");
+      if (!trigger) return;
+      const wineName = (trigger.dataset.wine || trigger.textContent || "").trim();
+      if (!wineName) return;
+      event.preventDefault();
+      openWineModal(wineName);
+    }
+
+    document.addEventListener("click", handleWineTriggerEvent);
+
+    document.addEventListener("keydown", (event) => {
+      const isActivationKey =
+        event.key === "Enter" ||
+        event.key === " " ||
+        event.key === "Spacebar" ||
+        event.code === "Space";
+      if (!isActivationKey) return;
+      const trigger = event.target.closest?.(".wine-name");
+      if (!trigger) return;
+      event.preventDefault();
+      const wineName = (trigger.dataset.wine || trigger.textContent || "").trim();
+      if (wineName) {
+        openWineModal(wineName);
+      }
+    });
+  </script>
+
+
+</body>
+</html>
