@@ -728,7 +728,6 @@
       color: var(--color-ink);
     }
 
-    .mic-button,
     .send-button {
       width: 52px;
       height: 52px;
@@ -744,22 +743,8 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    .mic-button:hover,
     .send-button:hover {
       transform: translateY(-3px);
-    }
-
-    .mic-button:hover {
-      border-color: rgba(216, 187, 108, 0.5);
-      background: rgba(197, 163, 79, 0.22);
-      color: var(--color-ivory);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.38);
-    }
-
-    .mic-button.recording {
-      border-color: rgba(216, 187, 108, 0.6);
-      background: rgba(216, 187, 108, 0.24);
-      box-shadow: 0 22px 40px rgba(197, 163, 79, 0.35);
     }
 
     .send-button {
@@ -775,14 +760,12 @@
       box-shadow: 0 30px 60px rgba(197, 163, 79, 0.4);
     }
 
-    .mic-button:disabled,
     .send-button:disabled {
       opacity: 0.5;
       cursor: not-allowed;
       transform: none;
     }
 
-    body[data-theme="light"] .mic-button,
     body[data-theme="light"] .send-button {
       border-color: rgba(0, 0, 0, 0.08);
       background: rgba(255, 255, 255, 0.75);
@@ -794,11 +777,6 @@
       background: linear-gradient(135deg, #f4e6c0, #f0dba0);
       border-color: rgba(197, 163, 79, 0.55);
       box-shadow: 0 22px 42px rgba(197, 163, 79, 0.35);
-    }
-
-    body[data-theme="light"] .mic-button:hover {
-      background: rgba(197, 163, 79, 0.24);
-      color: var(--color-ink);
     }
 
     .icon svg,
@@ -912,7 +890,6 @@
         padding: 14px 20px;
       }
 
-      .mic-button,
       .send-button {
         width: 48px;
         height: 48px;
@@ -1074,7 +1051,6 @@
       .message,
       .message-bubble,
       .option-button,
-      .mic-button,
       .send-button,
       .floating-reset,
       .floating-reset svg {
@@ -1167,9 +1143,6 @@ html, body {
           autocomplete="off"
         />
       </div>
-      <button type="button" class="mic-button" id="micButton" aria-label="Activer la dictée vocale">
-        <span class="icon" id="micIcon"></span>
-      </button>
       <button type="submit" class="send-button" id="sendButton">
         <span class="icon" id="sendIcon"></span>
       </button>
@@ -1415,8 +1388,6 @@ html, body {
         title: "French Wine Sommelier · Tomos.bot",
         headerTitle: "🇫🇷 Sommelier",
         placeholder: "Ask me for a French wine...",
-        micAria: "Enable voice dictation",
-        micUnavailable: "Voice recognition is not available in this browser.",
         themeToggle: {
           toLight: "Switch back to light mode",
           toDark: "Enable dark mode",
@@ -1559,7 +1530,6 @@ html, body {
             prix: "~€15",
           },
         },
-        speechRecognitionLocale: "en-US",
         systemPrompt: "",
       },
       es: {
@@ -1567,8 +1537,6 @@ html, body {
         title: "sommelier de Vinos Franceses · Tomos.bot",
         headerTitle: "🇫🇷 sommelier",
         placeholder: "Pregúntame por un vino francés...",
-        micAria: "Activar dictado por voz",
-        micUnavailable: "El reconocimiento de voz no está disponible en este navegador.",
         themeToggle: {
           toLight: "Volver al modo claro",
           toDark: "Activar el modo oscuro",
@@ -1711,7 +1679,6 @@ html, body {
             prix: "~€15",
           },
         },
-        speechRecognitionLocale: "es-ES",
         systemPrompt: "",
       },
       fr: {
@@ -1719,8 +1686,6 @@ html, body {
         title: "Sommelier de Vins Français · Tomos.bot",
         headerTitle: "🇫🇷 Sommelier",
         placeholder: "Demandez-moi un vin français...",
-        micAria: "Activer la dictée vocale",
-        micUnavailable: "La reconnaissance vocale n'est pas disponible sur ce navigateur.",
         themeToggle: {
           toLight: "Revenir au mode clair",
           toDark: "Activer le mode nuit",
@@ -1863,7 +1828,6 @@ html, body {
             prix: "~15 €",
           },
         },
-        speechRecognitionLocale: "fr-FR",
         systemPrompt: "",
       },
       de: {
@@ -1871,8 +1835,6 @@ html, body {
         title: "Französischer Weinsommelier · Tomos.bot",
         headerTitle: "🇫🇷 Sommelier",
         placeholder: "Frag mich nach einem französischen Wein...",
-        micAria: "Spracherkennung aktivieren",
-        micUnavailable: "Die Spracherkennung ist in diesem Browser nicht verfügbar.",
         themeToggle: {
           toLight: "Zurück zum hellen Modus wechseln",
           toDark: "Dunkelmodus aktivieren",
@@ -2008,7 +1970,6 @@ html, body {
             prix: "~€15",
           },
         },
-        speechRecognitionLocale: "de-DE",
         systemPrompt: "",
       },
       pt: {
@@ -2016,8 +1977,6 @@ html, body {
         title: "Sommelier de Vinhos Franceses · Tomos.bot",
         headerTitle: "🇫🇷 Sommelier",
         placeholder: "Peça-me um vinho francês...",
-        micAria: "Ativar ditado por voz",
-        micUnavailable: "O reconhecimento de voz não está disponível neste navegador.",
         themeToggle: {
           toLight: "Voltar ao modo claro",
           toDark: "Ativar o modo escuro",
@@ -2153,7 +2112,6 @@ html, body {
             prix: "~€15",
           },
         },
-        speechRecognitionLocale: "pt-PT",
         systemPrompt: "",
       },
       pl: {
@@ -2161,8 +2119,6 @@ html, body {
         title: "Sommelier Win Francuskich · Tomos.bot",
         headerTitle: "🇫🇷 Sommelier",
         placeholder: "Zapytaj mnie o francuskie wino...",
-        micAria: "Włącz dyktowanie głosowe",
-        micUnavailable: "Rozpoznawanie mowy nie jest dostępne w tej przeglądarce.",
         themeToggle: {
           toLight: "Powrót do jasnego trybu",
           toDark: "Włącz tryb ciemny",
@@ -2298,7 +2254,6 @@ html, body {
             prix: "~€15",
           },
         },
-        speechRecognitionLocale: "pl-PL",
         systemPrompt: "",
       },
       zh: {
@@ -2306,8 +2261,6 @@ html, body {
         title: "法国葡萄酒侍酒师 · Tomos.bot",
         headerTitle: "🇫🇷 侍酒师",
         placeholder: "向我咨询一款法国葡萄酒...",
-        micAria: "开启语音输入",
-        micUnavailable: "此浏览器不支持语音识别。",
         themeToggle: {
           toLight: "切换回亮色模式",
           toDark: "开启夜间模式",
@@ -2448,7 +2401,6 @@ html, body {
             prix: "约 €15",
           },
         },
-        speechRecognitionLocale: "zh-CN",
         systemPrompt: "",
       },
     };
@@ -2461,8 +2413,6 @@ html, body {
     let currentLang = LANGUAGE_TO_OPTION_LANG[currentLanguage] || "EN";
     let messages = [];
     let isTyping = false;
-    let recognition;
-    let isRecording = false;
     let activeWineModal = null;
     let activeKeydownHandler = null;
 
@@ -2470,8 +2420,6 @@ html, body {
     let form;
     let input;
     let sendButton;
-    let micButton;
-    let micIcon;
     let sendIcon;
     let headerIcon;
     let themeToggleButton;
@@ -2502,14 +2450,11 @@ html, body {
       form = document.getElementById("form");
       input = document.getElementById("input");
       sendButton = document.getElementById("sendButton");
-      micButton = document.getElementById("micButton");
-      micIcon = document.getElementById("micIcon");
       sendIcon = document.getElementById("sendIcon");
       headerIcon = document.getElementById("headerIcon");
       resetChatButton = document.getElementById("resetChatBtn");
 
       renderIcon(headerIcon, "wine", { width: 32, height: 32, strokeWidth: 1.4 });
-      renderIcon(micIcon, "mic", { width: 20, height: 20, strokeWidth: 1.6 });
       renderIcon(sendIcon, "send", { width: 20, height: 20, strokeWidth: 1.6 });
 
       initializeLanguage();
@@ -2517,7 +2462,6 @@ html, body {
       applyLanguageSettings();
       setupThemeToggle();
       setupLanguageSelect();
-      setupSpeechRecognition();
 
       startChatExperience();
 
@@ -2545,12 +2489,6 @@ html, body {
       }
 
       enhanceWineNames();
-
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition && micButton) {
-        micButton.disabled = true;
-        micButton.setAttribute("title", getTranslations().micUnavailable);
-      }
     }
 
 function initializeLanguage() {
@@ -2587,14 +2525,6 @@ function initializeLanguage() {
       document.title = t.title;
       if (headerTitle) headerTitle.textContent = t.headerTitle;
       if (input) input.placeholder = t.placeholder;
-      if (micButton) {
-        micButton.setAttribute("aria-label", t.micAria);
-        if (micButton.disabled) {
-          micButton.setAttribute("title", t.micUnavailable);
-        } else {
-          micButton.removeAttribute("title");
-        }
-      }
       if (languageLabel) languageLabel.textContent = t.languageSelectorLabel;
       if (languageSelect) {
         languageSelect.value = currentLanguage;
@@ -2673,68 +2603,6 @@ function initializeLanguage() {
       });
     }
 
-    function setupSpeechRecognition() {
-      if (!micButton) return;
-
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-      if (!SpeechRecognition) {
-        micButton.disabled = true;
-        micButton.setAttribute("title", getTranslations().micUnavailable);
-        return;
-      }
-
-      micButton.disabled = false;
-      micButton.removeAttribute("title");
-
-      if (!recognition) {
-        recognition = new SpeechRecognition();
-        recognition.interimResults = false;
-        recognition.continuous = false;
-
-        recognition.addEventListener("start", () => {
-          isRecording = true;
-          micButton.classList.add("recording");
-          renderIcon(micIcon, "mic-off", { width: 20, height: 20, strokeWidth: 1.8 });
-        });
-
-        recognition.addEventListener("end", () => {
-          isRecording = false;
-          micButton.classList.remove("recording");
-          renderIcon(micIcon, "mic", { width: 20, height: 20, strokeWidth: 1.6 });
-        });
-
-        recognition.addEventListener("error", () => {
-          isRecording = false;
-          micButton.classList.remove("recording");
-          renderIcon(micIcon, "mic", { width: 20, height: 20, strokeWidth: 1.6 });
-        });
-
-        recognition.addEventListener("result", (event) => {
-          const transcript = Array.from(event.results)
-            .map((result) => result[0].transcript)
-            .join(" ")
-            .trim();
-          if (transcript) {
-            input.value = transcript;
-            form?.dispatchEvent(new Event("submit"));
-          }
-        });
-
-        micButton.addEventListener("click", () => {
-          if (!recognition) return;
-          if (isRecording) {
-            recognition.stop();
-          } else {
-            recognition.lang = getTranslations().speechRecognitionLocale;
-            recognition.start();
-          }
-        });
-      }
-
-      recognition.lang = getTranslations().speechRecognitionLocale;
-    }
-
     function renderIcon(element, name, options = {}) {
       if (!element) return;
 
@@ -2756,19 +2624,6 @@ function initializeLanguage() {
           "M7 10h10",
           "M12 15v7",
           "M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z",
-        ],
-        mic: [
-          "M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z",
-          "M19 10v2a7 7 0 0 1-14 0v-2",
-          "M12 19v3",
-        ],
-        "mic-off": [
-          "M2 2l20 20",
-          "M18.89 13.23A7.12 7.12 0 0 0 19 12v-2",
-          "M5 10v2a7 7 0 0 0 12 5",
-          "M15 9.34V5a3 3 0 0 0-5.68-1.33",
-          "M9 9v3a3 3 0 0 0 5.12 2.12",
-          "M12 19v3",
         ],
         send: [
           "M22 2L11 13",
@@ -2826,16 +2681,6 @@ function initializeLanguage() {
       if (resetChatButton && !resetChatButton.classList.contains("spinning")) {
         resetChatButton.classList.add("spinning");
         setTimeout(() => resetChatButton?.classList.remove("spinning"), 650);
-      }
-
-      if (isRecording && recognition) {
-        try {
-          recognition.stop();
-        } catch (error) {
-          console.warn("Recognition stop failed during reset:", error);
-        }
-        isRecording = false;
-        micButton?.classList.remove("recording");
       }
 
       if (messagesContainer) {
