@@ -204,41 +204,26 @@
 
     .header {
       position: relative;
-      margin: 14px 20px 6px;
-      padding: 18px 26px;
+      padding: 26px 32px 22px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 28px;
-      row-gap: 12px;
-      flex-wrap: wrap;
+      gap: 18px;
       flex-shrink: 0;
-      border-radius: 999px;
-      background: linear-gradient(120deg, #fefbf6, #f3e7d7 70%);
-      border: 1px solid rgba(154, 126, 85, 0.35);
-      box-shadow: 0 24px 60px rgba(69, 40, 7, 0.18);
-    }
-
-    body[data-theme="light"] .header {
-      background: linear-gradient(120deg, #fffdf8, #f4e6cf 75%);
-      border-color: rgba(154, 126, 85, 0.45);
-      box-shadow: 0 20px 50px rgba(194, 162, 122, 0.25);
     }
 
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 6px;
       position: relative;
       z-index: 1;
-      margin-left: auto;
     }
 
     @media (max-width: 480px) {
       .header {
-        margin: 12px;
-        padding: 16px 18px;
-        gap: 16px;
+        padding: 18px 18px 16px;
+        gap: 12px;
       }
 
       .header-content {
@@ -257,32 +242,27 @@
       }
 
       .header-title {
-        font-size: clamp(18px, 5vw, 22px);
-        letter-spacing: 0.22em;
-      }
-
-      .header-subtitle {
-        font-size: 10px;
-        letter-spacing: 0.24em;
+        font-size: clamp(16px, 4.8vw, 18px);
+        letter-spacing: clamp(0.08em, 0.3vw, 0.12em);
       }
 
       .header-actions {
-        gap: 6px;
+        gap: 4px;
       }
 
       .icon-button {
-        width: 34px;
-        height: 34px;
+        width: 32px;
+        height: 32px;
       }
 
       .language-select select {
-        padding: 6px 22px 6px 12px;
+        padding: 6px 22px 6px 10px;
         font-size: 10px;
-        letter-spacing: 0.18em;
+        letter-spacing: 0.05em;
       }
 
       .language-select::after {
-        right: 10px;
+        right: 9px;
         font-size: 10px;
       }
     }
@@ -290,12 +270,10 @@
     .header::after {
       content: '';
       position: absolute;
-      inset: 6px;
-      border-radius: inherit;
-      background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.5), transparent 60%);
-      opacity: 0.8;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(197, 163, 79, 0.16), rgba(255, 255, 255, 0.02));
+      opacity: 0.55;
       pointer-events: none;
-      mix-blend-mode: screen;
     }
 
     .header-content {
@@ -304,19 +282,20 @@
       gap: 18px;
       position: relative;
       z-index: 1;
-      min-width: 0;
     }
 
     .header-icon {
-      width: clamp(46px, 7vw, 58px);
-      height: clamp(46px, 7vw, 58px);
-      border-radius: 18px;
+      width: clamp(44px, 6vw, 60px);
+      height: clamp(44px, 6vw, 60px);
+      border-radius: clamp(18px, 2vw, 26px);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #fef9f2, #f6ebde);
-      color: #aa1633;
-      box-shadow: inset 0 0 0 1px rgba(210, 176, 134, 0.6), 0 12px 30px rgba(66, 31, 13, 0.2);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(216, 187, 108, 0.65), rgba(197, 163, 79, 0.25)),
+        linear-gradient(160deg, rgba(255, 255, 255, 0.12), rgba(12, 12, 12, 0.6));
+      color: var(--color-accent-soft);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25), 0 12px 26px rgba(0, 0, 0, 0.45);
       position: relative;
       overflow: hidden;
     }
@@ -326,69 +305,61 @@
       position: absolute;
       inset: 0;
       border-radius: inherit;
-      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.65), transparent 60%);
-      opacity: 0.7;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.25), transparent 55%);
+      opacity: 0.45;
       pointer-events: none;
     }
 
     body[data-theme="light"] .header-icon {
-      background: linear-gradient(135deg, #fffdfa, #f3e7d6);
-      color: #8d0f27;
-      box-shadow: inset 0 0 0 1px rgba(210, 176, 134, 0.6), 0 12px 18px rgba(0, 0, 0, 0.08);
+      background:
+        radial-gradient(circle at 40% 30%, rgba(197, 163, 79, 0.4), rgba(216, 187, 108, 0.18)),
+        linear-gradient(160deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.35));
+      color: #745a1a;
+      box-shadow: inset 0 0 0 1px rgba(197, 163, 79, 0.4), 0 12px 24px rgba(0, 0, 0, 0.1);
     }
 
     .header-titles {
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 6px;
+      align-items: center;
+      gap: clamp(6px, 1.4vw, 12px);
     }
 
     .header-title {
-      font-size: clamp(20px, 2.8vw, 28px);
-      letter-spacing: 0.32em;
-      text-transform: uppercase;
-      color: #13254b;
-    }
-
-    .header-subtitle {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      letter-spacing: 0.4em;
+      gap: clamp(6px, 1.4vw, 12px);
+      font-size: clamp(18px, 2.4vw, 24px);
+      letter-spacing: clamp(0.12em, 0.35vw, 0.22em);
       text-transform: uppercase;
-      color: #7c5b33;
-      font-weight: 600;
-    }
-
-    .header-subtitle-text {
       white-space: nowrap;
     }
 
     .header-flag {
       display: inline-flex;
       align-items: center;
-      font-size: 16px;
+      font-size: clamp(20px, 2.6vw, 28px);
       line-height: 1;
-      filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.15));
+    }
+
+    .header-title-text {
+      white-space: nowrap;
     }
 
     .icon-button {
       position: relative;
       z-index: 1;
-      width: 40px;
-      height: 40px;
-      border-radius: 20px;
-      border: 1px solid rgba(138, 112, 74, 0.35);
-      background: #fff;
-      color: #1a2445;
+      width: 36px;
+      height: 36px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(24, 24, 28, 0.7);
+      color: var(--color-accent-soft);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: transform 0.4s var(--transition-soft), border-color 0.4s ease, color 0.4s ease, background 0.4s ease;
-      box-shadow: 0 12px 24px rgba(46, 23, 3, 0.15);
+      transition: transform 0.4s var(--transition-soft), border-color 0.4s ease, color 0.4s ease, background 0.6s ease;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
     }
 
     .language-select {
@@ -400,19 +371,18 @@
       appearance: none;
       -webkit-appearance: none;
       -moz-appearance: none;
-      background: #fff;
-      color: #1d2340;
-      border: 1px solid rgba(138, 112, 74, 0.35);
-      border-radius: 999px;
-      padding: 10px 28px 10px 16px;
+      background: rgba(24, 24, 28, 0.7);
+      color: rgba(245, 245, 245, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 16px;
+      padding: 10px 21px 10px 16px;
       font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.28em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       font-family: var(--font-body);
       cursor: pointer;
-      transition: transform 0.35s var(--transition-soft), border-color 0.4s ease, background 0.4s ease, color 0.4s ease;
-      box-shadow: 0 12px 24px rgba(46, 23, 3, 0.12);
+      transition: transform 0.35s var(--transition-soft), border-color 0.4s ease, background 0.6s ease, color 0.6s ease;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
       width: auto;
       min-width: 0;
       white-space: nowrap;
@@ -420,9 +390,9 @@
 
     .language-select select:hover {
       transform: translateY(-3px);
-      border-color: rgba(124, 91, 51, 0.65);
-      color: #13254b;
-      box-shadow: 0 18px 34px rgba(46, 23, 3, 0.2);
+      border-color: rgba(216, 187, 108, 0.45);
+      color: var(--color-ivory);
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.32);
     }
 
     .language-select select:focus-visible {
@@ -433,21 +403,20 @@
     .language-select::after {
       content: '▾';
       position: absolute;
-      right: 12px;
+      right: 14px;
       top: 50%;
       transform: translateY(-50%);
       pointer-events: none;
-      color: #7c5b33;
-      font-size: 10px;
+      color: var(--color-accent-soft);
+      font-size: 12px;
       transition: color 0.4s ease;
     }
 
     .icon-button:hover {
       transform: translateY(-3px);
-      border-color: rgba(124, 91, 51, 0.65);
-      color: #7c5b33;
-      background: #fff8ef;
-      box-shadow: 0 18px 36px rgba(46, 23, 3, 0.22);
+      border-color: rgba(216, 187, 108, 0.65);
+      color: var(--color-accent);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.38);
     }
 
     .icon-button:focus-visible {
@@ -456,26 +425,26 @@
     }
 
     body[data-theme="light"] .icon-button {
-      background: #fffdf8;
-      border-color: rgba(138, 112, 74, 0.45);
-      color: #7c5b33;
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+      background: rgba(255, 255, 255, 0.65);
+      border-color: rgba(16, 16, 16, 0.08);
+      color: #7a5d1a;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
     }
 
     body[data-theme="light"] .language-select select {
-      background: #fffdf8;
-      color: #1d2340;
-      border-color: rgba(138, 112, 74, 0.45);
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--color-ink);
+      border-color: rgba(16, 16, 16, 0.08);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
     }
 
     body[data-theme="light"] .language-select select:hover {
-      color: #13254b;
-      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.12);
+      color: var(--color-ink);
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.12);
     }
 
     body[data-theme="light"] .language-select::after {
-      color: #7c5b33;
+      color: #8b6a1e;
     }
 
     .messages-container {
@@ -1117,12 +1086,10 @@ html, body {
       <div class="header-content">
         <span class="header-icon" id="headerIcon"></span>
         <div class="header-titles">
-          <h1 class="header-title">Sommelier</h1>
-          <p class="header-subtitle">
+          <h1 class="header-title">
             <span class="header-flag" aria-hidden="true">🇫🇷</span>
-            <span class="header-subtitle-text">Vins de France</span>
-            <span class="header-flag" aria-hidden="true">🇫🇷</span>
-          </p>
+            <span class="header-title-text">Sommelier</span>
+          </h1>
         </div>
       </div>
       <div class="header-actions">
@@ -1419,8 +1386,7 @@ html, body {
       en: {
         htmlLang: "en",
         title: "French Wine Sommelier · Tomos.bot",
-        headerTitle: "Sommelier",
-        headerSubtitle: "Vins de France",
+        headerTitle: "🇫🇷 Sommelier",
         placeholder: "Ask me for a French wine...",
         themeToggle: {
           toLight: "Switch back to light mode",
@@ -1569,8 +1535,7 @@ html, body {
       es: {
         htmlLang: "es",
         title: "sommelier de Vinos Franceses · Tomos.bot",
-        headerTitle: "Sommelier",
-        headerSubtitle: "Vins de France",
+        headerTitle: "🇫🇷 sommelier",
         placeholder: "Pregúntame por un vino francés...",
         themeToggle: {
           toLight: "Volver al modo claro",
@@ -1719,8 +1684,7 @@ html, body {
       fr: {
         htmlLang: "fr",
         title: "Sommelier de Vins Français · Tomos.bot",
-        headerTitle: "Sommelier",
-        headerSubtitle: "Vins de France",
+        headerTitle: "🇫🇷 Sommelier",
         placeholder: "Demandez-moi un vin français...",
         themeToggle: {
           toLight: "Revenir au mode clair",
@@ -1869,8 +1833,7 @@ html, body {
       de: {
         htmlLang: "de",
         title: "Französischer Weinsommelier · Tomos.bot",
-        headerTitle: "Sommelier",
-        headerSubtitle: "Vins de France",
+        headerTitle: "🇫🇷 Sommelier",
         placeholder: "Frag mich nach einem französischen Wein...",
         themeToggle: {
           toLight: "Zurück zum hellen Modus wechseln",
@@ -2012,8 +1975,7 @@ html, body {
       pt: {
         htmlLang: "pt",
         title: "Sommelier de Vinhos Franceses · Tomos.bot",
-        headerTitle: "Sommelier",
-        headerSubtitle: "Vins de France",
+        headerTitle: "🇫🇷 Sommelier",
         placeholder: "Peça-me um vinho francês...",
         themeToggle: {
           toLight: "Voltar ao modo claro",
@@ -2155,8 +2117,7 @@ html, body {
       pl: {
         htmlLang: "pl",
         title: "Sommelier Win Francuskich · Tomos.bot",
-        headerTitle: "Sommelier",
-        headerSubtitle: "Vins de France",
+        headerTitle: "🇫🇷 Sommelier",
         placeholder: "Zapytaj mnie o francuskie wino...",
         themeToggle: {
           toLight: "Powrót do jasnego trybu",
@@ -2298,8 +2259,7 @@ html, body {
       zh: {
         htmlLang: "zh-Hans",
         title: "法国葡萄酒侍酒师 · Tomos.bot",
-        headerTitle: "侍酒师",
-        headerSubtitle: "Vins de France",
+        headerTitle: "🇫🇷 侍酒师",
         placeholder: "向我咨询一款法国葡萄酒...",
         themeToggle: {
           toLight: "切换回亮色模式",
@@ -2465,7 +2425,6 @@ html, body {
     let themeToggleButton;
     let themeIcon;
     let headerTitle;
-    let headerSubtitle;
     let languageSelect;
     let languageLabel;
     let resetChatButton;
@@ -2483,7 +2442,6 @@ html, body {
 
     function initializeApp() {
       headerTitle = document.querySelector(".header-title");
-      headerSubtitle = document.querySelector(".header-subtitle-text");
       themeToggleButton = document.getElementById("themeToggle");
       themeIcon = document.getElementById("themeIcon");
       languageSelect = document.getElementById("languageSelect");
@@ -2566,7 +2524,6 @@ function initializeLanguage() {
       document.documentElement.setAttribute("lang", t.htmlLang);
       document.title = t.title;
       if (headerTitle) headerTitle.textContent = t.headerTitle;
-      if (headerSubtitle) headerSubtitle.textContent = t.headerSubtitle || "Vins de France";
       if (input) input.placeholder = t.placeholder;
       if (languageLabel) languageLabel.textContent = t.languageSelectorLabel;
       if (languageSelect) {
