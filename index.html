@@ -3092,15 +3092,8 @@ function setupLanguageSelect() {
     }
 
     const typingSettings = {
-      short: { limit: 120, baseDelay: 32, pauseDelay: 160 },
-      medium: { limit: 400, baseDelay: 24, pauseDelay: 135 },
-      long: { baseDelay: 16, pauseDelay: 100 },
-      multipliers: {
-        newline: 1.8,
-        sentence: 1.4,
-        clause: 1.0,
-        space: 0.6,
-      },
+      minDelay: 12,
+      maxDelay: 45,
     };
 
     function animateAssistantMessage(bubble, content) {
@@ -3109,50 +3102,6 @@ function setupLanguageSelect() {
       const nodesQueue = Array.from(wrapper.childNodes);
       bubble.innerHTML = "";
       bubble.classList.add("is-typing");
-
-      const getNodeTextLength = (node) => {
-        if (!node) return 0;
-        if (node.nodeType === Node.TEXT_NODE) {
-          return node.textContent?.length || 0;
-        }
-        return Array.from(node.childNodes || []).reduce(
-          (total, child) => total + getNodeTextLength(child),
-          0
-        );
-      };
-
-      const totalTextLength = nodesQueue.reduce(
-        (total, node) => total + getNodeTextLength(node),
-        0
-      );
-
-      let baseDelay = typingSettings.long.baseDelay;
-      let pauseDelay = typingSettings.long.pauseDelay;
-
-      if (totalTextLength < typingSettings.short.limit) {
-        baseDelay = typingSettings.short.baseDelay;
-        pauseDelay = typingSettings.short.pauseDelay;
-      } else if (totalTextLength < typingSettings.medium.limit) {
-        baseDelay = typingSettings.medium.baseDelay;
-        pauseDelay = typingSettings.medium.pauseDelay;
-      }
-
-      const getCharDelay = (char) => {
-        if (!char) return baseDelay;
-        if (char === "\n") {
-          return pauseDelay * typingSettings.multipliers.newline;
-        }
-        if (/[.!?]/.test(char)) {
-          return pauseDelay * typingSettings.multipliers.sentence;
-        }
-        if (/[,;:]/.test(char)) {
-          return pauseDelay * typingSettings.multipliers.clause;
-        }
-        if (char === " ") {
-          return baseDelay * typingSettings.multipliers.space;
-        }
-        return baseDelay;
-      };
 
       const finishTyping = () => {
         bubble.classList.remove("is-typing");
@@ -3215,14 +3164,16 @@ function setupLanguageSelect() {
         let index = 0;
 
         const step = () => {
-          const char = text.charAt(index);
-          textNode.textContent += char;
+          textNode.textContent += text.charAt(index);
           index += 1;
           scrollMessagesToBottom();
 
           if (index < text.length) {
-            const delay = getCharDelay(char);
-            setTimeout(step, delay);
+            const dynamicDelay = Math.min(
+              typingSettings.maxDelay,
+              Math.max(typingSettings.minDelay, 160 / Math.log2(text.length + 3))
+            );
+            setTimeout(step, dynamicDelay);
           } else {
             done();
           }
