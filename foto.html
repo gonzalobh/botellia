@@ -3735,6 +3735,23 @@ function sendWineLabelImage(file) {
   reader.readAsDataURL(file);
 }
 
+function highlightDetectedWineName(text) {
+  // Detecta frases típicas de Vision:
+  // "The wine is X", "El vino es X", "El vino que observas es X",
+  // "The wine you're looking at is X", "Le vin est X"
+  const pattern = /(The wine is|El vino es|El vino que observas es|The wine you're looking at is|Le vin est)\s+([A-Z][A-Za-z0-9éèêàùûôç'\-\s]+)/;
+
+  const match = text.match(pattern);
+  if (!match) return text;
+
+  const fullName = match[2].trim();
+
+  return text.replace(
+    fullName,
+    `<span class="wine-name">${fullName}</span>`
+  );
+}
+
 async function processWineLabelImage(imageBase64, loaderMessage) {
   try {
     // Convertimos el base64 en data URL para OpenAI (visión)
@@ -3787,7 +3804,7 @@ async function processWineLabelImage(imageBase64, loaderMessage) {
     loaderMessage?.remove();
 
     if (clean) {
-      addMessage("assistant", clean);
+      addMessage("assistant", highlightDetectedWineName(clean));
     } else {
       addMessage(
         "assistant",
