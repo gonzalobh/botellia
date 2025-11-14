@@ -3676,28 +3676,36 @@ function sendWineLabelImage(file) {
   processWineLabelImage(file, loaderMessage);
 }
 
-async function processWineLabelImage(file, loaderMessage) {
+async function processWineLabelImage(imageBase64, loaderMessage) {
   try {
-    const formData = new FormData();
-    formData.append("image", file);
-    formData.append(
-      "messages",
-      JSON.stringify([
-        {
-          role: "user",
-          content: [
-            {
-              type: "input_text",
-              text: "Analiza esta etiqueta de vino y dame nombre, región, uvas, estilo, notas de cata, precio estimado y cualquier información relevante."
-            }
-          ]
-        }
-      ])
-    );
+    // Convertimos el base64 en data URL para OpenAI
+    const dataUrl = `data:image/jpeg;base64,${imageBase64}`;
 
-    const response = await fetch("https://hotel-chat-proxy.vercel.app/api/chat", {
+    const response = await fetch("https://hotel-chat-proxy.vercel.app/api/omz", {
       method: "POST",
-      body: formData
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        lang: currentLanguage || "es",
+        messages: [
+          {
+            role: "user",
+            content: [
+              {
+                type: "text",
+                text: "Analiza esta etiqueta de vino y dime: nombre del vino, región, uvas, estilo, notas de cata, precio estimado y cualquier información adicional relevante."
+              },
+              {
+                type: "image_url",
+                image_url: {
+                  url: dataUrl
+                }
+              }
+            ]
+          }
+        ]
+      })
     });
 
     if (!response.ok) {
@@ -3712,12 +3720,18 @@ async function processWineLabelImage(file, loaderMessage) {
     if (reply) {
       addMessage("assistant", reply);
     } else {
-      addMessage("assistant", "No pude reconocer la etiqueta. ¿Puedes intentar una foto más clara?");
+      addMessage(
+        "assistant",
+        "No pude reconocer la etiqueta. ¿Puedes intentar una foto más clara?"
+      );
     }
   } catch (error) {
     console.error("Error processing wine label image:", error);
     loaderMessage?.remove();
-    addMessage("assistant", "Hubo un problema al analizar la imagen. Intenta nuevamente.");
+    addMessage(
+      "assistant",
+      "Hubo un problema al analizar la imagen. Intenta nuevamente."
+    );
   }
 }
 
