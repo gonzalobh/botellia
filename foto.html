@@ -3256,6 +3256,30 @@ function setupLanguageSelect() {
       return messageDiv;
     }
 
+    function normalizeContent(raw) {
+      if (!raw) return "";
+
+      // Si viene como array (por ejemplo contenido de tipo input_text + input_image)
+      if (Array.isArray(raw)) {
+        return raw
+          .map(part => (typeof part === "string" ? part : part.text || ""))
+          .join(" ")
+          .trim();
+      }
+
+      // Si viene como objeto, convertirlo en texto para que no se imprima JSON estructurado
+      if (typeof raw === "object") {
+        try {
+          return JSON.stringify(raw, null, 2);
+        } catch {
+          return String(raw);
+        }
+      }
+
+      // Si es texto, devolverlo como texto
+      return String(raw);
+    }
+
     function normalizeText(text) {
       return text
         ?.normalize("NFD")
@@ -3617,20 +3641,21 @@ async function sendMessage(text, imageFile = null) {
     if (!response.ok) throw new Error("Network response was not ok");
 
     const data = await response.json();
-    const reply = data?.choices?.[0]?.message?.content || t.errorMessages.fetch;
+    const raw = data?.choices?.[0]?.message?.content;
+    const clean = normalizeContent(raw) || t.errorMessages.fetch;
 
-    messages.push({ role: "assistant", content: reply });
+    messages.push({ role: "assistant", content: clean });
     typingIndicator?.remove();
 
     // Limpiar <options>
-    const cleanResponse = reply.replace(/<options>.*?<\/options>/s, "").trim();
-    const displayResponse = cleanResponse || reply;
+    const cleanResponse = clean.replace(/<options>.*?<\/options>/s, "").trim();
+    const displayResponse = cleanResponse || clean;
 
     addMessage("assistant", displayResponse);
 
     // Opciones dinámicas desde <options>
     let renderedDynamicOptions = false;
-    const optionsMatch = reply.match(/<options>(.*?)<\/options>/s);
+    const optionsMatch = clean.match(/<options>(.*?)<\/options>/s);
 
     if (optionsMatch) {
       try {
@@ -3644,7 +3669,7 @@ async function sendMessage(text, imageFile = null) {
 
     // Si no hay <options>, generar opciones automáticas
     if (!renderedDynamicOptions) {
-      await generateFollowUpOptions(reply);
+      await generateFollowUpOptions(clean);
     }
 
   } catch (error) {
@@ -3743,12 +3768,13 @@ async function processWineLabelImage(imageBase64, loaderMessage) {
     }
 
     const data = await response.json();
-    const reply = data?.choices?.[0]?.message?.content?.trim();
+    const raw = data?.choices?.[0]?.message?.content;
+    const clean = normalizeContent(raw).trim();
 
     loaderMessage?.remove();
 
-    if (reply) {
-      addMessage("assistant", reply);
+    if (clean) {
+      addMessage("assistant", clean);
     } else {
       addMessage(
         "assistant",
