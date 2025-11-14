@@ -1276,6 +1276,16 @@ body[data-theme="light"] .message-input::placeholder {
     <script type="module">
     import { createIcons, icons } from "https://cdn.jsdelivr.net/npm/lucide@latest/+esm";
 
+    const IMAGE_LOADING_TEXT = {
+      es: "Analizando imagen...",
+      fr: "Analyse de l’image...",
+      en: "Analyzing image...",
+      de: "Bild wird analysiert...",
+      pt: "Analisando imagem...",
+      pl: "Analizowanie obrazu...",
+      zh: "正在分析图像..."
+    };
+
     const initialOptions = {
       ES: {
         lunch: "🍽️ Almuerzo",
@@ -3686,12 +3696,14 @@ async function sendMessage(text, imageFile = null) {
 function sendWineLabelImage(file) {
   if (!file) return;
 
+  const loaderText = IMAGE_LOADING_TEXT[currentLanguage] || IMAGE_LOADING_TEXT["es"];
+
   const loaderMessage = addMessage(
     "assistant",
     `
   <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:10px 0;">
     <dotlottie-wc src="https://lottie.host/487a5b75-ca3b-452a-b5a5-1114fad002b4/QR5rLvDJ3r.lottie" style="width:120px; height:120px;" autoplay loop></dotlottie-wc>
-    <p style="opacity:0.9; margin-top:10px;">Analizando la etiqueta… 🍷📸</p>
+    <p style="opacity:0.9; margin-top:10px;">${loaderText}</p>
   </div>
 `,
     [],
