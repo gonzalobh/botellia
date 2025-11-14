@@ -16,7 +16,7 @@
       --color-graphite: #222225;
       --color-porcelain: #f6f4ee;
       --color-ivory: #f8f8f6;
-      --color-ink: #101010;
+      --color-ink: #283e65;
       --color-muted: #b7b7c2;
       --color-muted-dark: #8f8f9a;
       --color-accent: #C5A34F;
@@ -204,11 +204,11 @@
 
     .header {
       position: relative;
-      padding: 26px 32px 22px;
+      padding: 16px 32px 22px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
+      gap: 38px;
       flex-shrink: 0;
     }
 
@@ -276,13 +276,20 @@
       pointer-events: none;
     }
 
-    .header-content {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      position: relative;
-      z-index: 1;
-    }
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* ← mueve icono a la izquierda y botones a la derecha */
+  width: 100%;
+}
+.header-icon {
+  margin-left: 0 !important; /* por si antes tenías negativos */
+}
+
+.header-actions {
+  flex-shrink: 0;   /* ← evita que aplaste el contenido */
+}
+
 
     .header-icon {
       width: clamp(44px, 6vw, 60px);
@@ -291,11 +298,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(216, 187, 108, 0.65), rgba(197, 163, 79, 0.25)),
-        linear-gradient(160deg, rgba(255, 255, 255, 0.12), rgba(12, 12, 12, 0.6));
-      color: var(--color-accent-soft);
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25), 0 12px 26px rgba(0, 0, 0, 0.45);
+    
       position: relative;
       overflow: hidden;
     }
@@ -305,17 +308,13 @@
       position: absolute;
       inset: 0;
       border-radius: inherit;
-      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.25), transparent 55%);
       opacity: 0.45;
       pointer-events: none;
     }
 
     body[data-theme="light"] .header-icon {
-      background:
-        radial-gradient(circle at 40% 30%, rgba(197, 163, 79, 0.4), rgba(216, 187, 108, 0.18)),
-        linear-gradient(160deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.35));
-      color: #745a1a;
-      box-shadow: inset 0 0 0 1px rgba(197, 163, 79, 0.4), 0 12px 24px rgba(0, 0, 0, 0.1);
+  
+      color: #a22e32;
     }
 
     .header-titles {
@@ -325,6 +324,7 @@
     }
 
     .header-title {
+        color:#1F3866;
       display: inline-flex;
       align-items: center;
       gap: clamp(6px, 1.4vw, 12px);
@@ -375,7 +375,7 @@
       color: rgba(245, 245, 245, 0.9);
       border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 16px;
-      padding: 10px 21px 10px 16px;
+      padding: 10px 13px 10px 13px;
       font-size: 13px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -400,17 +400,7 @@
       outline-offset: 3px;
     }
 
-    .language-select::after {
-      content: '▾';
-      position: absolute;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      color: var(--color-accent-soft);
-      font-size: 12px;
-      transition: color 0.4s ease;
-    }
+
 
     .icon-button:hover {
       transform: translateY(-3px);
@@ -427,7 +417,7 @@
     body[data-theme="light"] .icon-button {
       background: rgba(255, 255, 255, 0.65);
       border-color: rgba(16, 16, 16, 0.08);
-      color: #7a5d1a;
+      color: #273e65;
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
     }
 
@@ -444,7 +434,7 @@
     }
 
     body[data-theme="light"] .language-select::after {
-      color: #8b6a1e;
+      color: #a22e32;
     }
 
     .messages-container {
@@ -591,8 +581,9 @@
     }
 
     body[data-theme="light"] .message.user .message-bubble {
-      background: linear-gradient(160deg, rgba(245, 243, 236, 0.96), rgba(255, 255, 255, 0.92));
+      background: #a22e320a;
       border-color: rgba(197, 163, 79, 0.35);
+      color:#A12E32;
     }
 
     .typing-indicator {
@@ -686,17 +677,13 @@
       display: flex;
       gap: 16px;
       align-items: center;
-      background: rgba(15, 15, 18, 0.88);
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+
       backdrop-filter: blur(20px);
       transition: background 0.8s ease, border-color 0.6s ease;
       flex-shrink: 0;
     }
 
-    body[data-theme="light"] .input-container {
-      background: rgba(253, 252, 248, 0.9);
-      border-top: 1px solid rgba(0, 0, 0, 0.08);
-    }
+
 
     .input-wrapper {
       flex: 1;
@@ -767,15 +754,15 @@
     }
 
     body[data-theme="light"] .send-button {
-      border-color: rgba(0, 0, 0, 0.08);
-      background: rgba(255, 255, 255, 0.75);
+      border-color: #A12E32;
+      background: #A12E32;
       box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12);
     }
 
     body[data-theme="light"] .send-button {
-      color: var(--color-ink);
-      background: linear-gradient(135deg, #f4e6c0, #f0dba0);
-      border-color: rgba(197, 163, 79, 0.55);
+      color: white;
+      background:#A12E32;
+      border-color: #A12E32;
       box-shadow: 0 22px 42px rgba(197, 163, 79, 0.35);
     }
 
@@ -796,16 +783,16 @@
       animation: fadeIn 0.8s ease;
     }
 
-    .welcome-icon {
-      width: 74px;
-      height: 74px;
-      border-radius: 28px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at 40% 30%, rgba(197, 163, 79, 0.45), transparent 70%);
-      color: var(--color-accent-soft);
-    }
+.welcome-icon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: transparent !important;
+  box-shadow: none !important;
+}
 
     .welcome-title {
       font-family: var(--font-display);
@@ -971,7 +958,7 @@
     }
 
     body[data-theme="light"] .wine-title {
-      color: #8b6a1e;
+      color: #a22e32;
     }
 
     .wine-close {
@@ -1016,7 +1003,7 @@
 
     body[data-theme="light"] .wine-name {
       background: rgba(197, 163, 79, 0.18);
-      color: #745a1a;
+      color: #a22e32;
     }
 
     body[data-theme="light"] .wine-name:hover {
@@ -1077,43 +1064,122 @@ html, body {
   }
 }
 
+.header-titles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.header-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  opacity: 0.9;
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+}
+
+.header-title-text {
+  font-size: 22px;
+  letter-spacing: 0.18em;
+}
+
+.header-subtitle .flag {
+  font-size: 16px;
+}
+
+body[data-theme="light"] .header-subtitle {
+  color: #1F3866;
+}
+
+.powered-by {
+  text-align: center;
+  font-size: 10px;
+  opacity: 0.6;
+  margin-top: -6px;
+  margin-bottom: 14px;
+  font-family: var(--font-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.powered-logo {
+  height: 14px;
+  opacity: 0.8;
+}
+body[data-theme="light"] .message-input::placeholder {
+  color: #A12E32;
+}
+.input-zone {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+
+.input-zone .powered-by {
+  margin-top: -16px !important;  /* antes era ~14px */
+}
+
+
   </style>
   <base target="_blank">
 </head>
 <body>
   <div class="chat-container">
-    <header class="header">
-      <div class="header-content">
-        <span class="header-icon" id="headerIcon"></span>
-        <div class="header-titles">
-          <h1 class="header-title">
-            <span class="header-flag" aria-hidden="true">🇫🇷</span>
-            <span class="header-title-text">Sommelier</span>
-          </h1>
-        </div>
+<header class="header">
+  <div class="header-content">
+
+    <!-- ICONO IZQUIERDA -->
+    <span class="header-icon" id="headerIcon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 22h8"></path>
+        <path d="M7 10h10"></path>
+        <path d="M12 15v7"></path>
+        <path d="M5 2h14l-1 6a7 7 0 0 1-12 0z"></path>
+      </svg>
+    </span>
+
+    <!-- TÍTULOS -->
+    <div class="header-titles">
+      <h1 class="header-title">
+        <span class="header-title-text">SOMMELIER</span>
+      </h1>
+
+      <div class="header-subtitle">
+        <span class="flag">🇫🇷</span>
+        <span class="subtitle-text">Vins de France</span>
+        <span class="flag">🇫🇷</span>
       </div>
-      <div class="header-actions">
-        <button type="button" class="icon-button" id="themeToggle" aria-label="Activer le mode nuit">
-          <span class="icon" id="themeIcon"></span>
-        </button>
-        <div class="language-select">
-          <label for="languageSelect" class="sr-only">Sélectionner la langue</label>
-          <select id="languageSelect">
-            <option value="en">EN</option>
-            <option value="es">ES</option>
-            <option value="fr">FR</option>
-            <option value="de">DE</option>
-            <option value="pt">PT</option>
-            <option value="pl">PL</option>
-            <option value="zh">ZH</option>
-          </select>
-        </div>
-      </div>
-    </header>
+    </div>
+
+  </div>
+
+  <!-- ACCIONES DERECHA -->
+  <div class="header-actions">
+    <button type="button" class="icon-button" id="themeToggle" aria-label="Changer de thème">
+      <span class="icon" id="themeIcon"></span>
+    </button>
+
+    <div class="language-select">
+      <label for="languageSelect" class="sr-only">Langue</label>
+      <select id="languageSelect">
+        <option value="fr">FR</option>
+        <option value="en">EN</option>
+        <option value="es">ES</option>
+        <option value="de">DE</option>
+        <option value="pt">PT</option>
+        <option value="pl">PL</option>
+        <option value="zh">ZH</option>
+      </select>
+    </div>
+  </div>
+</header>
+
 
     <main class="messages-container" id="messages"></main>
 
-    <button type="button" id="resetChatBtn" class="floating-reset" aria-label="Réinitialiser la conversation">
+    <button type="button" id="resetChatBtn" class="floating-reset" aria-label="Réinitialiser la conversation" style="display:none">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -1133,20 +1199,33 @@ html, body {
       </svg>
     </button>
 
-    <form class="input-container" id="form">
-      <div class="input-wrapper">
-        <input
-          type="text"
-          id="input"
-          class="message-input"
-          placeholder="Demandez-moi un vin français..."
-          autocomplete="off"
-        />
-      </div>
-      <button type="submit" class="send-button" id="sendButton">
-        <span class="icon" id="sendIcon"></span>
-      </button>
-    </form>
+<div class="input-zone">
+  <form class="input-container" id="form">
+    <div class="input-wrapper">
+      <input
+        type="text"
+        id="input"
+        class="message-input"
+        placeholder="Demandez-moi un vin français..."
+        autocomplete="off"
+      />
+    </div>
+
+    <button type="submit" class="send-button" id="sendButton">
+      <span class="icon" id="sendIcon"></span>
+    </button>
+  </form>
+
+ <div class="powered-by">
+  Fait par 
+  <a href="https://tomos.bot" target="_blank" class="powered-link">
+    <img src="logo.svg" alt="Logo" class="powered-logo">
+  </a>
+</div>
+
+</div>
+
+
   </div>
 
   <!-- Carga de Lucide Icons -->
@@ -1386,7 +1465,7 @@ html, body {
       en: {
         htmlLang: "en",
         title: "French Wine Sommelier · Tomos.bot",
-        headerTitle: "🇫🇷 Sommelier",
+        headerTitle: "Sommelier",
         placeholder: "Ask me for a French wine...",
         themeToggle: {
           toLight: "Switch back to light mode",
@@ -1535,7 +1614,7 @@ html, body {
       es: {
         htmlLang: "es",
         title: "sommelier de Vinos Franceses · Tomos.bot",
-        headerTitle: "🇫🇷 sommelier",
+        headerTitle: "Sommelier",
         placeholder: "Pregúntame por un vino francés...",
         themeToggle: {
           toLight: "Volver al modo claro",
@@ -1684,7 +1763,7 @@ html, body {
       fr: {
         htmlLang: "fr",
         title: "Sommelier de Vins Français · Tomos.bot",
-        headerTitle: "🇫🇷 Sommelier",
+        headerTitle: "Sommelier",
         placeholder: "Demandez-moi un vin français...",
         themeToggle: {
           toLight: "Revenir au mode clair",
@@ -1833,7 +1912,7 @@ html, body {
       de: {
         htmlLang: "de",
         title: "Französischer Weinsommelier · Tomos.bot",
-        headerTitle: "🇫🇷 Sommelier",
+        headerTitle: "Sommelier",
         placeholder: "Frag mich nach einem französischen Wein...",
         themeToggle: {
           toLight: "Zurück zum hellen Modus wechseln",
@@ -1975,7 +2054,7 @@ html, body {
       pt: {
         htmlLang: "pt",
         title: "Sommelier de Vinhos Franceses · Tomos.bot",
-        headerTitle: "🇫🇷 Sommelier",
+        headerTitle: "Sommelier",
         placeholder: "Peça-me um vinho francês...",
         themeToggle: {
           toLight: "Voltar ao modo claro",
@@ -2117,7 +2196,7 @@ html, body {
       pl: {
         htmlLang: "pl",
         title: "Sommelier Win Francuskich · Tomos.bot",
-        headerTitle: "🇫🇷 Sommelier",
+        headerTitle: "Sommelier",
         placeholder: "Zapytaj mnie o francuskie wino...",
         themeToggle: {
           toLight: "Powrót do jasnego trybu",
@@ -2587,21 +2666,20 @@ function initializeLanguage() {
       });
     }
 
-    function setupLanguageSelect() {
-      if (!languageSelect) return;
-      languageSelect.addEventListener("change", (event) => {
-        const newLanguage = event.target.value;
-        if (!TRANSLATIONS[newLanguage] || newLanguage === currentLanguage) return;
-        currentLanguage = newLanguage;
-        currentLang = LANGUAGE_TO_OPTION_LANG[currentLanguage] || "EN";
-        try {
-          localStorage.setItem(LANGUAGE_STORAGE_KEY, newLanguage);
-        } catch (error) {}
-        applyLanguageSettings();
-        setupSpeechRecognition();
-        startChatExperience();
-      });
-    }
+function setupLanguageSelect() {
+  if (!languageSelect) return;
+  languageSelect.addEventListener("change", (event) => {
+    const newLanguage = event.target.value;
+    if (!TRANSLATIONS[newLanguage] || newLanguage === currentLanguage) return;
+    currentLanguage = newLanguage;
+    currentLang = LANGUAGE_TO_OPTION_LANG[currentLanguage] || "EN";
+    try {
+      localStorage.setItem(LANGUAGE_STORAGE_KEY, newLanguage);
+    } catch (error) {}
+    applyLanguageSettings();   // Actualiza textos (header, placeholder, etc.)
+    startChatExperience();     // Reinicia el chat y muestra la bienvenida en el nuevo idioma
+  });
+}
 
     function renderIcon(element, name, options = {}) {
       if (!element) return;
