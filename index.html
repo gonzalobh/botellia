@@ -635,6 +635,15 @@
       flex-wrap: wrap;
       gap: 10px;
       margin-top: 16px;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .options-container.pending-display {
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
     }
 
     .options-container.initial-options {
@@ -2854,6 +2863,22 @@ function setupLanguageSelect() {
       messagesContainer.appendChild(welcomeDiv);
     }
 
+    function revealOptionsAfterTyping(bubble, element) {
+      if (!element) return;
+      if (!bubble || !bubble.classList.contains("is-typing")) {
+        element.classList.remove("pending-display");
+        return;
+      }
+
+      element.classList.add("pending-display");
+      const showOptions = () => {
+        element.classList.remove("pending-display");
+        bubble.removeEventListener("typingcomplete", showOptions);
+      };
+
+      bubble.addEventListener("typingcomplete", showOptions);
+    }
+
     function showInitialOptions() {
       const t = getTranslations();
       const message = addMessage("assistant", t.initialQuestion);
@@ -2863,6 +2888,8 @@ function setupLanguageSelect() {
       const container = document.createElement("div");
       container.className = "options-container initial-options";
       message.appendChild(container);
+      const bubble = message.querySelector(".message-bubble");
+      revealOptionsAfterTyping(bubble, container);
       initialOptionsContainer = container;
       renderInitialOccasionButtons();
     }
@@ -3045,7 +3072,11 @@ function setupLanguageSelect() {
         container.appendChild(button);
       });
       const lastMessage = document.querySelector("#messages").lastElementChild;
-      if (lastMessage) lastMessage.appendChild(container);
+      if (lastMessage) {
+        lastMessage.appendChild(container);
+        const bubble = lastMessage.querySelector(".message-bubble");
+        revealOptionsAfterTyping(bubble, container);
+      }
     }
 
     function scrollMessagesToBottom() {
@@ -3068,6 +3099,9 @@ function setupLanguageSelect() {
       const finishTyping = () => {
         bubble.classList.remove("is-typing");
         scrollMessagesToBottom();
+        bubble.dispatchEvent(
+          new CustomEvent("typingcomplete", { bubbles: true })
+        );
       };
 
       const processNextNode = () => {
@@ -3164,6 +3198,9 @@ function setupLanguageSelect() {
       if (options.length > 0) {
         const optionsContainer = document.createElement("div");
         optionsContainer.className = "options-container";
+        if (role === "assistant") {
+          revealOptionsAfterTyping(bubble, optionsContainer);
+        }
 
         options.forEach((option) => {
           const button = document.createElement("button");
