@@ -434,7 +434,7 @@
     }
 
     body[data-theme="light"] .language-select::after {
-      color: #8b6a1e;
+      color: #a22e32;
     }
 
     .messages-container {
@@ -581,7 +581,7 @@
     }
 
     body[data-theme="light"] .message.user .message-bubble {
-      background: linear-gradient(160deg, rgba(245, 243, 236, 0.96), rgba(255, 255, 255, 0.92));
+      background: #a22e320a;
       border-color: rgba(197, 163, 79, 0.35);
       color:#A12E32;
     }
@@ -783,16 +783,16 @@
       animation: fadeIn 0.8s ease;
     }
 
-    .welcome-icon {
-      width: 74px;
-      height: 74px;
-      border-radius: 28px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at 40% 30%, rgba(197, 163, 79, 0.45), transparent 70%);
-      color: var(--color-accent-soft);
-    }
+.welcome-icon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: transparent !important;
+  box-shadow: none !important;
+}
 
     .welcome-title {
       font-family: var(--font-display);
@@ -958,7 +958,7 @@
     }
 
     body[data-theme="light"] .wine-title {
-      color: #8b6a1e;
+      color: #a22e32;
     }
 
     .wine-close {
@@ -2505,7 +2505,6 @@ body[data-theme="light"] .message-input::placeholder {
     let resetChatButton;
     let initialOptionsContainer = null;
     let initialOptionsExpanded = false;
-    let welcomeTimeoutId = null;
 
     document.addEventListener("DOMContentLoaded", () => {
       createIcons({ icons });
@@ -2663,21 +2662,20 @@ function initializeLanguage() {
       });
     }
 
-    function setupLanguageSelect() {
-      if (!languageSelect) return;
-      languageSelect.addEventListener("change", (event) => {
-        const newLanguage = event.target.value;
-        if (!TRANSLATIONS[newLanguage] || newLanguage === currentLanguage) return;
-        currentLanguage = newLanguage;
-        currentLang = LANGUAGE_TO_OPTION_LANG[currentLanguage] || "EN";
-        try {
-          localStorage.setItem(LANGUAGE_STORAGE_KEY, newLanguage);
-        } catch (error) {}
-        applyLanguageSettings();
-        setupSpeechRecognition();
-        startChatExperience();
-      });
-    }
+function setupLanguageSelect() {
+  if (!languageSelect) return;
+  languageSelect.addEventListener("change", (event) => {
+    const newLanguage = event.target.value;
+    if (!TRANSLATIONS[newLanguage] || newLanguage === currentLanguage) return;
+    currentLanguage = newLanguage;
+    currentLang = LANGUAGE_TO_OPTION_LANG[currentLanguage] || "EN";
+    try {
+      localStorage.setItem(LANGUAGE_STORAGE_KEY, newLanguage);
+    } catch (error) {}
+    applyLanguageSettings();   // Actualiza textos (header, placeholder, etc.)
+    startChatExperience();     // Reinicia el chat y muestra la bienvenida en el nuevo idioma
+  });
+}
 
     function renderIcon(element, name, options = {}) {
       if (!element) return;
@@ -2731,19 +2729,11 @@ function initializeLanguage() {
       element.appendChild(iconSvg);
     }
 
-    function clearWelcomeTimeout() {
-      if (welcomeTimeoutId) {
-        clearTimeout(welcomeTimeoutId);
-        welcomeTimeoutId = null;
-      }
-    }
-
     function startChatExperience() {
       messages = [];
       isTyping = false;
       initialOptionsContainer = null;
       initialOptionsExpanded = false;
-      clearWelcomeTimeout();
       if (messagesContainer) {
         messagesContainer.innerHTML = "";
       }
@@ -2751,13 +2741,12 @@ function initializeLanguage() {
         sendButton.disabled = false;
       }
       showWelcome();
-      welcomeTimeoutId = setTimeout(() => {
+      setTimeout(() => {
         const welcome = document.querySelector(".welcome-screen");
         if (welcome) {
           welcome.remove();
         }
         showInitialOptions();
-        welcomeTimeoutId = null;
       }, 3300);
       input?.focus();
     }
@@ -2767,8 +2756,6 @@ function initializeLanguage() {
         resetChatButton.classList.add("spinning");
         setTimeout(() => resetChatButton?.classList.remove("spinning"), 650);
       }
-
-      clearWelcomeTimeout();
 
       if (messagesContainer) {
         messagesContainer.innerHTML = "";
