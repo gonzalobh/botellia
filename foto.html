@@ -3673,12 +3673,34 @@ function sendWineLabelImage(file) {
     { disableTyping: true }
   );
 
-  processWineLabelImage(file, loaderMessage);
+  const reader = new FileReader();
+
+  reader.onload = async () => {
+    try {
+      const result = reader.result || "";
+      const imageBase64 = result.toString().split(",")[1];
+      if (!imageBase64) {
+        throw new Error("Invalid image data");
+      }
+      await processWineLabelImage(imageBase64, loaderMessage);
+    } catch (error) {
+      console.error("Error reading wine label image:", error);
+      loaderMessage?.remove();
+      addMessage("assistant", "Hubo un problema al analizar la imagen. Intenta nuevamente.");
+    }
+  };
+
+  reader.onerror = () => {
+    loaderMessage?.remove();
+    addMessage("assistant", "Hubo un problema al analizar la imagen. Intenta nuevamente.");
+  };
+
+  reader.readAsDataURL(file);
 }
 
 async function processWineLabelImage(imageBase64, loaderMessage) {
   try {
-    // Convertimos el base64 en data URL para OpenAI
+    // Convertimos el base64 en data URL para OpenAI (visión)
     const dataUrl = `data:image/jpeg;base64,${imageBase64}`;
 
     const response = await fetch("https://hotel-chat-proxy.vercel.app/api/omz", {
@@ -3687,7 +3709,7 @@ async function processWineLabelImage(imageBase64, loaderMessage) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        lang: currentLanguage || "es",
+        lang: window.currentLanguage || "es",
         messages: [
           {
             role: "user",
@@ -3708,7 +3730,15 @@ async function processWineLabelImage(imageBase64, loaderMessage) {
       })
     });
 
+    // Si la API de Vercel/OpenAI responde con error, leo el JSON y lo muestro en consola
     if (!response.ok) {
+      let errorData = null;
+      try {
+        errorData = await response.json();
+      } catch (e) {
+        errorData = { parseError: e?.message || "no se pudo leer el cuerpo de error" };
+      }
+      console.error("Wine label API error:", response.status, errorData);
       throw new Error(`Wine label analysis failed with status ${response.status}`);
     }
 
