@@ -3734,7 +3734,8 @@ async function processWineLabelImage(imageBase64, loaderMessage) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        lang: window.currentLanguage || "es",
+        // 🔥 FIX: usar el idioma real seleccionado
+        lang: currentLanguage || "es",
         messages: [
           {
             role: "user",
