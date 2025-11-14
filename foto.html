@@ -3673,55 +3673,31 @@ function sendWineLabelImage(file) {
     { disableTyping: true }
   );
 
-  const reader = new FileReader();
-
-  reader.onload = async () => {
-    try {
-      const result = reader.result || "";
-      const imageBase64 = result.toString().split(",")[1];
-      if (!imageBase64) {
-        throw new Error("Invalid image data");
-      }
-      await processWineLabelImage(imageBase64, loaderMessage);
-    } catch (error) {
-      console.error("Error reading wine label image:", error);
-      loaderMessage?.remove();
-      addMessage("assistant", "Hubo un problema al analizar la imagen. Intenta nuevamente.");
-    }
-  };
-
-  reader.onerror = () => {
-    loaderMessage?.remove();
-    addMessage("assistant", "Hubo un problema al analizar la imagen. Intenta nuevamente.");
-  };
-
-  reader.readAsDataURL(file);
+  processWineLabelImage(file, loaderMessage);
 }
 
-async function processWineLabelImage(imageBase64, loaderMessage) {
+async function processWineLabelImage(file, loaderMessage) {
   try {
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append(
+      "messages",
+      JSON.stringify([
+        {
+          role: "user",
+          content: [
+            {
+              type: "input_text",
+              text: "Analiza esta etiqueta de vino y dame nombre, región, uvas, estilo, notas de cata, precio estimado y cualquier información relevante."
+            }
+          ]
+        }
+      ])
+    );
+
     const response = await fetch("https://hotel-chat-proxy.vercel.app/api/chat", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        messages: [
-          {
-            role: "user",
-            content: [
-              {
-                type: "text",
-                text: "Analiza esta etiqueta de vino y dime: nombre del vino, región, uvas, estilo, notas de cata, precio estimado y cualquier información adicional relevante.",
-              },
-              {
-                type: "input_image",
-                image: imageBase64,
-              },
-            ],
-          },
-        ],
-      }),
+      body: formData
     });
 
     if (!response.ok) {
