@@ -554,6 +554,23 @@
       position: relative;
     }
 
+    .message-bubble.is-typing::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 1.4em;
+      right: 16px;
+      bottom: 16px;
+      background: currentColor;
+      opacity: 0.8;
+      animation: caretBlink 1s steps(2) infinite;
+    }
+
+    @keyframes caretBlink {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
     .message-bubble:hover {
       transform: translateY(-4px);
       box-shadow: var(--shadow-hover);
@@ -3031,6 +3048,102 @@ function setupLanguageSelect() {
       if (lastMessage) lastMessage.appendChild(container);
     }
 
+    function scrollMessagesToBottom() {
+      if (!messagesContainer) return;
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    const typingSettings = {
+      minDelay: 12,
+      maxDelay: 45,
+    };
+
+    function animateAssistantMessage(bubble, content) {
+      const wrapper = document.createElement("div");
+      wrapper.innerHTML = content || "";
+      const nodesQueue = Array.from(wrapper.childNodes);
+      bubble.innerHTML = "";
+      bubble.classList.add("is-typing");
+
+      const finishTyping = () => {
+        bubble.classList.remove("is-typing");
+        scrollMessagesToBottom();
+      };
+
+      const processNextNode = () => {
+        if (!nodesQueue.length) {
+          finishTyping();
+          return;
+        }
+
+        const node = nodesQueue.shift();
+        typeNode(node, bubble, processNextNode);
+      };
+
+      const typeNode = (node, target, done) => {
+        if (!node) {
+          done();
+          return;
+        }
+
+        if (node.nodeType === Node.TEXT_NODE) {
+          typeText(node.textContent || "", target, done);
+          return;
+        }
+
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          const clone = node.cloneNode(false);
+          target.appendChild(clone);
+          const childNodes = Array.from(node.childNodes);
+
+          const processChild = () => {
+            if (!childNodes.length) {
+              done();
+              return;
+            }
+            const child = childNodes.shift();
+            typeNode(child, clone, processChild);
+          };
+
+          processChild();
+          return;
+        }
+
+        done();
+      };
+
+      const typeText = (text, target, done) => {
+        if (!text) {
+          done();
+          return;
+        }
+
+        const textNode = document.createTextNode("");
+        target.appendChild(textNode);
+        let index = 0;
+
+        const step = () => {
+          textNode.textContent += text.charAt(index);
+          index += 1;
+          scrollMessagesToBottom();
+
+          if (index < text.length) {
+            const dynamicDelay = Math.min(
+              typingSettings.maxDelay,
+              Math.max(typingSettings.minDelay, 160 / Math.log2(text.length + 3))
+            );
+            setTimeout(step, dynamicDelay);
+          } else {
+            done();
+          }
+        };
+
+        step();
+      };
+
+      processNextNode();
+    }
+
     function addMessage(role, content, options = []) {
       if (!messagesContainer) return null;
 
@@ -3039,7 +3152,12 @@ function setupLanguageSelect() {
 
       const bubble = document.createElement("div");
       bubble.className = "message-bubble";
-      bubble.innerHTML = content;
+
+      if (role === "assistant") {
+        animateAssistantMessage(bubble, content);
+      } else {
+        bubble.innerHTML = content;
+      }
 
       messageDiv.appendChild(bubble);
 
@@ -3063,7 +3181,7 @@ function setupLanguageSelect() {
       }
 
       messagesContainer.appendChild(messageDiv);
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      scrollMessagesToBottom();
       return messageDiv;
     }
 
