@@ -3736,19 +3736,17 @@ function sendWineLabelImage(file) {
 }
 
 function highlightDetectedWineName(text) {
-  // Detecta frases típicas de Vision:
-  // "The wine is X", "El vino es X", "El vino que observas es X",
-  // "The wine you're looking at is X", "Le vin est X"
-  const pattern = /(The wine is|El vino es|El vino que observas es|The wine you're looking at is|Le vin est)\s+([A-Z][A-Za-z0-9éèêàùûôç'\-\s]+)/;
+  // Busca nombres comunes de vinos franceses reales
+  const winePattern = /\b(Ch[âa]teau\s+[A-Z][A-Za-z0-9\-'\s]+|Domaine\s+[A-Z][A-Za-z0-9\-'\s]+|Clos\s+[A-Z][A-Za-z0-9\-'\s]+|Chablis\s+[A-Z][A-Za-z0-9\-'\s]+|Côtes?\s+du\s+[A-Z][A-Za-z0-9\-'\s]+)\b/;
 
-  const match = text.match(pattern);
+  const match = text.match(winePattern);
   if (!match) return text;
 
-  const fullName = match[2].trim();
+  const wineName = match[0].trim();
 
   return text.replace(
-    fullName,
-    `<span class="wine-name">${fullName}</span>`
+    wineName,
+    `<span class="wine-name">${wineName}</span>`
   );
 }
 
