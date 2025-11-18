@@ -1522,6 +1522,14 @@ body[data-theme="light"] .message-input::placeholder {
           title: "Welcome to your Virtual Sommelier!",
           subtitle: "Discover remarkable French wines for every occasion.",
         },
+        initialPriceQuestion:
+          "Welcome to Botellia.fr. To assist you better, could you share your preferred price range? I'll suggest options that fit your budget.",
+        priceOptions: {
+          under20: "-20 €",
+          between21and60: "21-60 €",
+          over60: "Over 60 €",
+          all: "All options",
+        },
         initialQuestion: "For which occasion would you like a recommendation?",
         initialOptions: {
           lunch: "🍽️ Lunch",
@@ -1670,6 +1678,14 @@ body[data-theme="light"] .message-input::placeholder {
         welcome: {
           title: "¡Bienvenido a tu sommelier Virtual!",
           subtitle: "Descubre grandes vinos franceses para cada ocasión.",
+        },
+        initialPriceQuestion:
+          "Bienvenido a Botellia.fr, para ayudarte mejor, ¿puedes indicarme tu rango de precio preferido? Así podré proponerte opciones que se ajusten a tu presupuesto.",
+        priceOptions: {
+          under20: "-20 €",
+          between21and60: "21-60 €",
+          over60: "Más de 60 €",
+          all: "Todas las opciones",
         },
         initialQuestion: "¿Para qué ocasión te gustaría una recomendación?",
         initialOptions: {
@@ -1820,6 +1836,14 @@ body[data-theme="light"] .message-input::placeholder {
           title: "Bienvenue auprès de votre Sommelier Virtuel !",
           subtitle: "Découvrez les plus grands vins français pour chaque occasion.",
         },
+        initialPriceQuestion:
+          "Bienvenue sur Botellia.fr. Pour mieux vous aider, pouvez-vous m'indiquer votre fourchette de prix préférée ? Je pourrai ainsi proposer des options adaptées à votre budget.",
+        priceOptions: {
+          under20: "-20 €",
+          between21and60: "21-60 €",
+          over60: "Plus de 60 €",
+          all: "Toutes les options",
+        },
         initialQuestion: "Pour quelle occasion souhaitez-vous une recommandation ?",
         initialOptions: {
           lunch: "🍽️ Déjeuner",
@@ -1969,6 +1993,14 @@ body[data-theme="light"] .message-input::placeholder {
           title: "Willkommen bei deinem virtuellen Sommelier!",
           subtitle: "Entdecke bemerkenswerte französische Weine für jeden Anlass.",
         },
+        initialPriceQuestion:
+          "Willkommen auf Botellia.fr. Damit ich dir besser helfen kann, nenne mir bitte deine bevorzugte Preisspanne. So kann ich dir Optionen vorschlagen, die zu deinem Budget passen.",
+        priceOptions: {
+          under20: "-20 €",
+          between21and60: "21-60 €",
+          over60: "Mehr als 60 €",
+          all: "Alle Optionen",
+        },
         initialQuestion: "Für welchen Anlass hättest du gern eine Empfehlung?",
         initialOptions: {
           lunch: "🍽️ Mittagessen",
@@ -2110,6 +2142,14 @@ body[data-theme="light"] .message-input::placeholder {
         welcome: {
           title: "Bem-vindo ao seu Sommelier Virtual!",
           subtitle: "Descubra grandes vinhos franceses para cada ocasião.",
+        },
+        initialPriceQuestion:
+          "Bem-vindo à Botellia.fr. Para ajudar melhor, pode indicar a sua faixa de preço preferida? Assim posso sugerir opções adequadas ao seu orçamento.",
+        priceOptions: {
+          under20: "-20 €",
+          between21and60: "21-60 €",
+          over60: "Mais de 60 €",
+          all: "Todas as opções",
         },
         initialQuestion: "Para qual ocasião você deseja uma recomendação?",
         initialOptions: {
@@ -2253,6 +2293,14 @@ body[data-theme="light"] .message-input::placeholder {
           title: "Witamy u Twojego Wirtualnego Sommeliera!",
           subtitle: "Odkryj znakomite francuskie wina na każdą okazję.",
         },
+        initialPriceQuestion:
+          "Witamy w Botellia.fr. Aby lepiej pomóc, podaj proszę swój preferowany przedział cenowy. Dzięki temu zaproponuję opcje pasujące do Twojego budżetu.",
+        priceOptions: {
+          under20: "-20 €",
+          between21and60: "21-60 €",
+          over60: "Powyżej 60 €",
+          all: "Wszystkie opcje",
+        },
         initialQuestion: "Na jaką okazję chcesz otrzymać rekomendację?",
         initialOptions: {
           lunch: "🍽️ Lunch",
@@ -2394,6 +2442,14 @@ body[data-theme="light"] .message-input::placeholder {
         welcome: {
           title: "欢迎来到你的虚拟侍酒师！",
           subtitle: "为每个时刻发现出色的法国美酒。",
+        },
+        initialPriceQuestion:
+          "欢迎来到 Botellia.fr。为便于更好地帮助你，请告诉我你偏好的价格区间，我会为你推荐符合预算的选择。",
+        priceOptions: {
+          under20: "-20 €",
+          between21and60: "21-60 €",
+          over60: "60 € 以上",
+          all: "所有选项",
         },
         initialQuestion: "你想为哪种场合寻求推荐？",
         initialOptions: {
@@ -2555,6 +2611,7 @@ body[data-theme="light"] .message-input::placeholder {
     let resetChatButton;
     let initialOptionsContainer = null;
     let initialOptionsExpanded = false;
+    let priceOptionsContainer = null;
 
     document.addEventListener("DOMContentLoaded", () => {
       createIcons({ icons });
@@ -2784,6 +2841,7 @@ function setupLanguageSelect() {
       isTyping = false;
       initialOptionsContainer = null;
       initialOptionsExpanded = false;
+      priceOptionsContainer = null;
       if (messagesContainer) {
         messagesContainer.innerHTML = "";
       }
@@ -2796,7 +2854,7 @@ function setupLanguageSelect() {
         if (welcome) {
           welcome.remove();
         }
-        showInitialOptions();
+        showInitialPricePrompt();
       }, 3300);
       input?.focus();
     }
@@ -2827,6 +2885,7 @@ function setupLanguageSelect() {
       isTyping = false;
       initialOptionsContainer = null;
       initialOptionsExpanded = false;
+      priceOptionsContainer = null;
       sendButton?.removeAttribute("disabled");
 
       if (typeof conversationHistory !== "undefined") {
@@ -2853,7 +2912,7 @@ function setupLanguageSelect() {
         }
       }
 
-      showInitialOptions();
+      showInitialPricePrompt();
       messagesContainer?.scrollTo({ top: 0, behavior: "smooth" });
       input?.focus();
     }
@@ -2897,6 +2956,49 @@ function setupLanguageSelect() {
       };
 
       bubble.addEventListener("typingcomplete", showOptions);
+    }
+
+    function showInitialPricePrompt() {
+      const t = getTranslations();
+      const message = addMessage("assistant", t.initialPriceQuestion);
+      if (!message) return;
+
+      const container = document.createElement("div");
+      container.className = "options-container initial-options price-options";
+      message.appendChild(container);
+
+      const bubble = message.querySelector(".message-bubble");
+      revealOptionsAfterTyping(bubble, container);
+
+      priceOptionsContainer = container;
+      renderPriceOptions();
+    }
+
+    function renderPriceOptions() {
+      if (!priceOptionsContainer) return;
+      const t = getTranslations();
+      const options = t.priceOptions || {};
+
+      priceOptionsContainer.innerHTML = "";
+      Object.entries(options).forEach(([key, label]) => {
+        if (!label) return;
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "option-button";
+        button.textContent = label;
+        button.addEventListener("click", () => handlePriceSelection(key, label));
+        priceOptionsContainer.appendChild(button);
+      });
+    }
+
+    function handlePriceSelection(optionKey, label) {
+      if (priceOptionsContainer) {
+        priceOptionsContainer.remove();
+        priceOptionsContainer = null;
+      }
+
+      addMessage("user", label);
+      showInitialOptions();
     }
 
     function showInitialOptions() {
