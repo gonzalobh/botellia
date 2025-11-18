@@ -1,12 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Sommelier de Vins Français · Botellia.fr</title>
+<title>Botellia.fr | Recherche de Vins Français, Accords Mets-Vins & Guide avec Chatbot Sommelier</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <meta name="description" content="Découvrez et explorez les vins français grâce à un moteur de recherche intuitif et un assistant intelligent. Notre chatbot spécialisé vous guide pas à pas pour choisir le vin idéal selon vos goûts, vos accords mets-vins et chaque occasion. Parfait pour amateurs, passionnés et débutants qui souhaitent mieux comprendre le vin français.">
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script type="module" src="https://unpkg.com/@lottiefiles/dotlottie-wc@latest/dist/dotlottie-wc.js"></script>
+
 <style>
     :root {
       --font-display: 'Playfair Display', serif;
@@ -211,6 +213,7 @@
       justify-content: space-between;
       gap: 38px;
       flex-shrink: 0;
+      border-bottom: 1px solid #dd5348;
     }
 
     .header-actions {
@@ -1150,9 +1153,19 @@ body[data-theme="light"] .message-input::placeholder {
 }
 .input-zone {
   padding-bottom: env(safe-area-inset-bottom, 0px);
+      border-top: 1px solid #32669c;
 
 .input-zone .powered-by {
   margin-top: -16px !important;  /* antes era ~14px */
+}
+.powered-link {
+  text-decoration: none;      /* Sin subrayado */
+  color: inherit;             /* Usa el mismo color del texto padre */
+  font-weight: 400;
+}
+
+.powered-link:hover {
+  opacity: 0.85;              /* Un pequeño efecto suave al pasar el mouse */
 }
 
 
@@ -1181,7 +1194,6 @@ body[data-theme="light"] .message-input::placeholder {
       </h1>
 
       <div class="header-subtitle">
-        <span class="flag">🇫🇷</span>
         <span class="subtitle-text">Vins de France</span>
         <span class="flag">🇫🇷</span>
       </div>
@@ -1245,27 +1257,17 @@ body[data-theme="light"] .message-input::placeholder {
       />
     </div>
 
-    <button type="button" id="imageUploadBtn" class="icon-button image-button" aria-label="Subir foto de etiqueta">
-      <!-- icono Lucide: camera -->
-      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M23 19V7a2 2 0 0 0-2-2h-3l-2-3H8L6 5H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2z"></path>
-        <circle cx="12" cy="13" r="4"></circle>
-      </svg>
-    </button>
-
-    <input type="file" id="imageInput" accept="image/*" style="display:none" />
-
     <button type="submit" class="send-button" id="sendButton">
       <span class="icon" id="sendIcon"></span>
     </button>
   </form>
 
- <div class="powered-by">
-  Fait par 
-  <a href="https://tomos.bot" target="_blank" class="powered-link">
-    <img src="logo.svg" alt="Logo" class="powered-logo">
+<div class="powered-by">
+  <a href="https://tomos.io" target="_blank" class="powered-link">
+    Fait par Tomos.io
   </a>
 </div>
+
 
 </div>
 
@@ -2544,8 +2546,6 @@ body[data-theme="light"] .message-input::placeholder {
     let input;
     let sendButton;
     let sendIcon;
-    let imageUploadButton;
-    let imageInput;
     let headerIcon;
     let themeToggleButton;
     let themeIcon;
@@ -2576,8 +2576,6 @@ body[data-theme="light"] .message-input::placeholder {
       input = document.getElementById("input");
       sendButton = document.getElementById("sendButton");
       sendIcon = document.getElementById("sendIcon");
-      imageUploadButton = document.getElementById("imageUploadBtn");
-      imageInput = document.getElementById("imageInput");
       headerIcon = document.getElementById("headerIcon");
       resetChatButton = document.getElementById("resetChatBtn");
 
@@ -2608,18 +2606,6 @@ body[data-theme="light"] .message-input::placeholder {
             event.preventDefault();
             form?.dispatchEvent(new Event("submit"));
           }
-        });
-      }
-
-      if (imageUploadButton && imageInput) {
-        document.getElementById("imageUploadBtn").onclick = () => {
-          document.getElementById("imageInput").click();
-        };
-
-        document.getElementById("imageInput").addEventListener("change", (e) => {
-          const file = e.target.files[0];
-          if (file) sendWineLabelImage(file);
-          e.target.value = "";
         });
       }
 
@@ -3212,7 +3198,7 @@ function setupLanguageSelect() {
       processNextNode();
     }
 
-    function addMessage(role, content, options = [], config = {}) {
+    function addMessage(role, content, options = []) {
       if (!messagesContainer) return null;
 
       const messageDiv = document.createElement("div");
@@ -3221,7 +3207,7 @@ function setupLanguageSelect() {
       const bubble = document.createElement("div");
       bubble.className = "message-bubble";
 
-      if (role === "assistant" && !config.disableTyping) {
+      if (role === "assistant") {
         animateAssistantMessage(bubble, content);
       } else {
         bubble.innerHTML = content;
@@ -3584,7 +3570,7 @@ async function sendMessage(text) {
 
   try {
     // 🚀 Enviamos mensajes + idioma actual
-    const response = await fetch("https://hotel-chat-proxy.vercel.app/api/omz", {
+    const response = await fetch("https://hotel-chat-proxy.vercel.app/api/recomienda", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -3632,93 +3618,6 @@ async function sendMessage(text) {
       sendButton.disabled = false;
     }
     input?.focus();
-  }
-}
-
-function sendWineLabelImage(file) {
-  if (!file) return;
-
-  const loaderMessage = addMessage(
-    "assistant",
-    `
-  <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:10px 0;">
-    <dotlottie-wc src="https://lottie.host/487a5b75-ca3b-452a-b5a5-1114fad002b4/QR5rLvDJ3r.lottie" style="width:120px; height:120px;" autoplay loop></dotlottie-wc>
-    <p style="opacity:0.9; margin-top:10px;">Analizando la etiqueta… 🍷📸</p>
-  </div>
-`,
-    [],
-    { disableTyping: true }
-  );
-
-  const reader = new FileReader();
-
-  reader.onload = async () => {
-    try {
-      const result = reader.result || "";
-      const imageBase64 = result.toString().split(",")[1];
-      if (!imageBase64) {
-        throw new Error("Invalid image data");
-      }
-      await processWineLabelImage(imageBase64, loaderMessage);
-    } catch (error) {
-      console.error("Error reading wine label image:", error);
-      loaderMessage?.remove();
-      addMessage("assistant", "Hubo un problema al analizar la imagen. Intenta nuevamente.");
-    }
-  };
-
-  reader.onerror = () => {
-    loaderMessage?.remove();
-    addMessage("assistant", "Hubo un problema al analizar la imagen. Intenta nuevamente.");
-  };
-
-  reader.readAsDataURL(file);
-}
-
-async function processWineLabelImage(imageBase64, loaderMessage) {
-  try {
-    const response = await fetch("https://hotel-chat-proxy.vercel.app/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        messages: [
-          {
-            role: "user",
-            content: [
-              {
-                type: "text",
-                text: "Analiza esta etiqueta de vino y dime: nombre del vino, región, uvas, estilo, notas de cata, precio estimado y cualquier información adicional relevante.",
-              },
-              {
-                type: "input_image",
-                image: imageBase64,
-              },
-            ],
-          },
-        ],
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Wine label analysis failed with status ${response.status}`);
-    }
-
-    const data = await response.json();
-    const reply = data?.choices?.[0]?.message?.content?.trim();
-
-    loaderMessage?.remove();
-
-    if (reply) {
-      addMessage("assistant", reply);
-    } else {
-      addMessage("assistant", "No pude reconocer la etiqueta. ¿Puedes intentar una foto más clara?");
-    }
-  } catch (error) {
-    console.error("Error processing wine label image:", error);
-    loaderMessage?.remove();
-    addMessage("assistant", "Hubo un problema al analizar la imagen. Intenta nuevamente.");
   }
 }
 
