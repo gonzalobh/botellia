@@ -559,15 +559,7 @@
     }
 
     .message-bubble.is-typing::after {
-      content: '';
-      position: absolute;
-      width: 2px;
-      height: 1.4em;
-      right: 16px;
-      bottom: 16px;
-      background: currentColor;
-      opacity: 0.8;
-      animation: caretBlink 1s steps(2) infinite;
+
     }
 
     @keyframes caretBlink {
@@ -1278,6 +1270,8 @@ body[data-theme="light"] .message-input::placeholder {
     <script type="module">
     import { createIcons, icons } from "https://cdn.jsdelivr.net/npm/lucide@latest/+esm";
 
+    let selectedPriceRange = null;
+
     const initialOptions = {
       ES: {
         lunch: "🍽️ Almuerzo",
@@ -1600,7 +1594,7 @@ body[data-theme="light"] .message-input::placeholder {
             "I'm sorry, an error occurred while connecting to the server. Please try again.",
           fetch: "Error while retrieving the response.",
         },
-        vivino: "View on Vivino →",
+        vivino: "Contact us if you'd like your wines featured here: ",
         modalAriaLabel: (wineName) => `Tasting details for ${wineName}`,
         modalCloseAria: "Close the wine sheet",
         modalLabels: {
@@ -1757,7 +1751,7 @@ body[data-theme="light"] .message-input::placeholder {
             "Lo siento, se produjo un error al conectar con el servidor. Inténtalo de nuevo.",
           fetch: "Error al recuperar la respuesta.",
         },
-        vivino: "Ver en Vivino →",
+        vivino: "Contáctanos si quieres que tus vinos aparezcan acá: ",
         modalAriaLabel: (wineName) => `Detalles de cata de ${wineName}`,
         modalCloseAria: "Cerrar la ficha del vino",
         modalLabels: {
@@ -1914,7 +1908,7 @@ body[data-theme="light"] .message-input::placeholder {
             "Je suis désolé, une erreur est survenue lors de la connexion au serveur. Veuillez réessayer.",
           fetch: "Erreur lors de la récupération de la réponse.",
         },
-        vivino: "Voir sur Vivino →",
+        vivino: "Contactez-nous si vous souhaitez que vos vins apparaissent ici : ",
         modalAriaLabel: (wineName) => `Détails de dégustation pour ${wineName}`,
         modalCloseAria: "Fermer la fiche du vin",
         modalLabels: {
@@ -2064,7 +2058,7 @@ body[data-theme="light"] .message-input::placeholder {
             "Es tut mir leid, beim Verbinden mit dem Server ist ein Fehler aufgetreten. Bitte versuche es erneut.",
           fetch: "Fehler beim Abrufen der Antwort.",
         },
-        vivino: "Auf Vivino ansehen →",
+        vivino: "Kontaktiere uns, wenn deine Weine hier erscheinen sollen: ",
         modalAriaLabel: (wineName) => `Verkostungsnotizen für ${wineName}`,
         modalCloseAria: "Weinkarte schließen",
         modalLabels: {
@@ -2214,7 +2208,7 @@ body[data-theme="light"] .message-input::placeholder {
             "Desculpe, ocorreu um erro ao conectar ao servidor. Tente novamente.",
           fetch: "Erro ao obter a resposta.",
         },
-        vivino: "Ver no Vivino →",
+        vivino: "Fale com a gente se quiser que seus vinhos apareçam aqui: ",
         modalAriaLabel: (wineName) => `Detalhes de degustação de ${wineName}`,
         modalCloseAria: "Fechar a ficha do vinho",
         modalLabels: {
@@ -2364,7 +2358,7 @@ body[data-theme="light"] .message-input::placeholder {
             "Przepraszam, wystąpił błąd podczas łączenia z serwerem. Spróbuj ponownie.",
           fetch: "Błąd podczas pobierania odpowiedzi.",
         },
-        vivino: "Zobacz na Vivino →",
+        vivino: "Skontaktuj się z nami, jeśli chcesz, aby Twoje wina pojawiły się tutaj: ",
         modalAriaLabel: (wineName) => `Szczegóły degustacji dla ${wineName}`,
         modalCloseAria: "Zamknij kartę wina",
         modalLabels: {
@@ -2519,7 +2513,7 @@ body[data-theme="light"] .message-input::placeholder {
           network: "抱歉，连接服务器时出现错误，请重试。",
           fetch: "获取回复时出错。",
         },
-        vivino: "前往 Vivino 查看 →",
+        vivino: "如果希望你的葡萄酒出现在这里，请联系我们：",
         modalAriaLabel: (wineName) => `查看 ${wineName} 的品鉴详情`,
         modalCloseAria: "关闭葡萄酒详情卡片",
         modalLabels: {
@@ -2992,6 +2986,8 @@ function setupLanguageSelect() {
     }
 
     function handlePriceSelection(optionKey, label) {
+      selectedPriceRange = optionKey; // guardar el rango seleccionado
+
       if (priceOptionsContainer) {
         priceOptionsContainer.remove();
         priceOptionsContainer = null;
@@ -3678,6 +3674,7 @@ async function sendMessage(text) {
       body: JSON.stringify({
         messages,
         lang: currentLanguage || "es", // ← idioma seleccionado (de, fr, es, etc.)
+        priceRange: selectedPriceRange
       }),
     });
 
@@ -3725,12 +3722,15 @@ async function sendMessage(text) {
 
     function createVivinoLink(wineName) {
       const t = getTranslations();
-      const link = document.createElement("a");
-      link.href = `https://www.vivino.com/search?q=${encodeURIComponent(wineName)}`;
-      link.target = "_blank";
-      link.rel = "noopener";
-      link.textContent = t.vivino;
-      return link;
+      const container = document.createElement("span");
+      container.textContent = t.vivino;
+
+      const emailLink = document.createElement("a");
+      emailLink.href = "mailto:marketing@tomos.io";
+      emailLink.textContent = "marketing@tomos.io";
+
+      container.appendChild(emailLink);
+      return container;
     }
 
     function closeWineModal() {
