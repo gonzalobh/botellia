@@ -1144,6 +1144,16 @@ body[data-theme="light"] .header-subtitle {
   gap: 6px;
 }
 
+.contact-message {
+  margin: -8px auto 16px;
+  text-align: center;
+  font-size: 11px;
+  opacity: 0.75;
+  max-width: 320px;
+  line-height: 1.6;
+  font-family: var(--font-body);
+}
+
 .powered-logo {
   height: 14px;
   opacity: 0.8;
@@ -1267,6 +1277,8 @@ body[data-theme="light"] .message-input::placeholder {
     Fait par Tomos.io
   </a>
 </div>
+
+<p class="contact-message" id="contactMessage"></p>
 
 
 </div>
@@ -1524,6 +1536,8 @@ body[data-theme="light"] .message-input::placeholder {
           title: "Welcome to your Virtual Sommelier!",
           subtitle: "Discover remarkable French wines for every occasion.",
         },
+        contactCTA:
+          "Contact us if you want your wines to appear here: marketing@tomos.io",
         initialPriceQuestion:
           "Welcome to Botellia.fr. To assist you better, could you share your preferred price range? I'll suggest options that fit your budget.",
         priceOptions: {
@@ -1681,6 +1695,8 @@ body[data-theme="light"] .message-input::placeholder {
           title: "¡Bienvenido a tu sommelier Virtual!",
           subtitle: "Descubre grandes vinos franceses para cada ocasión.",
         },
+        contactCTA:
+          "Contáctanos si quieres que tus vinos aparezcan acá: marketing@tomos.io",
         initialPriceQuestion:
           "Bienvenido a Botellia.fr, para ayudarte mejor, ¿puedes indicarme tu rango de precio preferido? Así podré proponerte opciones que se ajusten a tu presupuesto.",
         priceOptions: {
@@ -1838,6 +1854,8 @@ body[data-theme="light"] .message-input::placeholder {
           title: "Bienvenue auprès de votre Sommelier Virtuel !",
           subtitle: "Découvrez les plus grands vins français pour chaque occasion.",
         },
+        contactCTA:
+          "Contactez-nous si vous voulez que vos vins apparaissent ici : marketing@tomos.io",
         initialPriceQuestion:
           "Bienvenue sur Botellia.fr. Pour mieux vous aider, pouvez-vous m'indiquer votre fourchette de prix préférée ? Je pourrai ainsi proposer des options adaptées à votre budget.",
         priceOptions: {
@@ -1995,6 +2013,8 @@ body[data-theme="light"] .message-input::placeholder {
           title: "Willkommen bei deinem virtuellen Sommelier!",
           subtitle: "Entdecke bemerkenswerte französische Weine für jeden Anlass.",
         },
+        contactCTA:
+          "Kontaktiere uns, wenn deine Weine hier erscheinen sollen: marketing@tomos.io",
         initialPriceQuestion:
           "Willkommen auf Botellia.fr. Damit ich dir besser helfen kann, nenne mir bitte deine bevorzugte Preisspanne. So kann ich dir Optionen vorschlagen, die zu deinem Budget passen.",
         priceOptions: {
@@ -2145,6 +2165,8 @@ body[data-theme="light"] .message-input::placeholder {
           title: "Bem-vindo ao seu Sommelier Virtual!",
           subtitle: "Descubra grandes vinhos franceses para cada ocasião.",
         },
+        contactCTA:
+          "Fale conosco se quiser que seus vinhos apareçam aqui: marketing@tomos.io",
         initialPriceQuestion:
           "Bem-vindo à Botellia.fr. Para ajudar melhor, pode indicar a sua faixa de preço preferida? Assim posso sugerir opções adequadas ao seu orçamento.",
         priceOptions: {
@@ -2295,6 +2317,8 @@ body[data-theme="light"] .message-input::placeholder {
           title: "Witamy u Twojego Wirtualnego Sommeliera!",
           subtitle: "Odkryj znakomite francuskie wina na każdą okazję.",
         },
+        contactCTA:
+          "Skontaktuj się z nami, jeśli chcesz, aby Twoje wina pojawiły się tutaj: marketing@tomos.io",
         initialPriceQuestion:
           "Witamy w Botellia.fr. Aby lepiej pomóc, podaj proszę swój preferowany przedział cenowy. Dzięki temu zaproponuję opcje pasujące do Twojego budżetu.",
         priceOptions: {
@@ -2445,6 +2469,8 @@ body[data-theme="light"] .message-input::placeholder {
           title: "欢迎来到你的虚拟侍酒师！",
           subtitle: "为每个时刻发现出色的法国美酒。",
         },
+        contactCTA:
+          "如果想让您的葡萄酒在这里展示，请联系我们：marketing@tomos.io",
         initialPriceQuestion:
           "欢迎来到 Botellia.fr。为便于更好地帮助你，请告诉我你偏好的价格区间，我会为你推荐符合预算的选择。",
         priceOptions: {
@@ -2608,6 +2634,7 @@ body[data-theme="light"] .message-input::placeholder {
     let themeToggleButton;
     let themeIcon;
     let headerTitle;
+    let contactMessage;
     let languageSelect;
     let languageLabel;
     let resetChatButton;
@@ -2631,6 +2658,7 @@ body[data-theme="light"] .message-input::placeholder {
       languageSelect = document.getElementById("languageSelect");
       languageLabel = document.querySelector('label[for="languageSelect"]');
       messagesContainer = document.getElementById("messages");
+      contactMessage = document.getElementById("contactMessage");
       form = document.getElementById("form");
       input = document.getElementById("input");
       sendButton = document.getElementById("sendButton");
@@ -2720,6 +2748,7 @@ function initializeLanguage() {
       if (welcomeTitle) welcomeTitle.textContent = t.welcome.title;
       const welcomeSubtitle = document.querySelector(".welcome-subtitle");
       if (welcomeSubtitle) welcomeSubtitle.textContent = t.welcome.subtitle;
+      if (contactMessage) contactMessage.textContent = t.contactCTA;
 
       applyTheme(getCurrentTheme(), { persist: false });
 
