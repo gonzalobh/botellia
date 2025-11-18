@@ -1278,6 +1278,8 @@ body[data-theme="light"] .message-input::placeholder {
     <script type="module">
     import { createIcons, icons } from "https://cdn.jsdelivr.net/npm/lucide@latest/+esm";
 
+    let selectedPriceRange = null;
+
     const initialOptions = {
       ES: {
         lunch: "🍽️ Almuerzo",
@@ -2992,6 +2994,8 @@ function setupLanguageSelect() {
     }
 
     function handlePriceSelection(optionKey, label) {
+      selectedPriceRange = optionKey; // guardar el rango seleccionado
+
       if (priceOptionsContainer) {
         priceOptionsContainer.remove();
         priceOptionsContainer = null;
@@ -3678,6 +3682,7 @@ async function sendMessage(text) {
       body: JSON.stringify({
         messages,
         lang: currentLanguage || "es", // ← idioma seleccionado (de, fr, es, etc.)
+        priceRange: selectedPriceRange
       }),
     });
 
