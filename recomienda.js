@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
   try {
     // 🧩 Recibimos mensajes y el idioma desde el frontend
-    const { messages, lang } = req.body;
+    const { messages, lang, priceRange } = req.body;
 
     // 🔒 Prompt base (oculto en variable de entorno)
     const basePrompt = process.env.SOMMELIER_PROMPT_RECOMIENDA || "System prompt not set.";
@@ -30,6 +30,19 @@ export default async function handler(req, res) {
     const languagePin = `El idioma actual del usuario es ${LANG_MAP[lang] || "español"}.
 Responde única y estrictamente en ${LANG_MAP[lang] || "español"}, sin mezclar idiomas ni traducir el texto del usuario.`;
 
+    // 🎯 Instrucción dinámica de precio
+    let pricePin = "";
+    if (priceRange) {
+      const PRICE_MAP = {
+        under20: "menos de 20 €",
+        between21and60: "entre 21 y 60 €",
+        over60: "más de 60 €",
+        all: "sin límite"
+      };
+
+      pricePin = `El usuario prefiere vinos en el rango de ${PRICE_MAP[priceRange] || "sin límite"}. Ajusta todas las recomendaciones estrictamente a ese presupuesto.`;
+    }
+
     // 🚀 Llamada a OpenAI
     const upstream = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -42,8 +55,9 @@ Responde única y estrictamente en ${LANG_MAP[lang] || "español"}, sin mezclar 
         messages: [
           { role: "system", content: basePrompt },
           { role: "system", content: languagePin },
+          pricePin ? { role: "system", content: pricePin } : null,
           ...(messages || []),
-        ],
+        ].filter(Boolean),
       }),
     });
 
