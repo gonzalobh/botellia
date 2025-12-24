@@ -237,7 +237,7 @@
       .header-icon {
         width: clamp(40px, 12vw, 48px);
         height: clamp(40px, 12vw, 48px);
-        border-radius: clamp(16px, 6vw, 22px);
+        border-radius: 50%;
       }
 
       .header-titles {
@@ -297,13 +297,21 @@
     .header-icon {
       width: clamp(44px, 6vw, 60px);
       height: clamp(44px, 6vw, 60px);
-      border-radius: clamp(18px, 2vw, 26px);
+      border-radius: 50%;
       display: inline-flex;
       align-items: center;
       justify-content: center;
     
       position: relative;
       overflow: hidden;
+    }
+
+    .header-icon img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
     }
 
     .header-icon::after {
@@ -849,7 +857,7 @@
       .header-icon {
         width: 42px;
         height: 42px;
-        border-radius: 16px;
+        border-radius: 50%;
       }
 
       .header-title {
@@ -1052,7 +1060,9 @@ body[data-theme="light"] .message-input::placeholder {
   <div class="chat-container">
 <header class="header">
   <div class="header-content">
-    <span class="header-icon" id="headerIcon"></span>
+    <span class="header-icon" id="headerIcon">
+      <img src="prat.png" alt="Avatar de Arturo Prat">
+    </span>
 
     <div class="header-titles">
       <h1 class="header-title">
@@ -1193,7 +1203,6 @@ body[data-theme="light"] .message-input::placeholder {
       headerIcon = document.getElementById("headerIcon");
       resetChatButton = document.getElementById("resetChatBtn");
 
-      renderIcon(headerIcon, "anchor", { width: 32, height: 32, strokeWidth: 1.4 });
       renderIcon(sendIcon, "send", { width: 20, height: 20, strokeWidth: 1.6 });
 
       applyLanguageSettings();
