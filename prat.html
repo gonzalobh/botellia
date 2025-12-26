@@ -168,6 +168,61 @@
       letter-spacing: 0.24em;
     }
 
+    .hero-panel-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .hero-panel-switch {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      width: 46px;
+      height: 26px;
+      flex-shrink: 0;
+    }
+
+    .hero-panel-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .hero-panel-switch .switch-slider {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(242, 193, 91, 0.45);
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+      transition: var(--transition-base);
+    }
+
+    .hero-panel-switch .switch-slider::before {
+      content: '';
+      position: absolute;
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      top: 2px;
+      border-radius: 50%;
+      background: linear-gradient(140deg, #f9d37e, #f2c15b);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.35);
+      transition: var(--transition-base);
+    }
+
+    .hero-panel-switch input:checked + .switch-slider {
+      background: rgba(209, 43, 43, 0.3);
+      border-color: rgba(209, 43, 43, 0.7);
+    }
+
+    .hero-panel-switch input:checked + .switch-slider::before {
+      transform: translateX(18px);
+      background: linear-gradient(140deg, #f25c5c, #d12b2b);
+    }
+
     .hero-panel-subtitle {
       font-size: 16px;
       color: rgba(245, 245, 245, 0.8);
@@ -330,6 +385,10 @@
         max-height: none;
         margin-right: 0;
         padding-right: 0;
+      }
+
+      .header.hero-card {
+        display: none;
       }
 
       .messages-container {
@@ -1280,7 +1339,13 @@ body[data-theme="light"] .message-input::placeholder {
   <div class="desktop-shell">
     <aside class="hero-panel" aria-hidden="true">
       <div class="hero-panel-content">
-        <h2 class="hero-panel-title">Arturo Prat</h2>
+        <div class="hero-panel-heading">
+          <h2 class="hero-panel-title">Arturo Prat</h2>
+          <label class="hero-panel-switch">
+            <input type="checkbox" id="heroToggle" aria-label="Alternar modo Arturo Prat">
+            <span class="switch-slider"></span>
+          </label>
+        </div>
         <p class="hero-panel-subtitle">
           Un referente del honor naval chileno. Conversa con su legado y descubre principios que inspiran liderazgo.
         </p>
