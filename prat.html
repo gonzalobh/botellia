@@ -1651,29 +1651,26 @@ body[data-theme="light"] .message-input::placeholder {
       input?.focus();
     }
 
-    function showWelcome() {
-      if (!messagesContainer) return;
-      const welcomeDiv = document.createElement("div");
-      welcomeDiv.className = "welcome-screen";
+function showWelcome() {
+  if (!messagesContainer) return;
 
-      const icon = document.createElement("span");
-      icon.className = "welcome-icon";
-      renderIcon(icon, "anchor", { width: 48, height: 48, strokeWidth: 1 });
+  const welcomeDiv = document.createElement("div");
+  welcomeDiv.className = "welcome-screen";
 
-      const title = document.createElement("h2");
-      title.className = "welcome-title";
-      title.textContent = TEXT.welcome.title;
+  const title = document.createElement("h2");
+  title.className = "welcome-title";
+  title.textContent = TEXT.welcome.title;
 
-      const subtitle = document.createElement("p");
-      subtitle.className = "welcome-subtitle";
-      subtitle.textContent = TEXT.welcome.subtitle;
+  const subtitle = document.createElement("p");
+  subtitle.className = "welcome-subtitle";
+  subtitle.textContent = TEXT.welcome.subtitle;
 
-      welcomeDiv.appendChild(icon);
-      welcomeDiv.appendChild(title);
-      welcomeDiv.appendChild(subtitle);
+  welcomeDiv.appendChild(title);
+  welcomeDiv.appendChild(subtitle);
 
-      messagesContainer.appendChild(welcomeDiv);
-    }
+  messagesContainer.appendChild(welcomeDiv);
+}
+
 
     function revealOptionsAfterTyping(bubble, element) {
       if (!element) return;
