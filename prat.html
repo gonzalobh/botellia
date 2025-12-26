@@ -312,7 +312,7 @@
 
     .header-portrait {
       width: clamp(88px, 10vw, 110px);
-      height: clamp(88px, 10vw, 110px);
+      height: clamp(120px, 14vw, 150px);
       border-radius: 26px;
       display: inline-flex;
       align-items: center;
@@ -528,7 +528,7 @@
     }
 
     .message-bubble {
-      max-width: 82%;
+      max-width: 100%;
       padding: 18px 22px;
       border-radius: var(--radius-lg);
       font-size: 17px;
@@ -1070,7 +1070,7 @@ body[data-theme="light"] .message-input::placeholder {
     </div>
   </div>
 
-  <div class="header-actions header-actions-group">
+  <div class="">
     <button type="button" class="icon-button" id="themeToggle" aria-label="Cambiar tema">
       <span class="icon" id="themeIcon"></span>
     </button>
@@ -1135,7 +1135,7 @@ body[data-theme="light"] .message-input::placeholder {
     const TEXT = {
       htmlLang: "es",
       title: "Arturo · Asistente del héroe naval",
-      headerTitle: "Arturo",
+      headerTitle: "Arturo Prat",
       headerSubtitle: "Héroe naval chileno",
       placeholder: "Conversa con Arturo Prat...",
       themeToggle: {
@@ -1147,7 +1147,7 @@ body[data-theme="light"] .message-input::placeholder {
         subtitle:
           "Estoy aquí para conversar sobre historia naval, valores y liderazgo chileno. Pregúntame lo que quieras.",
       },
-      initialQuestion: "¿Qué te gustaría conocer sobre Arturo Prat?",
+      initialQuestion: "¿Qué te gustaría conocer sobre mi?",
       initialOptions: [],
       errorMessages: {
         network:
