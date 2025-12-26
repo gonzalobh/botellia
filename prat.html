@@ -117,6 +117,105 @@
       line-height: 1.8;
     }
 
+    .desktop-shell {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+    }
+
+    .hero-panel {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 32px;
+      padding: clamp(28px, 4vw, 40px);
+      background: linear-gradient(160deg, rgba(7, 21, 43, 0.85), rgba(8, 26, 52, 0.95));
+      border: 1px solid rgba(242, 193, 91, 0.28);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-panel);
+      max-width: 520px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(209, 43, 43, 0.22), transparent 55%),
+        radial-gradient(circle at 80% 0%, rgba(242, 193, 91, 0.22), transparent 50%);
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    .hero-panel-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .hero-panel-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 2.6vw, 34px);
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+    }
+
+    .hero-panel-subtitle {
+      font-size: 16px;
+      color: rgba(245, 245, 245, 0.8);
+      max-width: 360px;
+    }
+
+    .hero-panel-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .hero-panel-tag {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(242, 193, 91, 0.4);
+      background: rgba(10, 24, 46, 0.7);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(245, 245, 245, 0.85);
+    }
+
+    .hero-panel-portrait {
+      position: relative;
+      z-index: 1;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid rgba(242, 193, 91, 0.4);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+      aspect-ratio: 3 / 4;
+    }
+
+    .hero-panel-portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-panel-caption {
+      position: relative;
+      z-index: 1;
+      font-size: 14px;
+      color: rgba(245, 245, 245, 0.72);
+      border-left: 2px solid rgba(242, 193, 91, 0.6);
+      padding-left: 12px;
+      line-height: 1.7;
+    }
+
     .chat-container {
       position: relative;
       width: 100%;
@@ -195,6 +294,72 @@
         border-radius: var(--radius-xl);
         box-shadow: var(--shadow-veil);
       }
+    }
+
+    @media (min-width: 1024px) {
+      body {
+        padding: 32px;
+      }
+
+      .desktop-shell {
+        max-width: 1280px;
+        align-items: stretch;
+      }
+
+      .hero-panel {
+        display: flex;
+        flex: 1;
+      }
+
+      .chat-container {
+        width: 52%;
+        max-width: none;
+        height: 86vh;
+      }
+
+      .messages-container {
+        padding: 32px 34px calc(120px + env(safe-area-inset-bottom, 0px));
+        gap: 24px;
+      }
+
+      .message-bubble {
+        max-width: 78%;
+        font-size: 17.5px;
+      }
+
+      .message.user .message-bubble {
+        max-width: 70%;
+      }
+
+      .header {
+        padding: 24px 30px 28px;
+      }
+
+      .header-portrait {
+        width: 92px;
+        height: 128px;
+      }
+    }
+
+    body[data-theme="light"] .hero-panel {
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.9), rgba(237, 241, 247, 0.95));
+      border-color: rgba(177, 31, 45, 0.2);
+      box-shadow: 0 30px 70px rgba(17, 32, 58, 0.18);
+    }
+
+    body[data-theme="light"] .hero-panel-title {
+      color: var(--color-ink);
+    }
+
+    body[data-theme="light"] .hero-panel-subtitle,
+    body[data-theme="light"] .hero-panel-caption,
+    body[data-theme="light"] .hero-panel-tag {
+      color: rgba(31, 56, 102, 0.75);
+    }
+
+    body[data-theme="light"] .hero-panel-tag {
+      background: rgba(255, 255, 255, 0.85);
+      border-color: rgba(177, 31, 45, 0.25);
     }
 
     body[data-theme="light"] .chat-container {
@@ -1049,7 +1214,28 @@ body[data-theme="light"] .message-input::placeholder {
   <base target="_blank">
 </head>
 <body>
-  <div class="chat-container">
+  <div class="desktop-shell">
+    <aside class="hero-panel" aria-hidden="true">
+      <div class="hero-panel-content">
+        <h2 class="hero-panel-title">Arturo Prat</h2>
+        <p class="hero-panel-subtitle">
+          Un referente del honor naval chileno. Conversa con su legado y descubre principios que inspiran liderazgo.
+        </p>
+        <div class="hero-panel-tags">
+          <span class="hero-panel-tag">Historia naval</span>
+          <span class="hero-panel-tag">Valores</span>
+          <span class="hero-panel-tag">Liderazgo</span>
+        </div>
+      </div>
+      <div class="hero-panel-portrait">
+        <img src="prat.png" alt="Retrato de Arturo Prat">
+      </div>
+      <p class="hero-panel-caption">
+        “Al abordaje, muchachos.” — La decisión que definió una era de servicio y valentía.
+      </p>
+    </aside>
+
+    <div class="chat-container">
 <header class="header hero-card">
   <div class="header-content">
     <span class="header-portrait" id="headerIcon">
@@ -1127,6 +1313,7 @@ body[data-theme="light"] .message-input::placeholder {
 </div>
 
 
+    </div>
   </div>
 
   <script type="module">
