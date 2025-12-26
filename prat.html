@@ -175,54 +175,6 @@
       gap: 16px;
     }
 
-    .hero-panel-switch {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      width: 46px;
-      height: 26px;
-      flex-shrink: 0;
-    }
-
-    .hero-panel-switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .hero-panel-switch .switch-slider {
-      position: absolute;
-      inset: 0;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.18);
-      border: 1px solid rgba(242, 193, 91, 0.45);
-      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
-      transition: var(--transition-base);
-    }
-
-    .hero-panel-switch .switch-slider::before {
-      content: '';
-      position: absolute;
-      height: 20px;
-      width: 20px;
-      left: 3px;
-      top: 2px;
-      border-radius: 50%;
-      background: linear-gradient(140deg, #f9d37e, #f2c15b);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.35);
-      transition: var(--transition-base);
-    }
-
-    .hero-panel-switch input:checked + .switch-slider {
-      background: rgba(209, 43, 43, 0.3);
-      border-color: rgba(209, 43, 43, 0.7);
-    }
-
-    .hero-panel-switch input:checked + .switch-slider::before {
-      transform: translateX(18px);
-      background: linear-gradient(140deg, #f25c5c, #d12b2b);
-    }
-
     .hero-panel-subtitle {
       font-size: 16px;
       color: rgba(245, 245, 245, 0.8);
@@ -429,6 +381,13 @@
         right: 32px;
         padding: 8px 10px;
         z-index: 2000;
+      }
+
+      .hero-panel .header-actions {
+        position: relative;
+        top: auto;
+        right: auto;
+        z-index: auto;
       }
 
       .hero-panel-portrait {
@@ -1341,10 +1300,11 @@ body[data-theme="light"] .message-input::placeholder {
       <div class="hero-panel-content">
         <div class="hero-panel-heading">
           <h2 class="hero-panel-title">Arturo Prat</h2>
-          <label class="hero-panel-switch">
-            <input type="checkbox" id="heroToggle" aria-label="Alternar modo Arturo Prat">
-            <span class="switch-slider"></span>
-          </label>
+          <div class="header-actions">
+            <button type="button" class="icon-button" data-theme-toggle aria-label="Cambiar tema">
+              <span class="icon theme-icon"></span>
+            </button>
+          </div>
         </div>
         <p class="hero-panel-subtitle">
           Un referente del honor naval chileno. Conversa con su legado y descubre principios que inspiran liderazgo.
@@ -1385,8 +1345,8 @@ body[data-theme="light"] .message-input::placeholder {
   </div>
 
   <div class="header-actions">
-    <button type="button" class="icon-button" id="themeToggle" aria-label="Cambiar tema">
-      <span class="icon" id="themeIcon"></span>
+    <button type="button" class="icon-button" data-theme-toggle aria-label="Cambiar tema">
+      <span class="icon theme-icon"></span>
     </button>
 
   </div>
@@ -1483,8 +1443,7 @@ body[data-theme="light"] .message-input::placeholder {
     let sendButton;
     let sendIcon;
     let headerIcon;
-    let themeToggleButton;
-    let themeIcon;
+    let themeToggleButtons = [];
     let headerTitle;
     let resetChatButton;
     let initialOptionsContainer = null;
@@ -1496,8 +1455,7 @@ body[data-theme="light"] .message-input::placeholder {
 
     function initializeApp() {
       headerTitle = document.querySelector(".header-title");
-      themeToggleButton = document.getElementById("themeToggle");
-      themeIcon = document.getElementById("themeIcon");
+      themeToggleButtons = Array.from(document.querySelectorAll("[data-theme-toggle]"));
       messagesContainer = document.getElementById("messages");
       form = document.getElementById("form");
       input = document.getElementById("input");
@@ -1565,12 +1523,13 @@ body[data-theme="light"] .message-input::placeholder {
         } catch (error) {}
       }
       const iconName = normalized === "dark" ? "sun" : "moon";
-      renderIcon(themeIcon, iconName, { width: 22, height: 22, strokeWidth: 1.6 });
-      if (themeToggleButton) {
-        const label = normalized === "dark" ? TEXT.themeToggle.toLight : TEXT.themeToggle.toDark;
-        themeToggleButton.setAttribute("aria-label", label);
-        themeToggleButton.setAttribute("title", label);
-      }
+      const label = normalized === "dark" ? TEXT.themeToggle.toLight : TEXT.themeToggle.toDark;
+      themeToggleButtons.forEach((button) => {
+        const iconTarget = button.querySelector(".theme-icon");
+        renderIcon(iconTarget, iconName, { width: 22, height: 22, strokeWidth: 1.6 });
+        button.setAttribute("aria-label", label);
+        button.setAttribute("title", label);
+      });
     }
 
     function initializeTheme() {
@@ -1586,11 +1545,13 @@ body[data-theme="light"] .message-input::placeholder {
     }
 
     function setupThemeToggle() {
-      if (!themeToggleButton) return;
-      themeToggleButton.addEventListener("click", () => {
-        const current = getCurrentTheme();
-        const next = current === "dark" ? "light" : "dark";
-        applyTheme(next);
+      if (!themeToggleButtons.length) return;
+      themeToggleButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const current = getCurrentTheme();
+          const next = current === "dark" ? "light" : "dark";
+          applyTheme(next);
+        });
       });
     }
 
